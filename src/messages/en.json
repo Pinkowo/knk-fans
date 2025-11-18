@@ -7,6 +7,11 @@
     "about": "About KNK",
     "contact": "Contact"
   },
+  "links": {
+    "title": "Community",
+    "heading": "Follow KNK everywhere",
+    "subheading": "Official socials and fan hubs gathered in one place."
+  },
   "actions": {
     "listenNow": "Listen now",
     "viewMore": "See more"

@@ -7,6 +7,11 @@
     "about": "關於 KNK",
     "contact": "聯絡我們"
   },
+  "links": {
+    "title": "社群連結",
+    "heading": "追蹤 KNK 的每一個足跡",
+    "subheading": "粉絲團、Instagram 等官方管道一次收藏。"
+  },
   "actions": {
     "listenNow": "立即收聽",
     "viewMore": "查看更多"

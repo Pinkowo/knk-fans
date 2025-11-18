@@ -7,6 +7,11 @@
     "about": "KNK 소개",
     "contact": "문의하기"
   },
+  "links": {
+    "title": "공식 링크",
+    "heading": "KNK 를 더 가까이",
+    "subheading": "공식 SNS 와 팬 커뮤니티를 한 눈에 확인하세요."
+  },
   "actions": {
     "listenNow": "지금 듣기",
     "viewMore": "더 보기"

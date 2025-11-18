@@ -203,15 +203,15 @@
 
 ### Notion 資料擷取 - 外部連結
 
-- [ ] T074 [P] 建立外部連結 Notion 查詢，在 `src/lib/notion/links.ts` 實作 `fetchExternalLinks()` 函式
-- [ ] T075 [P] 定義外部連結類型，在 `src/types/links.ts` 定義 `ExternalLink` 介面
-- [ ] T076 建立外部連結 API Route，在 `src/app/api/notion/links/route.ts` 實作 GET 端點，revalidate 604800 秒（7 天）
+- [x] T074 [P] 建立外部連結 Notion 查詢，在 `src/lib/notion/links.ts` 實作 `fetchExternalLinks()` 函式
+- [x] T075 [P] 定義外部連結類型，在 `src/types/links.ts` 定義 `ExternalLink` 介面
+- [x] T076 建立外部連結 API Route，在 `src/app/api/notion/links/route.ts` 實作 GET 端點，revalidate 604800 秒（7 天）
 
 ### 外部連結頁面實作
 
-- [ ] T077 建立外部連結頁面，在 `src/app/[locale]/links/page.tsx` 擷取連結資料並渲染
-- [ ] T078 [P] 建立連結卡片元件，在 `src/components/links/LinkCard.tsx` 顯示平台名稱、圖示，設定 `target="_blank"` 與 `rel="noopener noreferrer"`
-- [ ] T079 新增外部連結翻譯，在 `messages/*.json` 新增 `links.*` 鍵值
+- [x] T077 建立外部連結頁面，在 `src/app/[locale]/links/page.tsx` 擷取連結資料並渲染
+- [x] T078 [P] 建立連結卡片元件，在 `src/components/links/LinkCard.tsx` 顯示平台名稱、圖示，設定 `target="_blank"` 與 `rel="noopener noreferrer"`
+- [x] T079 新增外部連結翻譯，在 `messages/*.json` 新增 `links.*` 鍵值
 
 **檢查點**: 外部連結頁面完整運作
 

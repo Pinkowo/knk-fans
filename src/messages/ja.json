@@ -7,6 +7,11 @@
     "about": "KNK について",
     "contact": "お問い合わせ"
   },
+  "links": {
+    "title": "リンク",
+    "heading": "KNK の最新情報をフォロー",
+    "subheading": "公式 SNS とファンコミュニティをまとめてチェック。"
+  },
   "actions": {
     "listenNow": "今すぐ聴く",
     "viewMore": "もっと見る"

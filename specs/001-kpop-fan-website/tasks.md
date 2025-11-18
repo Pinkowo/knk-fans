@@ -17,14 +17,14 @@
 
 **目的**: 專案結構建立與基礎工具設定
 
-- [ ] T001 建立 Next.js 14 專案結構，使用 TypeScript 5.x，在專案根目錄執行 `npx create-next-app@latest knk-fans --typescript --tailwind --app --src-dir --import-alias "@/*"`
-- [ ] T002 安裝核心依賴項：`npm install @notionhq/client next-intl framer-motion`
-- [ ] T003 [P] 設定 ESLint 與 Prettier，在 `.eslintrc.json` 和 `.prettierrc` 設定檔
-- [ ] T004 [P] 建立 `.env.local.example`，定義所需環境變數（NOTION_API_KEY、資料庫 ID 等）
-- [ ] T005 [P] 設定 Tailwind CSS，在 `tailwind.config.js` 定義設計系統（顏色、字體、間距）
-- [ ] T006 建立專案目錄結構：`src/components/`、`src/lib/`、`src/types/`、`public/sprites/`、`messages/`
-- [ ] T007 [P] 設定 TypeScript 路徑別名，在 `tsconfig.json` 設定 `@/` 指向 `./src/`
-- [ ] T008 [P] 建立 Git 忽略規則，將 `.env.local`、`.next/`、`node_modules/` 加入 `.gitignore`
+- [x] T001 建立 Next.js 14 專案結構，使用 TypeScript 5.x，在專案根目錄執行 `npx create-next-app@latest knk-fans --typescript --tailwind --app --src-dir --import-alias "@/*"`
+- [x] T002 安裝核心依賴項：`npm install @notionhq/client next-intl framer-motion`
+- [x] T003 [P] 設定 ESLint 與 Prettier，在 `.eslintrc.json` 和 `.prettierrc` 設定檔
+- [x] T004 [P] 建立 `.env.local.example`，定義所需環境變數（NOTION_API_KEY、資料庫 ID 等）
+- [x] T005 [P] 設定 Tailwind CSS，在 `tailwind.config.js` 定義設計系統（顏色、字體、間距）
+- [x] T006 建立專案目錄結構：`src/components/`、`src/lib/`、`src/types/`、`public/sprites/`、`messages/`
+- [x] T007 [P] 設定 TypeScript 路徑別名，在 `tsconfig.json` 設定 `@/` 指向 `./src/`
+- [x] T008 [P] 建立 Git 忽略規則，將 `.env.local`、`.next/`、`node_modules/` 加入 `.gitignore`
 
 ---
 
@@ -36,34 +36,34 @@
 
 ### 國際化（i18n）基礎設施
 
-- [ ] T009 建立 i18n 設定檔 `i18n.ts`，定義四種語言（ko、zh、ja、en）與訊息載入邏輯
-- [ ] T010 設定 next-intl middleware，在 `middleware.ts` 實作語言偵測與路由重導向
-- [ ] T011 [P] 建立繁體中文翻譯檔 `messages/zh.json`，包含共用 UI 文字（導航、按鈕、錯誤訊息）
-- [ ] T012 [P] 建立韓文翻譯檔 `messages/ko.json`，與 zh.json 結構相同
-- [ ] T013 [P] 建立日文翻譯檔 `messages/ja.json`，與 zh.json 結構相同
-- [ ] T014 [P] 建立英文翻譯檔 `messages/en.json`，與 zh.json 結構相同
-- [ ] T015 更新 `next.config.js`，使用 next-intl 插件包裝設定
+- [x] T009 建立 i18n 設定檔 `i18n.ts`，定義四種語言（ko、zh、ja、en）與訊息載入邏輯
+- [x] T010 設定 next-intl middleware，在 `middleware.ts` 實作語言偵測與路由重導向
+- [x] T011 [P] 建立繁體中文翻譯檔 `messages/zh.json`，包含共用 UI 文字（導航、按鈕、錯誤訊息）
+- [x] T012 [P] 建立韓文翻譯檔 `messages/ko.json`，與 zh.json 結構相同
+- [x] T013 [P] 建立日文翻譯檔 `messages/ja.json`，與 zh.json 結構相同
+- [x] T014 [P] 建立英文翻譯檔 `messages/en.json`，與 zh.json 結構相同
+- [x] T015 更新 `next.config.js`，使用 next-intl 插件包裝設定
 
 ### Notion API 整合
 
-- [ ] T016 建立 Notion 客戶端，在 `src/lib/notion/client.ts` 實作速率限制隊列（3 req/s）與重試邏輯
-- [ ] T017 定義 Notion 類型介面，在 `src/types/notion.ts` 定義所有 Notion 資料庫回應類型
-- [ ] T018 建立 Notion 工具函式，在 `src/lib/notion/utils.ts` 實作 Rich Text 轉 Plain Text 轉換器
-- [ ] T019 建立快取策略設定，在 `src/lib/notion/config.ts` 定義各內容類型的 revalidate 時間
+- [x] T016 建立 Notion 客戶端，在 `src/lib/notion/client.ts` 實作速率限制隊列（3 req/s）與重試邏輯
+- [x] T017 定義 Notion 類型介面，在 `src/types/notion.ts` 定義所有 Notion 資料庫回應類型
+- [x] T018 建立 Notion 工具函式，在 `src/lib/notion/utils.ts` 實作 Rich Text 轉 Plain Text 轉換器
+- [x] T019 建立快取策略設定，在 `src/lib/notion/config.ts` 定義各內容類型的 revalidate 時間
 
 ### 共用元件與布局
 
-- [ ] T020 建立根布局，在 `src/app/layout.tsx` 設定 HTML lang 屬性、字體載入、Vercel Analytics
-- [ ] T021 建立語言路由布局，在 `src/app/[locale]/layout.tsx` 實作 NextIntlClientProvider 與導航結構
-- [ ] T022 [P] 建立 Header 元件，在 `src/components/common/Header.tsx` 實作網站導航列與 Logo
-- [ ] T023 [P] 建立 Footer 元件，在 `src/components/common/Footer.tsx` 實作頁尾資訊
-- [ ] T024 [P] 建立 LanguageSelector 元件，在 `src/components/common/LanguageSelector.tsx` 實作語言切換下拉選單（Client Component）
-- [ ] T025 建立 localStorage Hook，在 `src/lib/hooks/useLocalStorage.ts` 實作通用 localStorage 存取邏輯（型別安全）
+- [x] T020 建立根布局，在 `src/app/layout.tsx` 設定 HTML lang 屬性、字體載入、Vercel Analytics
+- [x] T021 建立語言路由布局，在 `src/app/[locale]/layout.tsx` 實作 NextIntlClientProvider 與導航結構
+- [x] T022 [P] 建立 Header 元件，在 `src/components/common/Header.tsx` 實作網站導航列與 Logo
+- [x] T023 [P] 建立 Footer 元件，在 `src/components/common/Footer.tsx` 實作頁尾資訊
+- [x] T024 [P] 建立 LanguageSelector 元件，在 `src/components/common/LanguageSelector.tsx` 實作語言切換下拉選單（Client Component）
+- [x] T025 建立 localStorage Hook，在 `src/lib/hooks/useLocalStorage.ts` 實作通用 localStorage 存取邏輯（型別安全）
 
 ### 樣式與設計系統
 
-- [ ] T026 建立全域樣式，在 `src/styles/globals.css` 定義 CSS 變數、字體匯入、基礎樣式重置
-- [ ] T027 設定 Framer Motion 變體，在 `src/lib/animation/variants.ts` 定義常用動畫效果（淡入、滑入、彈窗）
+- [x] T026 建立全域樣式，在 `src/styles/globals.css` 定義 CSS 變數、字體匯入、基礎樣式重置
+- [x] T027 設定 Framer Motion 變體，在 `src/lib/animation/variants.ts` 定義常用動畫效果（淡入、滑入、彈窗）
 
 **檢查點**: 基礎建設完成 - 現在可以並行開始實作使用者故事
 
@@ -77,17 +77,17 @@
 
 ### Notion 資料擷取 - 推坑指南
 
-- [ ] T028 [P] 建立推坑指南 Notion 查詢，在 `src/lib/notion/guide.ts` 實作 `fetchGuideData()` 函式，擷取推薦項目與團體魅力點
-- [ ] T029 [P] 定義推坑指南類型，在 `src/types/guide.ts` 定義 `Guide`、`RecommendedItem`、`GroupCharm` 介面
-- [ ] T030 建立推坑指南 API Route，在 `src/app/api/notion/guide/route.ts` 實作 GET 端點，設定 ISR revalidate 為 21600 秒（6 小時）
+- [x] T028 [P] 建立推坑指南 Notion 查詢，在 `src/lib/notion/guide.ts` 實作 `fetchGuideData()` 函式，擷取推薦項目與團體魅力點
+- [x] T029 [P] 定義推坑指南類型，在 `src/types/guide.ts` 定義 `Guide`、`RecommendedItem`、`GroupCharm` 介面
+- [x] T030 建立推坑指南 API Route，在 `src/app/api/notion/guide/route.ts` 實作 GET 端點，設定 ISR revalidate 為 21600 秒（6 小時）
 
 ### 首頁實作
 
-- [ ] T031 建立首頁 Server Component，在 `src/app/[locale]/page.tsx` 擷取推坑指南資料並渲染三大區塊
-- [ ] T032 [P] 建立推薦歌曲元件，在 `src/components/guide/RecommendedSongs.tsx` 顯示推薦歌曲列表，包含連結導向歌曲詳細頁
-- [ ] T033 [P] 建立推薦舞台/綜藝元件，在 `src/components/guide/RecommendedShows.tsx` 顯示推薦舞台與綜藝列表，包含外部連結
-- [ ] T034 [P] 建立團體魅力點元件，在 `src/components/guide/GroupCharms.tsx` 以卡片形式顯示團體特色（身高、聲線、團魂等）
-- [ ] T035 新增推坑指南翻譯，在 `messages/zh.json`、`ko.json`、`ja.json`、`en.json` 新增 `guide.*` 鍵值（標題、區塊名稱）
+- [x] T031 建立首頁 Server Component，在 `src/app/[locale]/page.tsx` 擷取推坑指南資料並渲染三大區塊
+- [x] T032 [P] 建立推薦歌曲元件，在 `src/components/guide/RecommendedSongs.tsx` 顯示推薦歌曲列表，包含連結導向歌曲詳細頁
+- [x] T033 [P] 建立推薦舞台/綜藝元件，在 `src/components/guide/RecommendedShows.tsx` 顯示推薦舞台與綜藝列表，包含外部連結
+- [x] T034 [P] 建立團體魅力點元件，在 `src/components/guide/GroupCharms.tsx` 以卡片形式顯示團體特色（身高、聲線、團魂等）
+- [x] T035 新增推坑指南翻譯，在 `messages/zh.json`、`ko.json`、`ja.json`、`en.json` 新增 `guide.*` 鍵值（標題、區塊名稱）
 - [ ] T036 最佳化首頁圖片，使用 `next/image` 元件，設定適當 `sizes` 與 `placeholder="blur"`，在所有推坑指南元件中套用
 - [ ] T037 建立首頁骨架屏，在 `src/app/[locale]/loading.tsx` 實作載入狀態 UI
 
@@ -186,7 +186,7 @@
 
 ### 語言持久化
 
-- [ ] T070 實作語言偏好記憶，在 `LanguageSelector.tsx` 新增 localStorage 存儲邏輯，使用 `useLocalStorage` Hook
+- [x] T070 實作語言偏好記憶，在 `LanguageSelector.tsx` 新增 localStorage 存儲邏輯，使用 `useLocalStorage` Hook
 - [ ] T071 實作 Server 端語言偵測，在 `middleware.ts` 讀取 cookie 或 Accept-Language header，設定預設語言為中文（zh）
 - [ ] T072 測試語言切換流程，驗證所有頁面的 UI 文字、導航標籤、區塊標題正確翻譯
 - [ ] T073 新增缺失翻譯，補全 `messages/*.json` 所有頁面的翻譯鍵值
@@ -309,7 +309,7 @@
 
 - [ ] T106 [P] 分析 Bundle 大小，執行 `npm run build`，使用 Next.js Bundle Analyzer，確保首頁 < 100KB gzipped
 - [ ] T107 [P] 最佳化圖片載入，驗證所有圖片使用 `next/image`，設定適當 `sizes` 與 `priority` 屬性
-- [ ] T108 [P] 實作字體最佳化，在 `src/app/layout.tsx` 使用 `next/font/google` 載入 Noto Sans TC，設定 `display: 'swap'`
+- [x] T108 [P] 實作字體最佳化，在 `src/app/layout.tsx` 使用 `next/font/google` 載入 Noto Sans TC，設定 `display: 'swap'`
 - [ ] T109 設定快取 Headers，在 `next.config.js` 定義靜態資源與頁面的 Cache-Control
 - [ ] T110 實作 generateStaticParams，在所有動態路由頁面（成員、歌曲等）實作靜態生成參數
 
@@ -330,7 +330,7 @@
 
 - [ ] T118 建立 On-Demand Revalidation API，在 `src/app/api/revalidate/route.ts` 實作手動觸發 ISR 重新驗證端點
 - [ ] T119 設定環境變數，在 Vercel Dashboard 設定所有 NOTION_* 環境變數與 REVALIDATION_SECRET
-- [ ] T120 整合 Vercel Analytics，在 `src/app/layout.tsx` 新增 `<Analytics />` 元件
+- [x] T120 整合 Vercel Analytics，在 `src/app/layout.tsx` 新增 `<Analytics />` 元件
 - [ ] T121 設定 Web Vitals 追蹤，在 `src/app/[locale]/layout.tsx` 實作 `useReportWebVitals` Hook
 
 ### 文件與測試

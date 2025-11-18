@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "入門ガイド",
+    "members": "メンバー",
+    "discography": "ディスコグラフィー",
+    "variety": "バラエティ",
+    "about": "KNK について",
+    "contact": "お問い合わせ"
+  },
+  "actions": {
+    "listenNow": "今すぐ聴く",
+    "viewMore": "もっと見る"
+  },
+  "language": {
+    "label": "言語を選択",
+    "zh": "繁体字中国語",
+    "ko": "韓国語",
+    "ja": "日本語",
+    "en": "英語"
+  },
+  "footer": {
+    "byline": "Inspirits of Gravity 制作",
+    "copyright": "© {year} KNK ファンサイト. All rights reserved."
+  },
+  "guide": {
+    "hero": {
+      "title": "KNK 入門ガイドへようこそ",
+      "subtitle": "おすすめ曲、ステージ、魅力をまとめてチェック。"
+    },
+    "sections": {
+      "songs": "おすすめ曲",
+      "stages": "ステージ / バラエティ",
+      "charms": "グループの魅力"
+    }
+  },
+  "errors": {
+    "generic": "問題が発生しました。しばらくしてから再度お試しください。"
+  }
+}

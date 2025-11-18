@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "입덕 가이드",
+    "members": "멤버 소개",
+    "discography": "음반",
+    "variety": "예능 추천",
+    "about": "KNK 소개",
+    "contact": "문의하기"
+  },
+  "actions": {
+    "listenNow": "지금 듣기",
+    "viewMore": "더 보기"
+  },
+  "language": {
+    "label": "언어 선택",
+    "zh": "중국어",
+    "ko": "한국어",
+    "ja": "일본어",
+    "en": "영어"
+  },
+  "footer": {
+    "byline": "Inspirits of Gravity 제작",
+    "copyright": "© {year} KNK 팬사이트. All rights reserved."
+  },
+  "guide": {
+    "hero": {
+      "title": "KNK 입덕 가이드에 오신 것을 환영합니다",
+      "subtitle": "노래와 무대, 단체 매력을 한 번에 만나보세요."
+    },
+    "sections": {
+      "songs": "추천곡",
+      "stages": "무대 / 예능",
+      "charms": "단체 매력 포인트"
+    }
+  },
+  "errors": {
+    "generic": "문제가 발생했습니다. 잠시 후 다시 시도해주세요."
+  }
+}

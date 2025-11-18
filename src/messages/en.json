@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "Guide",
+    "members": "Members",
+    "discography": "Discography",
+    "variety": "Variety",
+    "about": "About KNK",
+    "contact": "Contact"
+  },
+  "actions": {
+    "listenNow": "Listen now",
+    "viewMore": "See more"
+  },
+  "language": {
+    "label": "Language",
+    "zh": "Traditional Chinese",
+    "ko": "Korean",
+    "ja": "Japanese",
+    "en": "English"
+  },
+  "footer": {
+    "byline": "Crafted by Inspirits of Gravity",
+    "copyright": "© {year} KNK fan site. All rights reserved."
+  },
+  "guide": {
+    "hero": {
+      "title": "Welcome to the KNK fan guide",
+      "subtitle": "Discover songs, performances, and charms to fall in love instantly."
+    },
+    "sections": {
+      "songs": "Recommended Songs",
+      "stages": "Stages / Variety",
+      "charms": "Group Charms"
+    }
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again."
+  }
+}

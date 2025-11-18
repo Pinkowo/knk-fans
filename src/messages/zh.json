@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "home": "推坑指南",
+    "members": "成員介紹",
+    "discography": "音樂作品",
+    "variety": "綜藝推薦",
+    "about": "關於 KNK",
+    "contact": "聯絡我們"
+  },
+  "actions": {
+    "listenNow": "立即收聽",
+    "viewMore": "查看更多"
+  },
+  "language": {
+    "label": "選擇語言",
+    "zh": "繁體中文",
+    "ko": "韓文",
+    "ja": "日文",
+    "en": "英文"
+  },
+  "footer": {
+    "byline": "由 Inspirits of Gravity 製作",
+    "copyright": "© {year} KNK 粉絲網站. 保留所有權利。"
+  },
+  "guide": {
+    "hero": {
+      "title": "歡迎來到 KNK 推坑指南",
+      "subtitle": "探索歌曲、舞台與團魂，一秒入坑。"
+    },
+    "sections": {
+      "songs": "推薦歌曲",
+      "stages": "舞台 / 綜藝",
+      "charms": "團體魅力亮點"
+    }
+  },
+  "errors": {
+    "generic": "發生錯誤，請稍後再試。"
+  }
+}

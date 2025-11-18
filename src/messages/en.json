@@ -33,6 +33,16 @@
       "charms": "Group Charms"
     }
   },
+  "variety": {
+    "title": "Variety",
+    "hero": {
+      "heading": "Must-watch stages & shows",
+      "subheading": "Relive Random Play Dance, radio live cuts, and more iconic moments."
+    },
+    "seriesLabel": "Series",
+    "episode": "EP",
+    "special": "Special"
+  },
   "discography": {
     "title": "Discography",
     "hero": {

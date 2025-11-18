@@ -33,6 +33,16 @@
       "charms": "グループの魅力"
     }
   },
+  "variety": {
+    "title": "バラエティ",
+    "hero": {
+      "heading": "名場面バラエティ特集",
+      "subheading": "ランダムダンスやラジオライブなど名シーンをまとめて視聴。"
+    },
+    "seriesLabel": "シリーズ",
+    "episode": "EP",
+    "special": "スペシャル"
+  },
   "discography": {
     "title": "ディスコグラフィー",
     "hero": {

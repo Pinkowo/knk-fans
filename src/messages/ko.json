@@ -33,6 +33,16 @@
       "charms": "단체 매력 포인트"
     }
   },
+  "variety": {
+    "title": "예능",
+    "hero": {
+      "heading": "명장면 예능 추천",
+      "subheading": "랜덤플레이댄스부터 라디오 라이브까지 한 번에 모아보기."
+    },
+    "seriesLabel": "시리즈",
+    "episode": "EP",
+    "special": "스페셜"
+  },
   "discography": {
     "title": "음반",
     "hero": {

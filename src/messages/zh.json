@@ -33,6 +33,16 @@
       "charms": "團體魅力亮點"
     }
   },
+  "variety": {
+    "title": "綜藝舞台",
+    "hero": {
+      "heading": "經典舞台與綜藝推薦",
+      "subheading": "隨時重溫 Random Play Dance、清唱片段與名場面。"
+    },
+    "seriesLabel": "系列",
+    "episode": "第",
+    "special": "特別篇"
+  },
   "discography": {
     "title": "音樂作品",
     "hero": {

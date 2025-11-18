@@ -163,16 +163,16 @@
 
 ### Notion 資料擷取 - 綜藝
 
-- [ ] T063 [P] 建立綜藝 Notion 查詢，在 `src/lib/notion/variety.ts` 實作 `fetchVarietySeries()` 與 `fetchEpisodes()` 函式
-- [ ] T064 [P] 定義綜藝類型，在 `src/types/variety.ts` 定義 `VarietySeries`、`Episode` 介面
-- [ ] T065 建立綜藝 API Route，在 `src/app/api/notion/variety/route.ts` 實作 GET 端點，revalidate 86400 秒（24 小時）
+- [x] T063 [P] 建立綜藝 Notion 查詢，在 `src/lib/notion/variety.ts` 實作 `fetchVarietySeries()` 與 `fetchEpisodes()` 函式
+- [x] T064 [P] 定義綜藝類型，在 `src/types/variety.ts` 定義 `VarietySeries`、`Episode` 介面
+- [x] T065 建立綜藝 API Route，在 `src/app/api/notion/variety/route.ts` 實作 GET 端點，revalidate 86400 秒（24 小時）
 
 ### 綜藝頁面實作
 
-- [ ] T066 建立綜藝頁面，在 `src/app/[locale]/variety/page.tsx` 擷取系列列表並渲染
-- [ ] T067 [P] 建立系列卡片元件，在 `src/components/variety/SeriesCard.tsx` 顯示系列名稱與描述，支援展開/收合集數列表（Client Component）
-- [ ] T068 [P] 建立集數項目元件，在 `src/components/variety/EpisodeItem.tsx` 顯示集數編號與標題，點擊載入 YouTube 播放器
-- [ ] T069 新增綜藝翻譯，在 `messages/*.json` 新增 `variety.*` 鍵值
+- [x] T066 建立綜藝頁面，在 `src/app/[locale]/variety/page.tsx` 擷取系列列表並渲染
+- [x] T067 [P] 建立系列卡片元件，在 `src/components/variety/SeriesCard.tsx` 顯示系列名稱與描述，支援展開/收合集數列表（Client Component）
+- [x] T068 [P] 建立集數項目元件，在 `src/components/variety/EpisodeItem.tsx` 顯示集數編號與標題，點擊載入 YouTube 播放器
+- [x] T069 新增綜藝翻譯，在 `messages/*.json` 新增 `variety.*` 鍵值
 
 **檢查點**: 綜藝系統完整運作，可獨立測試
 

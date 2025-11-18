@@ -33,6 +33,22 @@
       "charms": "グループの魅力"
     }
   },
+  "discography": {
+    "title": "ディスコグラフィー",
+    "hero": {
+      "heading": "KNK の音楽を再発見",
+      "subheading": "入門にぴったりな曲から B 面まで、アルバムごとにチェック。"
+    },
+    "trackLink": "『{title}』を再生",
+    "back": "一覧に戻る"
+  },
+  "lyrics": {
+    "language": "表示する言語",
+    "mode": "表示モード",
+    "lineMode": "行ごと",
+    "paragraphMode": "段落",
+    "empty": "歌詞がまだ登録されていません"
+  },
   "members": {
     "title": "メンバー紹介",
     "hero": {

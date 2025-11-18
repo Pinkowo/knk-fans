@@ -33,6 +33,22 @@
       "charms": "Group Charms"
     }
   },
+  "discography": {
+    "title": "Discography",
+    "hero": {
+      "heading": "Rediscover every KNK era",
+      "subheading": "From debut hits to hidden b-sides, explore each album in order."
+    },
+    "trackLink": "Play “{title}”",
+    "back": "Back to albums"
+  },
+  "lyrics": {
+    "language": "Lyrics language",
+    "mode": "Display mode",
+    "lineMode": "Line",
+    "paragraphMode": "Paragraph",
+    "empty": "Lyrics are not available yet"
+  },
   "members": {
     "title": "Members",
     "hero": {

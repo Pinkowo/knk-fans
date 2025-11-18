@@ -33,6 +33,22 @@
       "charms": "團體魅力亮點"
     }
   },
+  "discography": {
+    "title": "音樂作品",
+    "hero": {
+      "heading": "聆聽 KNK 的所有作品",
+      "subheading": "從入坑必聽到 B-side 精選，逐張專輯回味。"
+    },
+    "trackLink": "立即播放《{title}》",
+    "back": "返回作品列表"
+  },
+  "lyrics": {
+    "language": "歌詞語言",
+    "mode": "顯示模式",
+    "lineMode": "逐行",
+    "paragraphMode": "段落",
+    "empty": "目前沒有歌詞資料"
+  },
   "members": {
     "title": "成員名冊",
     "hero": {

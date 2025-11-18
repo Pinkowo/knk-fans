@@ -129,27 +129,27 @@
 
 ### Notion 資料擷取 - 音樂作品
 
-- [ ] T048 [P] 建立專輯 Notion 查詢，在 `src/lib/notion/albums.ts` 實作 `fetchAlbums()` 函式
-- [ ] T049 [P] 建立歌曲 Notion 查詢，在 `src/lib/notion/songs.ts` 實作 `fetchSongById()` 與 `fetchSongLyrics()` 函式
-- [ ] T050 [P] 定義音樂類型，在 `src/types/music.ts` 定義 `Album`、`Song`、`Lyrics` 介面
-- [ ] T051 建立專輯 API Route，在 `src/app/api/notion/discography/route.ts` 實作 GET 端點，revalidate 604800 秒（7 天）
-- [ ] T052 建立歌曲 API Route，在 `src/app/api/notion/songs/[id]/route.ts` 實作 GET 端點（含歌詞），revalidate 600 秒（10 分鐘）
+- [x] T048 [P] 建立專輯 Notion 查詢，在 `src/lib/notion/albums.ts` 實作 `fetchAlbums()` 函式
+- [x] T049 [P] 建立歌曲 Notion 查詢，在 `src/lib/notion/songs.ts` 實作 `fetchSongById()` 與 `fetchSongLyrics()` 函式
+- [x] T050 [P] 定義音樂類型，在 `src/types/music.ts` 定義 `Album`、`Song`、`Lyrics` 介面
+- [x] T051 建立專輯 API Route，在 `src/app/api/notion/discography/route.ts` 實作 GET 端點，revalidate 604800 秒（7 天）
+- [x] T052 建立歌曲 API Route，在 `src/app/api/notion/songs/[id]/route.ts` 實作 GET 端點（含歌詞），revalidate 600 秒（10 分鐘）
 
 ### 音樂作品頁面實作
 
-- [ ] T053 建立音樂作品列表頁，在 `src/app/[locale]/discography/page.tsx` 擷取專輯列表，顯示封面、標題、發行日期
-- [ ] T054 [P] 建立專輯卡片元件，在 `src/components/discography/AlbumCard.tsx` 顯示專輯資訊與曲目列表
-- [ ] T055 建立歌曲詳細頁，在 `src/app/[locale]/discography/[id]/page.tsx` 擷取歌曲資料，嵌入 YouTube 播放器，傳遞歌詞資料
-- [ ] T056 建立 YouTube 嵌入元件，在 `src/components/music/YouTubeEmbed.tsx` 實作 iframe 嵌入，支援 videoId 參數
+- [x] T053 建立音樂作品列表頁，在 `src/app/[locale]/discography/page.tsx` 擷取專輯列表，顯示封面、標題、發行日期
+- [x] T054 [P] 建立專輯卡片元件，在 `src/components/discography/AlbumCard.tsx` 顯示專輯資訊與曲目列表
+- [x] T055 建立歌曲詳細頁，在 `src/app/[locale]/discography/[id]/page.tsx` 擷取歌曲資料，嵌入 YouTube 播放器，傳遞歌詞資料
+- [x] T056 建立 YouTube 嵌入元件，在 `src/components/music/YouTubeEmbed.tsx` 實作 iframe 嵌入，支援 videoId 參數
 
 ### 歌詞顯示系統
 
-- [ ] T057 建立歌詞工具函式，在 `src/lib/utils/lyrics.ts` 實作歌詞格式化邏輯（逐行交錯 vs 整段模式）
-- [ ] T058 建立歌詞顯示元件，在 `src/components/lyrics/LyricsDisplay.tsx` 實作 Client Component，使用 `useMemo` 最佳化渲染
-- [ ] T059 建立歌詞控制元件，在 `src/components/lyrics/LyricsControls.tsx` 實作語言多選核取方塊與顯示模式切換按鈕（Client Component）
-- [ ] T060 實作歌詞預設邏輯，在 `LyricsDisplay.tsx` 確保無語言選擇時自動顯示韓文（符合 FR-021）
-- [ ] T061 新增音樂與歌詞翻譯，在 `messages/*.json` 新增 `discography.*` 與 `lyrics.*` 鍵值
-- [ ] T062 最佳化歌詞效能，在 `LyricsDisplay.tsx` 使用 `React.memo` 與 CSS `contain` 屬性
+- [x] T057 建立歌詞工具函式，在 `src/lib/utils/lyrics.ts` 實作歌詞格式化邏輯（逐行交錯 vs 整段模式）
+- [x] T058 建立歌詞顯示元件，在 `src/components/lyrics/LyricsDisplay.tsx` 實作 Client Component，使用 `useMemo` 最佳化渲染
+- [x] T059 建立歌詞控制元件，在 `src/components/lyrics/LyricsControls.tsx` 實作語言多選核取方塊與顯示模式切換按鈕（Client Component）
+- [x] T060 實作歌詞預設邏輯，在 `LyricsDisplay.tsx` 確保無語言選擇時自動顯示韓文（符合 FR-021）
+- [x] T061 新增音樂與歌詞翻譯，在 `messages/*.json` 新增 `discography.*` 與 `lyrics.*` 鍵值
+- [x] T062 最佳化歌詞效能，在 `LyricsDisplay.tsx` 使用 `React.memo` 與 CSS `contain` 屬性
 
 **檢查點**: 音樂作品與歌詞系統完整運作，歌詞切換 < 1 秒
 

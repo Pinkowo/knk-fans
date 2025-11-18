@@ -271,8 +271,8 @@
 
 ### 關於我頁面實作
 
-- [ ] T099 建立關於我頁面，在 `src/app/[locale]/about-me/page.tsx` 顯示創作者自我介紹與服務說明
-- [ ] T100 新增關於我翻譯，在 `messages/*.json` 新增 `aboutMe.*` 鍵值（包含創作者介紹、服務說明、聯絡資訊）
+- [x] T099 建立關於我頁面，在 `src/app/[locale]/about-me/page.tsx` 顯示創作者自我介紹與服務說明
+- [x] T100 新增關於我翻譯，在 `messages/*.json` 新增 `aboutMe.*` 鍵值（包含創作者介紹、服務說明、聯絡資訊）
 
 **檢查點**: 關於我頁面完整顯示
 

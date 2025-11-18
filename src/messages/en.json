@@ -7,6 +7,29 @@
     "about": "About KNK",
     "contact": "Contact"
   },
+  "aboutMe": {
+    "title": "About Me",
+    "heading": "Hi, I'm the person behind this KNK fan project",
+    "subheading": "A homebase for the Inspirits of Gravity community, in four languages.",
+    "sections": {
+      "story": {
+        "title": "Story",
+        "body": "I’ve followed KNK since their debut in 2016. Every comeback reminded me how hard it can be for new fans to catch up, so I started cataloging performances, variety moments, and lyrics in one place."
+      },
+      "services": {
+        "title": "What I do",
+        "items": {
+          "showcase": "Compile comeback timelines and highlight stages",
+          "community": "Collaborate with international fans to keep info accurate",
+          "localization": "Provide Chinese/Korean/Japanese/English translations"
+        }
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "Want to contribute data, report an issue, or work together? Email or DM me anytime."
+      }
+    }
+  },
   "player": {
     "open": "Open player",
     "nowPlaying": "Now Playing",

@@ -7,6 +7,29 @@
     "about": "關於 KNK",
     "contact": "聯絡我們"
   },
+  "aboutMe": {
+    "title": "關於我",
+    "heading": "嗨，我是 KNK 粉絲站的創辦人",
+    "subheading": "這裡是我為台灣 Inspirits of Gravity 打造的推坑樂園。",
+    "sections": {
+      "story": {
+        "title": "我們的故事",
+        "body": "從 2016 年開始跟著 KNK 走過每一次回歸與成員變動，我希望建立一個讓新老粉絲都能重溫舞台、了解團魂的地方。網站內容包含推坑指南、綜藝整理、歌詞翻譯與互動小寵物。"
+      },
+      "services": {
+        "title": "我們提供",
+        "items": {
+          "showcase": "每次回歸與活動的整理、推薦舞台連結",
+          "community": "與各地粉絲合作維護可靠的資訊來源",
+          "localization": "支援中韓英日翻譯，降低入坑門檻"
+        }
+      },
+      "contact": {
+        "title": "聯絡方式",
+        "body": "如果你想貢獻資料、提供建議或合作，歡迎寫信或透過 IG 私訊我。"
+      }
+    }
+  },
   "player": {
     "open": "播放音樂",
     "nowPlaying": "現在播放",

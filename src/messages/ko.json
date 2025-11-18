@@ -12,6 +12,15 @@
     "heading": "KNK 를 더 가까이",
     "subheading": "공식 SNS 와 팬 커뮤니티를 한 눈에 확인하세요."
   },
+  "pets": {
+    "show": "펫 설정",
+    "hide": "설정 숨기기",
+    "globalToggle": "사이트 펫",
+    "enabled": "켜짐",
+    "disabled": "꺼짐",
+    "characters": "캐릭터",
+    "interactions": "클릭 반응"
+  },
   "actions": {
     "listenNow": "지금 듣기",
     "viewMore": "더 보기"

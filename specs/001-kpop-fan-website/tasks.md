@@ -223,22 +223,20 @@
 
 **獨立測試**: 瀏覽任何頁面，驗證小寵物動畫流暢（≥30 FPS），開啟設定可切換開關，設定跨頁面與工作階段持續
 
-### 精靈圖準備
-
-- [ ] T080 準備精靈圖資源，將 4x4 精靈圖（4 個方向 × 4 幀）放置於 `public/sprites/pets.png`，最佳化 PNG 檔案大小
+- [x] T080 準備精靈圖資源，將 4x4 精靈圖（4 個方向 × 4 幀）放置於 `public/sprites/pets.png`，最佳化 PNG 檔案大小
 
 ### 小寵物系統實作
 
-- [ ] T081 建立小寵物設定 Hook，在 `src/lib/hooks/usePetSettings.ts` 實作設定讀取/寫入 localStorage，定義預設值
-- [ ] T082 定義小寵物類型，在 `src/types/pets.ts` 定義 `Pet`、`PetSettings` 介面
-- [ ] T083 建立小寵物元件，在 `src/components/pets/SitePet.tsx` 使用 Canvas API 與 `requestAnimationFrame` 實作動畫（Client Component）
-- [ ] T084 實作小寵物物理，在 `SitePet.tsx` 實作邊界碰撞偵測、速度計算、方向更新
-- [ ] T085 實作小寵物渲染，在 `SitePet.tsx` 實作精靈圖切割與繪製邏輯，設定 8 FPS 精靈動畫
-- [ ] T086 建立小寵物設定元件，在 `src/components/pets/PetSettings.tsx` 實作設定面板，包含全域開關、個別角色開關、互動開關（Client Component）
-- [ ] T087 整合小寵物到布局，在 `src/app/[locale]/layout.tsx` 新增 `<SitePet>` 元件，確保在 z-index 最上層且 `pointer-events-none`
-- [ ] T088 實作點擊互動，在 `SitePet.tsx` 新增 Canvas onClick 事件處理，觸發小寵物動畫回應
-- [ ] T089 新增小寵物翻譯，在 `messages/*.json` 新增 `pets.*` 鍵值
-- [ ] T090 最佳化小寵物效能，驗證 FPS ≥ 30，CPU 使用 < 10%，記憶體 < 50MB
+- [x] T081 建立小寵物設定 Hook，在 `src/lib/hooks/usePetSettings.ts` 實作設定讀取/寫入 localStorage，定義預設值
+- [x] T082 定義小寵物類型，在 `src/types/pets.ts` 定義 `Pet`、`PetSettings` 介面
+- [x] T083 建立小寵物元件，在 `src/components/pets/SitePet.tsx` 使用 Canvas API 與 `requestAnimationFrame` 實作動畫（Client Component）
+- [x] T084 實作小寵物物理，在 `SitePet.tsx` 實作邊界碰撞偵測、速度計算、方向更新
+- [x] T085 實作小寵物渲染，在 `SitePet.tsx` 實作精靈圖切割與繪製邏輯，設定 8 FPS 精靈動畫
+- [x] T086 建立小寵物設定元件，在 `src/components/pets/PetSettings.tsx` 實作設定面板，包含全域開關、個別角色開關、互動開關（Client Component）
+- [x] T087 整合小寵物到布局，在 `src/app/[locale]/layout.tsx` 新增 `<SitePet>` 元件，確保在 z-index 最上層且 `pointer-events-none`
+- [x] T088 實作點擊互動，在 `SitePet.tsx` 新增 Canvas onClick 事件處理，觸發小寵物動畫回應
+- [x] T089 新增小寵物翻譯，在 `messages/*.json` 新增 `pets.*` 鍵值
+- [x] T090 最佳化小寵物效能，驗證 FPS ≥ 30，CPU 使用 < 10%，記憶體 < 50MB
 
 **檢查點**: 小寵物系統完整運作，效能達標
 

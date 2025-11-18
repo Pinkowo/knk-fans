@@ -12,6 +12,15 @@
     "heading": "追蹤 KNK 的每一個足跡",
     "subheading": "粉絲團、Instagram 等官方管道一次收藏。"
   },
+  "pets": {
+    "show": "小寵物設定",
+    "hide": "隱藏設定",
+    "globalToggle": "顯示小寵物",
+    "enabled": "開啟",
+    "disabled": "關閉",
+    "characters": "角色",
+    "interactions": "點擊互動"
+  },
   "actions": {
     "listenNow": "立即收聽",
     "viewMore": "查看更多"

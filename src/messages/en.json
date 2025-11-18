@@ -12,6 +12,15 @@
     "heading": "Follow KNK everywhere",
     "subheading": "Official socials and fan hubs gathered in one place."
   },
+  "pets": {
+    "show": "Show pet controls",
+    "hide": "Hide controls",
+    "globalToggle": "Site pets",
+    "enabled": "On",
+    "disabled": "Off",
+    "characters": "Characters",
+    "interactions": "Click interactions"
+  },
   "actions": {
     "listenNow": "Listen now",
     "viewMore": "See more"

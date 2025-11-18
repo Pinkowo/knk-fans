@@ -12,6 +12,15 @@
     "heading": "KNK の最新情報をフォロー",
     "subheading": "公式 SNS とファンコミュニティをまとめてチェック。"
   },
+  "pets": {
+    "show": "ペット設定",
+    "hide": "設定を閉じる",
+    "globalToggle": "サイトペット",
+    "enabled": "オン",
+    "disabled": "オフ",
+    "characters": "キャラクター",
+    "interactions": "クリック反応"
+  },
   "actions": {
     "listenNow": "今すぐ聴く",
     "viewMore": "もっと見る"

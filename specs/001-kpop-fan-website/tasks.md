@@ -187,9 +187,9 @@
 ### 語言持久化
 
 - [x] T070 實作語言偏好記憶，在 `LanguageSelector.tsx` 新增 localStorage 存儲邏輯，使用 `useLocalStorage` Hook
-- [ ] T071 實作 Server 端語言偵測，在 `middleware.ts` 讀取 cookie 或 Accept-Language header，設定預設語言為中文（zh）
-- [ ] T072 測試語言切換流程，驗證所有頁面的 UI 文字、導航標籤、區塊標題正確翻譯
-- [ ] T073 新增缺失翻譯，補全 `messages/*.json` 所有頁面的翻譯鍵值
+- [x] T071 實作 Server 端語言偵測，在 `middleware.ts` 讀取 cookie 或 Accept-Language header，設定預設語言為中文（zh）
+- [x] T072 測試語言切換流程，驗證所有頁面的 UI 文字、導航標籤、區塊標題正確翻譯
+- [x] T073 新增缺失翻譯，補全 `messages/*.json` 所有頁面的翻譯鍵值
 
 **檢查點**: 語言切換完整運作，偏好持久化
 

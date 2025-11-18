@@ -7,6 +7,12 @@
     "about": "KNK 소개",
     "contact": "문의하기"
   },
+  "about": {
+    "title": "그룹 소개",
+    "debut": "데뷔일",
+    "members": "{count}명의 멤버",
+    "achievements": "주요 활동"
+  },
   "aboutMe": {
     "title": "About Me",
     "heading": "안녕하세요, KNK 팬사이트 운영자입니다",

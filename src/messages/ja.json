@@ -7,6 +7,12 @@
     "about": "KNK について",
     "contact": "お問い合わせ"
   },
+  "about": {
+    "title": "グループ紹介",
+    "debut": "デビュー日",
+    "members": "{count} 名のメンバー",
+    "achievements": "主な実績"
+  },
   "aboutMe": {
     "title": "運営について",
     "heading": "こんにちは、KNK ファンサイトの管理人です",

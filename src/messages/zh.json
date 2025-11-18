@@ -7,6 +7,12 @@
     "about": "關於 KNK",
     "contact": "聯絡我們"
   },
+  "about": {
+    "title": "團體介紹",
+    "debut": "出道日期",
+    "members": "{count} 位成員",
+    "achievements": "重要里程碑"
+  },
   "aboutMe": {
     "title": "關於我",
     "heading": "嗨，我是 KNK 粉絲站的創辦人",

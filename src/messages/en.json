@@ -7,6 +7,12 @@
     "about": "About KNK",
     "contact": "Contact"
   },
+  "about": {
+    "title": "About KNK",
+    "debut": "Debut date",
+    "members": "{count} members",
+    "achievements": "Milestones"
+  },
   "aboutMe": {
     "title": "About Me",
     "heading": "Hi, I'm the person behind this KNK fan project",

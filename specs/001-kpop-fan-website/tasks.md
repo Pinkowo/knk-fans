@@ -284,16 +284,11 @@
 
 **獨立測試**: 造訪 `/zh/about`，驗證團體介紹內容顯示
 
-### Notion 資料擷取 - 團體介紹
-
-- [ ] T101 [P] 建立團體介紹 Notion 查詢，在 `src/lib/notion/about.ts` 實作 `fetchGroupInfo()` 函式
-- [ ] T102 [P] 定義團體類型，在 `src/types/group.ts` 定義 `GroupInfo` 介面
-- [ ] T103 建立團體介紹 API Route，在 `src/app/api/notion/about/route.ts` 實作 GET 端點，revalidate 604800 秒（7 天）
-
-### 團體介紹頁面實作
-
-- [ ] T104 建立團體介紹頁面，在 `src/app/[locale]/about/page.tsx` 擷取團體資料並渲染
-- [ ] T105 新增團體介紹翻譯，在 `messages/*.json` 新增 `about.*` 鍵值
+- [x] T101 [P] 建立團體介紹 Notion 查詢，在 `src/lib/notion/about.ts` 實作 `fetchGroupInfo()` 函式
+- [x] T102 [P] 定義團體類型，在 `src/types/group.ts` 定義 `GroupInfo` 介面
+- [x] T103 建立團體介紹 API Route，在 `src/app/api/notion/about/route.ts` 實作 GET 端點，revalidate 604800 秒（7 天）
+- [x] T104 建立團體介紹頁面，在 `src/app/[locale]/about/page.tsx` 擷取團體資料並渲染
+- [x] T105 新增團體介紹翻譯，在 `messages/*.json` 新增 `about.*` 鍵值
 
 **檢查點**: 團體介紹頁面完整顯示
 

@@ -7,6 +7,15 @@
     "about": "About KNK",
     "contact": "Contact"
   },
+  "player": {
+    "open": "Open player",
+    "nowPlaying": "Now Playing",
+    "queueEmpty": "No track selected yet",
+    "play": "Play",
+    "pause": "Pause",
+    "collapse": "Collapse",
+    "noVideo": "No video to play"
+  },
   "links": {
     "title": "Community",
     "heading": "Follow KNK everywhere",

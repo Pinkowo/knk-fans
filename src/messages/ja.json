@@ -7,6 +7,15 @@
     "about": "KNK について",
     "contact": "お問い合わせ"
   },
+  "player": {
+    "open": "音楽を再生",
+    "nowPlaying": "Now Playing",
+    "queueEmpty": "曲が選択されていません",
+    "play": "再生",
+    "pause": "一時停止",
+    "collapse": "閉じる",
+    "noVideo": "再生できる動画がありません"
+  },
   "links": {
     "title": "リンク",
     "heading": "KNK の最新情報をフォロー",

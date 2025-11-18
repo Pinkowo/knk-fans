@@ -7,6 +7,15 @@
     "about": "關於 KNK",
     "contact": "聯絡我們"
   },
+  "player": {
+    "open": "播放音樂",
+    "nowPlaying": "現在播放",
+    "queueEmpty": "尚未選擇歌曲",
+    "play": "播放",
+    "pause": "暫停",
+    "collapse": "收起",
+    "noVideo": "目前沒有可播放的影片"
+  },
   "links": {
     "title": "社群連結",
     "heading": "追蹤 KNK 的每一個足跡",

@@ -7,6 +7,15 @@
     "about": "KNK 소개",
     "contact": "문의하기"
   },
+  "player": {
+    "open": "음악 재생",
+    "nowPlaying": "Now Playing",
+    "queueEmpty": "재생 대기열이 비어 있습니다",
+    "play": "재생",
+    "pause": "일시정지",
+    "collapse": "닫기",
+    "noVideo": "재생 가능한 영상이 없습니다"
+  },
   "links": {
     "title": "공식 링크",
     "heading": "KNK 를 더 가까이",

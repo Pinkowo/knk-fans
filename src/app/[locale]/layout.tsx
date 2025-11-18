@@ -7,7 +7,9 @@ import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import PetSettingsPanel from "@/components/pets/PetSettings";
 import SitePet from "@/components/pets/SitePet";
+import MusicPlayer from "@/components/player/MusicPlayer";
 import { defaultLocale, locales, type AppLocale } from "@/i18n";
+import { PlayerProvider } from "@/lib/context/PlayerContext";
 
 type LayoutParams = { locale: string };
 
@@ -53,15 +55,18 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={resolvedLocale} messages={messages} timeZone="Asia/Taipei">
-      <div className="flex min-h-screen flex-col bg-surface text白">
-        <Header locale={resolvedLocale} />
-        <main className="flex-1 bg-gradient-to-b from-surface via-surface-muted to-surface">
-          {children}
-        </main>
-        <Footer />
-        <SitePet />
-        <PetSettingsPanel />
-      </div>
+      <PlayerProvider>
+        <div className="flex min-h-screen flex-col bg-surface text-white">
+          <Header locale={resolvedLocale} />
+          <main className="flex-1 bg-gradient-to-b from-surface via-surface-muted to-surface">
+            {children}
+          </main>
+          <Footer />
+          <SitePet />
+          <PetSettingsPanel />
+          <MusicPlayer />
+        </div>
+      </PlayerProvider>
     </NextIntlClientProvider>
   );
 }

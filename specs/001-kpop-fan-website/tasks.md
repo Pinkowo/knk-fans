@@ -250,14 +250,14 @@
 
 ### 音樂播放器實作
 
-- [ ] T091 定義播放器類型，在 `src/types/player.ts` 定義 `PlayerState`、`Track` 介面
-- [ ] T092 建立播放器 Context，在 `src/lib/context/PlayerContext.tsx` 實作全域播放器狀態管理（Client Component）
-- [ ] T093 建立音樂播放器元件，在 `src/components/player/MusicPlayer.tsx` 實作浮動播放器 UI，支援最小化/展開
-- [ ] T094 實作 YouTube 播放邏輯，在 `MusicPlayer.tsx` 使用 YouTube iframe API，處理播放事件
-- [ ] T095 實作播放控制，在 `MusicPlayer.tsx` 實作播放、暫停、跳過、選歌功能
-- [ ] T096 實作播放狀態持久化，使用 localStorage 儲存當前播放歌曲與播放狀態
-- [ ] T097 整合播放器到布局，在 `src/app/[locale]/layout.tsx` 包裹 `<PlayerContext.Provider>` 並新增 `<MusicPlayer>` 元件
-- [ ] T098 新增播放器翻譯，在 `messages/*.json` 新增 `player.*` 鍵值
+- [x] T091 定義播放器類型，在 `src/types/player.ts` 定義 `PlayerState`、`Track` 介面
+- [x] T092 建立播放器 Context，在 `src/lib/context/PlayerContext.tsx` 實作全域播放器狀態管理（Client Component）
+- [x] T093 建立音樂播放器元件，在 `src/components/player/MusicPlayer.tsx` 實作浮動播放器 UI，支援最小化/展開
+- [x] T094 實作 YouTube 播放邏輯，在 `MusicPlayer.tsx` 使用 YouTube iframe API，處理播放事件
+- [x] T095 實作播放控制，在 `MusicPlayer.tsx` 實作播放、暫停、跳過、選歌功能
+- [x] T096 實作播放狀態持久化，使用 localStorage 儲存當前播放歌曲與播放狀態
+- [x] T097 整合播放器到布局，在 `src/app/[locale]/layout.tsx` 包裹 `<PlayerContext.Provider>` 並新增 `<MusicPlayer>` 元件
+- [x] T098 新增播放器翻譯，在 `messages/*.json` 新增 `player.*` 鍵值
 
 **檢查點**: 音樂播放器完整運作，跨頁面播放不中斷
 

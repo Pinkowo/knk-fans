@@ -33,6 +33,25 @@
       "charms": "團體魅力亮點"
     }
   },
+  "members": {
+    "title": "成員名冊",
+    "hero": {
+      "heading": "認識 KNK 的每一位成員",
+      "subheading": "現任與已退團成員都在這裡，點擊卡片即可查看詳細故事。"
+    },
+    "current": "現任成員",
+    "former": "已退團成員",
+    "countLabel": "{{count}} 位成員",
+    "empty": "暫時沒有資料",
+    "close": "關閉",
+    "status": {
+      "current": "現任",
+      "former": "已退團"
+    },
+    "modal": {
+      "titleSuffix": "成員介紹"
+    }
+  },
   "errors": {
     "generic": "發生錯誤，請稍後再試。"
   }

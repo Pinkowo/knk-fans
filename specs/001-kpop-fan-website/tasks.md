@@ -88,8 +88,8 @@
 - [x] T033 [P] 建立推薦舞台/綜藝元件，在 `src/components/guide/RecommendedShows.tsx` 顯示推薦舞台與綜藝列表，包含外部連結
 - [x] T034 [P] 建立團體魅力點元件，在 `src/components/guide/GroupCharms.tsx` 以卡片形式顯示團體特色（身高、聲線、團魂等）
 - [x] T035 新增推坑指南翻譯，在 `messages/zh.json`、`ko.json`、`ja.json`、`en.json` 新增 `guide.*` 鍵值（標題、區塊名稱）
-- [ ] T036 最佳化首頁圖片，使用 `next/image` 元件，設定適當 `sizes` 與 `placeholder="blur"`，在所有推坑指南元件中套用
-- [ ] T037 建立首頁骨架屏，在 `src/app/[locale]/loading.tsx` 實作載入狀態 UI
+- [x] T036 最佳化首頁圖片，使用 `next/image` 元件，設定適當 `sizes` 與 `placeholder="blur"`，在所有推坑指南元件中套用
+- [x] T037 建立首頁骨架屏，在 `src/app/[locale]/loading.tsx` 實作載入狀態 UI
 
 **檢查點**: 推坑指南首頁完整可用，可獨立測試並展示
 
@@ -103,19 +103,19 @@
 
 ### Notion 資料擷取 - 成員
 
-- [ ] T038 [P] 建立成員 Notion 查詢，在 `src/lib/notion/members.ts` 實作 `fetchMembers()` 與 `fetchMemberById()` 函式
-- [ ] T039 [P] 定義成員類型，在 `src/types/member.ts` 定義 `Member` 介面（包含 id、name、photo、bio、status 等欄位）
-- [ ] T040 建立成員 API Routes，在 `src/app/api/notion/members/route.ts` 實作 GET 端點（列表），revalidate 86400 秒（24 小時）
-- [ ] T041 建立單一成員 API Route，在 `src/app/api/notion/members/[id]/route.ts` 實作 GET 端點（單筆），revalidate 86400 秒
+- [x] T038 [P] 建立成員 Notion 查詢，在 `src/lib/notion/members.ts` 實作 `fetchMembers()` 與 `fetchMemberById()` 函式
+- [x] T039 [P] 定義成員類型，在 `src/types/member.ts` 定義 `Member` 介面（包含 id、name、photo、bio、status 等欄位）
+- [x] T040 建立成員 API Routes，在 `src/app/api/notion/members/route.ts` 實作 GET 端點（列表），revalidate 86400 秒（24 小時）
+- [x] T041 建立單一成員 API Route，在 `src/app/api/notion/members/[id]/route.ts` 實作 GET 端點（單筆），revalidate 86400 秒
 
 ### 成員頁面實作
 
-- [ ] T042 建立成員列表頁面，在 `src/app/[locale]/members/page.tsx` 擷取成員資料，分為現任與已退團兩個區塊
-- [ ] T043 [P] 建立成員卡片元件，在 `src/components/members/MemberCard.tsx` 顯示照片、姓名，支援 onClick 事件
-- [ ] T044 建立成員彈窗元件，在 `src/components/members/MemberModal.tsx` 使用 Framer Motion 實作動畫彈窗，顯示完整成員資訊（Client Component）
-- [ ] T045 新增成員翻譯，在 `messages/*.json` 新增 `members.*` 鍵值（現任成員、已退團成員、關閉按鈕）
-- [ ] T046 最佳化成員照片，在 `MemberCard.tsx` 與 `MemberModal.tsx` 使用 `next/image` 元件
-- [ ] T047 建立成員頁面骨架屏，在 `src/app/[locale]/members/loading.tsx` 實作卡片骨架
+- [x] T042 建立成員列表頁面，在 `src/app/[locale]/members/page.tsx` 擷取成員資料，分為現任與已退團兩個區塊
+- [x] T043 [P] 建立成員卡片元件，在 `src/components/members/MemberCard.tsx` 顯示照片、姓名，支援 onClick 事件
+- [x] T044 建立成員彈窗元件，在 `src/components/members/MemberModal.tsx` 使用 Framer Motion 實作動畫彈窗，顯示完整成員資訊（Client Component）
+- [x] T045 新增成員翻譯，在 `messages/*.json` 新增 `members.*` 鍵值（現任成員、已退團成員、關閉按鈕）
+- [x] T046 最佳化成員照片，在 `MemberCard.tsx` 與 `MemberModal.tsx` 使用 `next/image` 元件
+- [x] T047 建立成員頁面骨架屏，在 `src/app/[locale]/members/loading.tsx` 實作卡片骨架
 
 **檢查點**: 成員列表與彈窗完整運作，可獨立測試
 

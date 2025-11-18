@@ -33,6 +33,25 @@
       "charms": "グループの魅力"
     }
   },
+  "members": {
+    "title": "メンバー紹介",
+    "hero": {
+      "heading": "KNK のメンバーをもっと深く知ろう",
+      "subheading": "現役メンバーと卒業メンバーのストーリーをカードからチェックできます。"
+    },
+    "current": "現役メンバー",
+    "former": "卒業メンバー",
+    "countLabel": "{{count}} 人",
+    "empty": "表示できるメンバーがいません",
+    "close": "閉じる",
+    "status": {
+      "current": "現役",
+      "former": "卒業"
+    },
+    "modal": {
+      "titleSuffix": "プロフィール"
+    }
+  },
   "errors": {
     "generic": "問題が発生しました。しばらくしてから再度お試しください。"
   }

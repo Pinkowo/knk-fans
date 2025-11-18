@@ -33,6 +33,25 @@
       "charms": "단체 매력 포인트"
     }
   },
+  "members": {
+    "title": "멤버 소개",
+    "hero": {
+      "heading": "KNK 멤버들을 한 곳에서 확인하세요",
+      "subheading": "현역과 전 멤버의 이야기까지, 카드를 눌러 자세히 살펴보세요."
+    },
+    "current": "현역 멤버",
+    "former": "전 멤버",
+    "countLabel": "총 {{count}}명",
+    "empty": "표시할 멤버가 없습니다",
+    "close": "닫기",
+    "status": {
+      "current": "현역",
+      "former": "전 멤버"
+    },
+    "modal": {
+      "titleSuffix": "프로필"
+    }
+  },
   "errors": {
     "generic": "문제가 발생했습니다. 잠시 후 다시 시도해주세요."
   }

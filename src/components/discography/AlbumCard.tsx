@@ -7,9 +7,10 @@ interface AlbumCardProps {
   album: Album;
   locale: string;
   trackLinkLabel: (title: string) => string;
+  priority?: boolean;
 }
 
-export default function AlbumCard({ album, locale, trackLinkLabel }: AlbumCardProps) {
+export default function AlbumCard({ album, locale, trackLinkLabel, priority = false }: AlbumCardProps) {
 
   return (
     <article className="flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5">
@@ -22,6 +23,7 @@ export default function AlbumCard({ album, locale, trackLinkLabel }: AlbumCardPr
           alt={album.title}
           fill
           sizes="(min-width: 1024px) 33vw, (min-width: 768px) 45vw, 100vw"
+          priority={priority}
           className="object-cover"
           placeholder="blur"
           blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMScgaGVpZ2h0PScxJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHdpZHRoPScxJyBoZWlnaHQ9JzEnIGZpbGw9JyMwZTIzMzYnIC8+PC9zdmc+"

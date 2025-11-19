@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 import { fetchSongById } from "@/lib/notion/songs";
 
-export const revalidate = 60 * 10; // 10 minutes
+export const revalidate = 600; // 10 minutes
 
 interface RouteContext {
-  params: Promise<{ id: string }> | { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(_request: Request, context: RouteContext) {

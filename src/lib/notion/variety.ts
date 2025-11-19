@@ -3,6 +3,7 @@ import { getFirstFileUrl, getRichTextValue, getTitleValue, sanitizeUrl } from "@
 import type {
   NotionFilesProperty,
   NotionPage,
+  NotionQueryResponse,
   NotionRichTextProperty,
   NotionTitleProperty,
   NotionUrlProperty,
@@ -74,7 +75,7 @@ export async function fetchVarietySeries(): Promise<VarietySeries[]> {
   }
 
   try {
-    const response = await notionClient.queryDatabase({
+    const response = await notionClient.queryDatabase<NotionQueryResponse<SeriesProperties>>({
       database_id: databaseId,
       sorts: [{ property: "Order", direction: "ascending" }],
     });
@@ -82,7 +83,7 @@ export async function fetchVarietySeries(): Promise<VarietySeries[]> {
     return response.results
       .map((page) => {
         try {
-          return mapSeries(page as NotionPage<SeriesProperties>);
+          return mapSeries(page);
         } catch (error) {
           console.warn("Failed to map variety series", error);
           return null;

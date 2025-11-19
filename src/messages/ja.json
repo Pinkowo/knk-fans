@@ -5,7 +5,8 @@
     "discography": "ディスコグラフィー",
     "variety": "バラエティ",
     "about": "KNK について",
-    "contact": "お問い合わせ"
+    "contact": "お問い合わせ",
+    "ariaMain": "メインナビゲーション"
   },
   "about": {
     "title": "グループ紹介",
@@ -70,6 +71,9 @@
     "ja": "日本語",
     "en": "英語"
   },
+  "layout": {
+    "skip": "メインコンテンツへスキップ"
+  },
   "footer": {
     "byline": "Inspirits of Gravity 制作",
     "copyright": "© {year} KNK ファンサイト. All rights reserved."
@@ -119,7 +123,7 @@
     },
     "current": "現役メンバー",
     "former": "卒業メンバー",
-    "countLabel": "{{count}} 人",
+    "countLabel": "{count} 人",
     "empty": "表示できるメンバーがいません",
     "close": "閉じる",
     "status": {
@@ -132,5 +136,15 @@
   },
   "errors": {
     "generic": "問題が発生しました。しばらくしてから再度お試しください。"
+  },
+  "errorPage": {
+    "title": "一時的なエラーが発生しました",
+    "subtitle": "少し時間をおいて再度お試しください。",
+    "retry": "再読み込み"
+  },
+  "notFound": {
+    "title": "ページが見つかりません",
+    "subtitle": "URL を確かめるかトップページに戻ってください。",
+    "back": "トップへ戻る"
   }
 }

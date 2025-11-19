@@ -3,6 +3,7 @@ import { getRichTextValue, getTitleValue, sanitizeUrl } from "@/lib/notion/utils
 import type { LyricsContent, SongDetail } from "@/types/music";
 import type {
   NotionPage,
+  NotionQueryResponse,
   NotionRichTextProperty,
   NotionSelectProperty,
   NotionTitleProperty,
@@ -69,7 +70,7 @@ export async function fetchSongById(id: string): Promise<SongDetail | null> {
   }
 
   try {
-    const response = await notionClient.queryDatabase({
+    const response = await notionClient.queryDatabase<NotionQueryResponse<SongProperties>>({
       database_id: databaseId,
       filter: {
         property: "Slug",
@@ -81,7 +82,7 @@ export async function fetchSongById(id: string): Promise<SongDetail | null> {
       return fallbackSongs[id] ?? null;
     }
 
-    return mapSong(response.results[0] as NotionPage<SongProperties>);
+    return mapSong(response.results[0]);
   } catch (error) {
     console.error("Failed to fetch song", error);
     return fallbackSongs[id] ?? null;

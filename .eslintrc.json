@@ -11,7 +11,8 @@
     "react",
     "react-hooks",
     "jsx-a11y",
-    "import"
+    "import",
+    "@next/next"
   ],
   "extends": [
     "eslint:recommended",
@@ -67,6 +68,8 @@
         "varsIgnorePattern": "^_"
       }
     ],
+    "@next/next/no-img-element": "error",
+    "@next/next/no-css-tags": "error",
     "import/no-unresolved": "off",
     "import/order": [
       "error",

@@ -1,3 +1,5 @@
+import type { LyricsContent } from "@/types/music";
+
 export type LyricsDisplayMode = "line" | "paragraph";
 
 export function formatLyrics(lines: string[] = [], mode: LyricsDisplayMode = "line"): string[] {
@@ -12,8 +14,11 @@ export function formatLyrics(lines: string[] = [], mode: LyricsDisplayMode = "li
   return lines;
 }
 
-export function mergeLyricsByLanguage(lyrics: Record<string, string[] | undefined>, languages: string[]) {
+export function mergeLyricsByLanguage(lyrics: Partial<LyricsContent>, languages: string[]) {
   return languages
-    .map((lang) => ({ lang, lines: lyrics[lang] ?? [] }))
+    .map((lang) => {
+      const key = lang as keyof LyricsContent;
+      return { lang, lines: lyrics[key] ?? [] };
+    })
     .filter((entry) => entry.lines.length > 0);
 }

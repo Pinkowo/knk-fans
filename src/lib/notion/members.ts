@@ -1,11 +1,10 @@
-import type { QueryDataSourceResponse } from "@notionhq/client/build/src/api-endpoints";
-
 import { notionClient } from "@/lib/notion/client";
 import { getFirstFileUrl, getRichTextValue, getTitleValue, sanitizeUrl } from "@/lib/notion/utils";
 import type { Member, MemberStatus } from "@/types/member";
 import type {
   NotionFilesProperty,
   NotionPage,
+  NotionQueryResponse,
   NotionRichTextProperty,
   NotionSelectProperty,
   NotionTitleProperty,
@@ -72,15 +71,15 @@ export async function fetchMembers(): Promise<Member[]> {
   }
 
   try {
-    const response = (await notionClient.queryDatabase<QueryDataSourceResponse>({
+    const response = await notionClient.queryDatabase<NotionQueryResponse<MemberDatabaseProperties>>({
       database_id: databaseId,
       sorts: [{ property: "Order", direction: "ascending" }],
-    })) as QueryDataSourceResponse;
+    });
 
     return response.results
       .map((page) => {
         try {
-          return mapMember(page as NotionPage<MemberDatabaseProperties>);
+          return mapMember(page);
         } catch (error) {
           console.warn("Failed to map member", error);
           return null;

@@ -4,12 +4,13 @@ import type { Album, TrackSummary } from "@/types/music";
 import type {
   NotionFilesProperty,
   NotionPage,
+  NotionQueryResponse,
   NotionRichTextProperty,
   NotionTitleProperty,
   NotionUrlProperty,
 } from "@/types/notion";
 
-const fallbackAlbums: Album[] = [
+export const fallbackAlbums: Album[] = [
   {
     id: "album-awaken",
     title: "AWAKE",
@@ -70,7 +71,7 @@ export async function fetchAlbums(): Promise<Album[]> {
   }
 
   try {
-    const response = await notionClient.queryDatabase({
+    const response = await notionClient.queryDatabase<NotionQueryResponse<AlbumProperties>>({
       database_id: databaseId,
       sorts: [{ property: "ReleaseDate", direction: "descending" }],
     });
@@ -89,4 +90,13 @@ export async function fetchAlbums(): Promise<Album[]> {
     console.error("Failed to fetch albums", error);
     return fallbackAlbums;
   }
+}
+
+export async function fetchSongIds(): Promise<string[]> {
+  const albums = await fetchAlbums();
+  const ids = albums
+    .flatMap((album) => album.tracks)
+    .map((track) => track.songId)
+    .filter((id): id is string => Boolean(id));
+  return ids.length ? ids : fallbackAlbums.flatMap((album) => album.tracks.map((track) => track.songId)).filter((id): id is string => Boolean(id));
 }

@@ -20,7 +20,7 @@ const SPRITE_SHEET = "/sprites/pets.png";
 
 export default function SitePet() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number | null>(null);
   const petsRef = useRef<PetSprite[]>([]);
   const spriteImage = useRef<HTMLImageElement | null>(null);
   const { settings } = usePetSettings();
@@ -111,7 +111,9 @@ export default function SitePet() {
     update();
 
     return () => {
-      cancelAnimationFrame(animationRef.current!);
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+      }
       window.removeEventListener("resize", resizeCanvas);
     };
   }, [settings]);

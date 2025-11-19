@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { fetchAlbums } from "@/lib/notion/albums";
 
-export const revalidate = 60 * 60 * 24 * 7; // 7 days
+export const revalidate = 604800; // 7 days
 
 export async function GET() {
   try {

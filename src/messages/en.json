@@ -5,7 +5,8 @@
     "discography": "Discography",
     "variety": "Variety",
     "about": "About KNK",
-    "contact": "Contact"
+    "contact": "Contact",
+    "ariaMain": "Primary navigation"
   },
   "about": {
     "title": "About KNK",
@@ -70,6 +71,9 @@
     "ja": "Japanese",
     "en": "English"
   },
+  "layout": {
+    "skip": "Skip to main content"
+  },
   "footer": {
     "byline": "Crafted by Inspirits of Gravity",
     "copyright": "© {year} KNK fan site. All rights reserved."
@@ -119,7 +123,7 @@
     },
     "current": "Current Members",
     "former": "Former Members",
-    "countLabel": "{{count}} members",
+    "countLabel": "{count} members",
     "empty": "No members to display yet",
     "close": "Close",
     "status": {
@@ -132,5 +136,15 @@
   },
   "errors": {
     "generic": "Something went wrong. Please try again."
+  },
+  "errorPage": {
+    "title": "Oops! Something went wrong",
+    "subtitle": "Give it another try in a moment.",
+    "retry": "Try again"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "subtitle": "The link might be outdated or mistyped.",
+    "back": "Back to home"
   }
 }

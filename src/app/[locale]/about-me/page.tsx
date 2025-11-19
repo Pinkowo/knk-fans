@@ -1,10 +1,10 @@
 import { getTranslations } from "next-intl/server";
 
-export default async function AboutMePage({
-  params,
-}: {
-  params: Promise<{ locale: string }> | { locale: string };
-}) {
+interface AboutMePageParams {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function AboutMePage({ params }: AboutMePageParams) {
   const { locale } = await params;
   const t = await getTranslations({ locale });
 
@@ -15,7 +15,7 @@ export default async function AboutMePage({
         <h1 className="text-4xl font-bold md:text-5xl">{t("aboutMe.heading")}</h1>
         <p className="text-base text-text-secondary">{t("aboutMe.subheading")}</p>
       </header>
-      <section className="space-y-4 rounded-3xl border border白/10 bg-white/5 p-6">
+      <section className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6">
         <h2 className="text-2xl font-semibold">{t("aboutMe.sections.story.title")}</h2>
         <p className="text-sm text-text-secondary">{t("aboutMe.sections.story.body")}</p>
       </section>

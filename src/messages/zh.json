@@ -5,7 +5,8 @@
     "discography": "音樂作品",
     "variety": "綜藝推薦",
     "about": "關於 KNK",
-    "contact": "聯絡我們"
+    "contact": "聯絡我們",
+    "ariaMain": "主導覽"
   },
   "about": {
     "title": "團體介紹",
@@ -70,6 +71,9 @@
     "ja": "日文",
     "en": "英文"
   },
+  "layout": {
+    "skip": "跳至主要內容"
+  },
   "footer": {
     "byline": "由 Inspirits of Gravity 製作",
     "copyright": "© {year} KNK 粉絲網站. 保留所有權利。"
@@ -119,7 +123,7 @@
     },
     "current": "現任成員",
     "former": "已退團成員",
-    "countLabel": "{{count}} 位成員",
+    "countLabel": "{count} 位成員",
     "empty": "暫時沒有資料",
     "close": "關閉",
     "status": {
@@ -132,5 +136,15 @@
   },
   "errors": {
     "generic": "發生錯誤，請稍後再試。"
+  },
+  "errorPage": {
+    "title": "喔不！系統暫時無法載入",
+    "subtitle": "我們會盡快修復，請稍候再試。",
+    "retry": "重新整理"
+  },
+  "notFound": {
+    "title": "找不到這個頁面",
+    "subtitle": "連結可能已被移除或輸入錯誤。",
+    "back": "返回首頁"
   }
 }

@@ -4,13 +4,13 @@ import SeriesCard from "@/components/variety/SeriesCard";
 import type { AppLocale } from "@/i18n";
 import { fetchVarietySeries } from "@/lib/notion/variety";
 
-export const revalidate = 60 * 60 * 24; // 24 小時
+export const revalidate = 86400; // 24 小時
 
-interface PageParams {
-  params: Promise<{ locale: AppLocale }> | { locale: AppLocale };
+interface VarietyPageParams {
+  params: Promise<{ locale: AppLocale }>;
 }
 
-export default async function VarietyPage({ params }: PageParams) {
+export default async function VarietyPage({ params }: VarietyPageParams) {
   const { locale } = await params;
   const [t, seriesList] = await Promise.all([getTranslations({ locale }), fetchVarietySeries()]);
 
@@ -22,8 +22,8 @@ export default async function VarietyPage({ params }: PageParams) {
         <p className="text-base text-text-secondary">{t("variety.hero.subheading")}</p>
       </header>
       <div className="mt-10 space-y-6">
-        {seriesList.map((series) => (
-          <SeriesCard key={series.id} series={series} />
+        {seriesList.map((series, index) => (
+          <SeriesCard key={series.id} series={series} priority={index === 0} />
         ))}
       </div>
     </div>

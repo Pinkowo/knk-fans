@@ -1,6 +1,7 @@
 import { Client } from "@notionhq/client";
 
 import { maxNotionRetries, rateLimitPerSecond } from "@/lib/notion/config";
+import type { NotionQueryResponse } from "@/types/notion";
 
 const notionSdkClient = new Client({ auth: process.env.NOTION_API_KEY });
 
@@ -102,7 +103,7 @@ class RateLimitedNotionClient {
     return status === 429 || (typeof status === "number" && status >= 500);
   }
 
-  queryDatabase<T = unknown>(params: DatabaseQueryParameters) {
+  queryDatabase<T = NotionQueryResponse>(params: DatabaseQueryParameters) {
     return this.enqueue(() => this.dispatchQuery(params) as Promise<T>);
   }
 

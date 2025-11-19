@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import MembersGrid from "@/components/members/MembersGrid";
 import { fetchMembers } from "@/lib/notion/members";
 
-export const revalidate = 60 * 60; // 1 小時重新驗證
+export const revalidate = 3600; // 1 小時重新驗證
 
 export default async function MembersPage() {
   const [t, members] = await Promise.all([getTranslations(), fetchMembers()]);

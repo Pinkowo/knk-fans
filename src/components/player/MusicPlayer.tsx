@@ -11,6 +11,8 @@ export default function MusicPlayer() {
   const { state, togglePlay, toggleVisible } = usePlayer();
   const currentTrack = state.queue[state.currentIndex];
   const youtubeId = useMemo(() => currentTrack?.videoId, [currentTrack]);
+  const panelId = "music-player-panel";
+  const headingId = "music-player-heading";
 
   if (!state.isOpen) {
     return (
@@ -18,6 +20,9 @@ export default function MusicPlayer() {
         type="button"
         onClick={toggleVisible}
         className="fixed bottom-6 left-6 z-50 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-sm text-white backdrop-blur"
+        aria-haspopup="dialog"
+        aria-controls={panelId}
+        aria-expanded={false}
       >
         {t("player.open")}
       </button>
@@ -25,11 +30,21 @@ export default function MusicPlayer() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-3xl rounded-3xl border border-white/10 bg-black/80 p-4 text-white backdrop-blur">
+    <div
+      role="dialog"
+      aria-modal="false"
+      aria-live="polite"
+      aria-atomic="true"
+      aria-labelledby={headingId}
+      className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-3xl rounded-3xl border border-white/10 bg-black/80 p-4 text-white backdrop-blur"
+      id={panelId}
+    >
       <div className="flex items-center justify-between">
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-accent-yellow">{t("player.nowPlaying")}</p>
-          <h3 className="text-xl font-semibold">{currentTrack?.title ?? t("player.queueEmpty")}</h3>
+          <h3 className="text-xl font-semibold" id={headingId}>
+            {currentTrack?.title ?? t("player.queueEmpty")}
+          </h3>
           {currentTrack?.artist && <p className="text-sm text-text-secondary">{currentTrack.artist}</p>}
         </div>
         <div className="flex items-center gap-2">

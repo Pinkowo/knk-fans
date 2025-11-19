@@ -7,14 +7,18 @@ import type { Member } from "@/types/member";
 interface MemberCardProps {
   member: Member;
   onSelect: (member: Member) => void;
+  priority?: boolean;
 }
 
-export default function MemberCard({ member, onSelect }: MemberCardProps) {
+export default function MemberCard({ member, onSelect, priority = false }: MemberCardProps) {
+  const label = member.position ? `${member.name} · ${member.position}` : member.name;
+
   return (
     <button
       type="button"
       onClick={() => onSelect(member)}
       className="group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 text-left transition hover:-translate-y-1 hover:border-white/20"
+      aria-label={label}
     >
       <div className="relative h-64 w-full overflow-hidden">
         <Image
@@ -25,6 +29,7 @@ export default function MemberCard({ member, onSelect }: MemberCardProps) {
           alt={member.name}
           fill
           sizes="(min-width: 768px) 25vw, 100vw"
+          priority={priority}
           className="object-cover transition duration-500 group-hover:scale-105"
           placeholder="blur"
           blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMScgaGVpZ2h0PScxJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHdpZHRoPScxJyBoZWlnaHQ9JzEnIGZpbGw9JyMyMjIyMzMnIC8+PC9zdmc+"

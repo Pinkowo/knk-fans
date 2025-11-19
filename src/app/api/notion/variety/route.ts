@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { fetchVarietySeries } from "@/lib/notion/variety";
 
-export const revalidate = 60 * 60 * 24; // 24 小時
+export const revalidate = 86400; // 24 小時
 
 export async function GET() {
   try {

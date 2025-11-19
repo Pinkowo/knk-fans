@@ -3,10 +3,10 @@ import { getTranslations } from "next-intl/server";
 
 import { fetchGroupInfo } from "@/lib/notion/about";
 
-export const revalidate = 60 * 60 * 24 * 7;
+export const revalidate = 604800;
 
 interface AboutPageParams {
-  params: Promise<{ locale: string }> | { locale: string };
+  params: Promise<{ locale: string }>;
 }
 
 export default async function AboutPage({ params }: AboutPageParams) {
@@ -38,6 +38,7 @@ export default async function AboutPage({ params }: AboutPageParams) {
             fill
             className="object-cover"
             sizes="(min-width: 768px) 50vw, 100vw"
+            priority
           />
         </div>
       </section>

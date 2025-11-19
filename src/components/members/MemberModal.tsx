@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useEffect, useRef } from "react";
 
 import type { Member } from "@/types/member";
 
@@ -13,6 +14,29 @@ interface MemberModalProps {
 
 export default function MemberModal({ member, onClose }: MemberModalProps) {
   const t = useTranslations();
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const titleId = member ? `member-modal-title-${member.id}` : undefined;
+  const descriptionId = member ? `member-modal-desc-${member.id}` : undefined;
+
+  useEffect(() => {
+    if (!member) {
+      return;
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    closeButtonRef.current?.focus();
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [member, onClose]);
 
   return (
     <AnimatePresence>
@@ -31,12 +55,15 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
             transition={{ type: "spring", stiffness: 120, damping: 18 }}
             role="dialog"
             aria-modal="true"
-            aria-label={`${member.name} ${t("members.modal.titleSuffix")}`}
+            aria-labelledby={titleId}
+            aria-describedby={member?.bio ? descriptionId : undefined}
           >
             <button
               type="button"
               onClick={onClose}
               className="absolute right-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1 text-sm font-semibold text-white"
+              aria-label={t("members.close")}
+              ref={closeButtonRef}
             >
               {t("members.close")}
             </button>
@@ -61,11 +88,15 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
                     ? t("members.status.current")
                     : t("members.status.former")}
                 </span>
-                <h3 className="text-3xl font-bold text-white">{member.name}</h3>
+                <h3 className="text-3xl font-bold text-white" id={titleId}>
+                  {member.name}
+                </h3>
                 {member.position && (
                   <p className="text-sm text-accent-pink">{member.position}</p>
                 )}
-                <p className="text-sm text-text-secondary">{member.bio}</p>
+                <p className="text-sm text-text-secondary" id={descriptionId}>
+                  {member.bio}
+                </p>
                 {member.links && member.links.length > 0 && (
                   <div className="flex flex-wrap gap-3">
                     {member.links.map((link) => (

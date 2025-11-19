@@ -75,13 +75,13 @@ export type NotionPropertyValue =
 
 export type NotionProperties = Record<string, NotionPropertyValue>;
 
-export interface NotionPage<T extends NotionProperties = NotionProperties> {
+export interface NotionPage<T = NotionProperties> {
   id: string;
   created_time: string;
   last_edited_time: string;
   properties: T;
 }
 
-export interface NotionQueryResponse<T extends NotionProperties = NotionProperties> {
+export interface NotionQueryResponse<T = NotionProperties> {
   results: Array<NotionPage<T>>;
 }

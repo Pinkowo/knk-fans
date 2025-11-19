@@ -1,13 +1,15 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 
 import LyricsDisplay from "@/components/lyrics/LyricsDisplay";
 import YouTubeEmbed from "@/components/music/YouTubeEmbed";
 import type { AppLocale } from "@/i18n";
+import { fetchSongIds } from "@/lib/notion/albums";
 import { fetchSongById } from "@/lib/notion/songs";
 
 interface SongPageParams {
-  params: Promise<{ locale: AppLocale; id: string }> | { locale: AppLocale; id: string };
+  params: Promise<{ locale: AppLocale; id: string }>;
 }
 
 export default async function SongPage({ params }: SongPageParams) {
@@ -24,13 +26,9 @@ export default async function SongPage({ params }: SongPageParams) {
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-12 text-white">
-      <button
-        type="button"
-        onClick={() => history.back()}
-        className="text-sm text-accent-teal transition hover:text-white"
-      >
+      <Link className="text-sm text-accent-teal transition hover:text-white" href={`/${locale}/discography`}>
         ← {t("discography.back")}
-      </button>
+      </Link>
       <div className="mt-4 space-y-4">
         <p className="text-sm uppercase tracking-[0.3em] text-accent-yellow">{song.album}</p>
         <h1 className="text-4xl font-bold">{song.title}</h1>
@@ -46,4 +44,9 @@ export default async function SongPage({ params }: SongPageParams) {
       </div>
     </div>
   );
+}
+
+export async function generateStaticParams() {
+  const ids = await fetchSongIds();
+  return ids.map((id) => ({ id }));
 }

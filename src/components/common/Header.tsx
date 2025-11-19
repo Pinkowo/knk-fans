@@ -34,7 +34,11 @@ export default async function Header({ locale }: HeaderProps) {
         <Link className="text-lg font-semibold tracking-wide text-gradient" href={`/${locale}`}>
           KNK GUIDE
         </Link>
-        <nav className="hidden gap-6 text-sm font-medium text-text-secondary md:flex">
+        <nav
+          aria-label={t("nav.ariaMain")}
+          className="hidden gap-6 text-sm font-medium text-text-secondary md:flex"
+          role="navigation"
+        >
           {NAV_LINKS.map((item) => (
             <Link
               className="transition hover:text-white"

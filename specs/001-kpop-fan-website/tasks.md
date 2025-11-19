@@ -300,24 +300,22 @@
 
 ### 效能最佳化
 
-- [ ] T106 [P] 分析 Bundle 大小，執行 `npm run build`，使用 Next.js Bundle Analyzer，確保首頁 < 100KB gzipped
-- [ ] T107 [P] 最佳化圖片載入，驗證所有圖片使用 `next/image`，設定適當 `sizes` 與 `priority` 屬性
+- [x] T106 [P] 分析 Bundle 大小，執行 `npm run build`，使用 Next.js Bundle Analyzer，確保首頁 < 100KB gzipped
+- [x] T107 [P] 最佳化圖片載入，驗證所有圖片使用 `next/image`，設定適當 `sizes` 與 `priority` 屬性
 - [x] T108 [P] 實作字體最佳化，在 `src/app/layout.tsx` 使用 `next/font/google` 載入 Noto Sans TC，設定 `display: 'swap'`
-- [ ] T109 設定快取 Headers，在 `next.config.js` 定義靜態資源與頁面的 Cache-Control
-- [ ] T110 實作 generateStaticParams，在所有動態路由頁面（成員、歌曲等）實作靜態生成參數
+- [x] T109 設定快取 Headers，在 `next.config.js` 定義靜態資源與頁面的 Cache-Control
+- [x] T110 實作 generateStaticParams，在所有動態路由頁面（成員、歌曲等）實作靜態生成參數
 
-### 錯誤處理與 Loading 狀態
-
-- [ ] T111 [P] 建立全域錯誤邊界，在 `src/app/[locale]/error.tsx` 實作錯誤處理 UI
-- [ ] T112 [P] 建立 404 頁面，在 `src/app/[locale]/not-found.tsx` 實作自訂 404 UI
-- [ ] T113 補全所有 loading.tsx，確保所有頁面都有骨架屏或 Loading 指示器
+- [x] T111 [P] 建立全域錯誤邊界，在 `src/app/[locale]/error.tsx` 實作錯誤處理 UI
+- [x] T112 [P] 建立 404 頁面，在 `src/app/[locale]/not-found.tsx` 實作自訂 404 UI
+- [x] T113 補全所有 loading.tsx，確保所有頁面都有骨架屏或 Loading 指示器
 
 ### 無障礙性（WCAG 2.1 AA）
 
-- [ ] T114 [P] 驗證鍵盤導航，確保所有互動元件可用 Tab、Enter、Escape 操作
-- [ ] T115 [P] 新增 ARIA 標籤，在導航、彈窗、按鈕元件新增適當 `aria-label`、`role` 屬性
-- [ ] T116 [P] 驗證顏色對比度，使用工具檢查文字與背景對比度 ≥ 4.5:1
-- [ ] T117 新增語義化 HTML，確保使用 `<header>`、`<nav>`、`<main>`、`<footer>` 標籤
+- [x] T114 [P] 驗證鍵盤導航，確保所有互動元件可用 Tab、Enter、Escape 操作
+- [x] T115 [P] 新增 ARIA 標籤，在導航、彈窗、按鈕元件新增適當 `aria-label`、`role` 屬性
+- [x] T116 [P] 驗證顏色對比度，使用工具檢查文字與背景對比度 ≥ 4.5:1
+- [x] T117 新增語義化 HTML，確保使用 `<header>`、`<nav>`、`<main>`、`<footer>` 標籤
 
 ### Vercel 部署準備
 

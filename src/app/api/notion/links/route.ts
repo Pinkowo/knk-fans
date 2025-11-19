@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { fetchExternalLinks } from "@/lib/notion/links";
 
-export const revalidate = 60 * 60 * 24 * 7; // 7 天
+export const revalidate = 604800; // 7 天
 
 export async function GET() {
   try {

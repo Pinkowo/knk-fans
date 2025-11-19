@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { fetchGroupInfo } from "@/lib/notion/about";
 
-export const revalidate = 60 * 60 * 24 * 7;
+export const revalidate = 604800;
 
 export async function GET() {
   try {

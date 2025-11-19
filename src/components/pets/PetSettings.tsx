@@ -17,6 +17,7 @@ export default function PetSettingsPanel() {
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-semibold text-white backdrop-blur transition hover:border-white/40"
+        aria-expanded={open}
       >
         {open ? t("pets.hide") : t("pets.show")}
       </button>
@@ -27,6 +28,7 @@ export default function PetSettingsPanel() {
             <button
               type="button"
               onClick={toggleEnabled}
+              aria-pressed={settings.enabled}
               className={`rounded-full px-3 py-1 text-xs font-semibold ${settings.enabled ? "bg-accent-teal text-black" : "bg-white/10 text-text-secondary"}`}
             >
               {settings.enabled ? t("pets.enabled") : t("pets.disabled")}
@@ -40,6 +42,7 @@ export default function PetSettingsPanel() {
                   key={pet.id}
                   type="button"
                   onClick={() => togglePet(pet.id)}
+                  aria-pressed={settings.activePets[pet.id]}
                   className={`rounded-2xl border px-3 py-2 ${settings.activePets[pet.id] ? "border-accent-pink text-white" : "border-white/15 text-text-secondary"}`}
                 >
                   {pet.name}
@@ -52,6 +55,7 @@ export default function PetSettingsPanel() {
             <button
               type="button"
               onClick={toggleInteractions}
+              aria-pressed={settings.interactions}
               className={`rounded-full px-3 py-1 text-xs font-semibold ${settings.interactions ? "bg-accent-teal text-black" : "bg-white/10 text-text-secondary"}`}
             >
               {settings.interactions ? t("pets.enabled") : t("pets.disabled")}

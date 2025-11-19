@@ -3,6 +3,7 @@ import { getRichTextValue, getTitleValue, sanitizeUrl } from "@/lib/notion/utils
 import type { ExternalLink } from "@/types/links";
 import type {
   NotionPage,
+  NotionQueryResponse,
   NotionRichTextProperty,
   NotionTitleProperty,
   NotionUrlProperty,
@@ -48,7 +49,7 @@ export async function fetchExternalLinks(): Promise<ExternalLink[]> {
   }
 
   try {
-    const response = await notionClient.queryDatabase({
+    const response = await notionClient.queryDatabase<NotionQueryResponse<LinkProperties>>({
       database_id: databaseId,
       sorts: [{ property: "Order", direction: "ascending" }],
     });
@@ -56,7 +57,7 @@ export async function fetchExternalLinks(): Promise<ExternalLink[]> {
     return response.results
       .map((page) => {
         try {
-          return mapLink(page as NotionPage<LinkProperties>);
+          return mapLink(page);
         } catch (error) {
           console.warn("Failed to map external link", error);
           return null;

@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 import { fetchMemberById } from "@/lib/notion/members";
 
-export const revalidate = 60 * 60 * 24; // 24 小時
+export const revalidate = 86400; // 24 小時
 
 interface RouteContext {
-  params: Promise<{ id: string }> | { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export async function GET(_request: Request, context: RouteContext) {

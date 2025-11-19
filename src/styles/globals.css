@@ -29,12 +29,29 @@ a {
   text-decoration: none;
 }
 
-a:focus,
-button:focus,
-input:focus,
-select:focus {
-  outline: 2px solid theme("colors.brand.400");
-  outline-offset: 2px;
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #ff7ac3;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: #ff7ac3;
+  color: #0b0f1a;
+  font-weight: 600;
+  transition: top 0.2s ease;
+  z-index: 999;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
 }
 
 ::selection {

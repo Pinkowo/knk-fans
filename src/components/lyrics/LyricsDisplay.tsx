@@ -20,10 +20,7 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
   const initialLanguage = lyrics.ko && lyrics.ko.length > 0 ? ["ko"] : DEFAULT_LANGUAGES;
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>(initialLanguage);
 
-  const mergedLyrics = useMemo(
-    () => mergeLyricsByLanguage(lyrics as Record<string, string[] | undefined>, selectedLanguages),
-    [lyrics, selectedLanguages],
-  );
+  const mergedLyrics = useMemo(() => mergeLyricsByLanguage(lyrics, selectedLanguages), [lyrics, selectedLanguages]);
 
   return (
     <div className="space-y-6" style={{ contain: "content" }}>

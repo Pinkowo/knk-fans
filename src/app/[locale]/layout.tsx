@@ -52,13 +52,17 @@ export default async function LocaleLayout({
 
   setRequestLocale(resolvedLocale);
   const messages = await getMessages();
+  const t = await getTranslations({ locale: resolvedLocale });
 
   return (
     <NextIntlClientProvider locale={resolvedLocale} messages={messages} timeZone="Asia/Taipei">
       <PlayerProvider>
         <div className="flex min-h-screen flex-col bg-surface text-white">
+          <a className="skip-link" href="#main-content">
+            {t("layout.skip")}
+          </a>
           <Header locale={resolvedLocale} />
-          <main className="flex-1 bg-gradient-to-b from-surface via-surface-muted to-surface">
+          <main id="main-content" className="flex-1 bg-gradient-to-b from-surface via-surface-muted to-surface">
             {children}
           </main>
           <Footer />

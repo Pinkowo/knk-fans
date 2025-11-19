@@ -4,10 +4,10 @@ import LinkCard from "@/components/links/LinkCard";
 import type { AppLocale } from "@/i18n";
 import { fetchExternalLinks } from "@/lib/notion/links";
 
-export const revalidate = 60 * 60 * 24 * 7;
+export const revalidate = 604800;
 
 interface PageParams {
-  params: Promise<{ locale: AppLocale }> | { locale: AppLocale };
+  params: Promise<{ locale: AppLocale }>;
 }
 
 export default async function LinksPage({ params }: PageParams) {

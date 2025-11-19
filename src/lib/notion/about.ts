@@ -5,6 +5,8 @@ import type {
   NotionFilesProperty,
   NotionNumberProperty,
   NotionPage,
+  NotionProperties,
+  NotionQueryResponse,
   NotionRichTextProperty,
   NotionTitleProperty,
 } from "@/types/notion";
@@ -23,13 +25,13 @@ const fallbackGroup: GroupInfo = {
   cover: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80",
 };
 
-interface AboutProperties {
+interface AboutProperties extends NotionProperties {
   Title: NotionTitleProperty;
-  DebutDate?: NotionRichTextProperty;
-  Description?: NotionRichTextProperty;
-  Achievements?: NotionRichTextProperty;
-  MembersCount?: NotionNumberProperty;
-  Cover?: NotionFilesProperty;
+  DebutDate: NotionRichTextProperty;
+  Description: NotionRichTextProperty;
+  Achievements: NotionRichTextProperty;
+  MembersCount: NotionNumberProperty;
+  Cover: NotionFilesProperty;
 }
 
 function mapGroup(page: NotionPage<AboutProperties>): GroupInfo {
@@ -55,7 +57,10 @@ export async function fetchGroupInfo(): Promise<GroupInfo> {
   }
 
   try {
-    const response = await notionClient.queryDatabase({ database_id: databaseId, page_size: 1 });
+    const response = await notionClient.queryDatabase<NotionQueryResponse<AboutProperties>>({
+      database_id: databaseId,
+      page_size: 1,
+    });
     if (response.results.length === 0) {
       return fallbackGroup;
     }

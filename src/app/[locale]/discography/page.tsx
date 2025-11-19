@@ -4,13 +4,13 @@ import AlbumCard from "@/components/discography/AlbumCard";
 import type { AppLocale } from "@/i18n";
 import { fetchAlbums } from "@/lib/notion/albums";
 
-export const revalidate = 60 * 60 * 24; // 24 小時
+export const revalidate = 86400; // 24 小時
 
-interface PageParams {
-  params: Promise<{ locale: AppLocale }> | { locale: AppLocale };
+interface DiscographyPageParams {
+  params: Promise<{ locale: AppLocale }>;
 }
 
-export default async function DiscographyPage({ params }: PageParams) {
+export default async function DiscographyPage({ params }: DiscographyPageParams) {
   const { locale } = await params;
   const [t, albums] = await Promise.all([getTranslations({ locale }), fetchAlbums()]);
 
@@ -22,12 +22,13 @@ export default async function DiscographyPage({ params }: PageParams) {
         <p className="text-base text-text-secondary">{t("discography.hero.subheading")}</p>
       </header>
       <div className="mt-10 grid gap-8 md:grid-cols-2">
-        {albums.map((album) => (
+        {albums.map((album, index) => (
           <AlbumCard
             key={album.id}
             album={album}
             locale={locale}
             trackLinkLabel={(title) => t("discography.trackLink", { title })}
+            priority={index < 2}
           />
         ))}
       </div>

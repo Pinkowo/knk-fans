@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { useId } from "react";
 
 import { fadeInUp, staggerContainer } from "@/lib/animation/variants";
 import type { RecommendedItem } from "@/types/guide";
@@ -16,15 +17,18 @@ const BLUR_DATA_URL =
 
 export default function RecommendedShows({ items }: RecommendedShowsProps) {
   const t = useTranslations();
+  const headingId = useId();
 
   return (
-    <section className="mx-auto mt-12 max-w-6xl">
+    <section className="mx-auto mt-12 max-w-6xl" aria-labelledby={headingId}>
       <div className="mb-6 flex items-end justify-between">
         <div>
           <p className="text-sm uppercase tracking-[0.2em] text-accent-teal">
             {t("guide.sections.stages")}
           </p>
-          <h2 className="text-3xl font-bold text-white">Stages & Variety Picks</h2>
+          <h2 className="text-3xl font-bold text-white" id={headingId}>
+            Stages & Variety Picks
+          </h2>
         </div>
       </div>
       <motion.div

@@ -10,6 +10,16 @@
 - Notion API（`@notionhq/client`）與 ISR 快取
 - Tailwind CSS、Framer Motion
 
+## 安裝與本機啟動
+
+1. 安裝 Node.js 20（建議使用 `nvm`）。
+2. 安裝依賴：`npm install`
+3. 複製環境變數樣板：`cp .env.local.example .env.local`
+4. 依下節說明填入 Notion ID、Revalidation Secret 與公開設定。
+5. 啟動開發伺服器：`npm run dev`，瀏覽 `http://localhost:3000/zh`
+
+> 想了解完整佈署與常見問題，請參考 [`docs/quickstart.md`](docs/quickstart.md)。
+
 ## 開發指令
 
 | 指令 | 說明 |
@@ -19,6 +29,8 @@
 | `npm run analyze` | 以 webpack + Bundle Analyzer 檢視 bundle |
 | `npm run lint` | 執行 ESLint |
 | `npm run check:contrast` | 依 WCAG 2.1 AA 驗證主題對比度 |
+| `npm run check:i18n` | 確認四種語言翻譯鍵值一致 |
+| `npm run type-check` | TypeScript 型別檢查（`tsc --noEmit`） |
 
 ## 環境變數
 
@@ -78,3 +90,4 @@ curl -X POST https://your-domain.com/api/revalidate \
 1. `npm run lint && npm run build`，確認無錯誤。
 2. 將 `.env.local.example` 中的變數全部填入 Vercel Dashboard。
 3. 重新部署後，在 Production URL 測試語言切換、API 資料與 Web Vitals（可透過 console 觀察）是否正常。
+4. 需要重新整理 ISR 時，可參考 [`docs/testing-report.md`](docs/testing-report.md) 的指令重跑 Lighthouse 與響應式檢查。

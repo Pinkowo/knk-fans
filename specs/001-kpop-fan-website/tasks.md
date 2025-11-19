@@ -326,19 +326,19 @@
 
 ### 文件與測試
 
-- [ ] T122 [P] 建立 README.md，包含專案說明、安裝步驟、環境變數設定、執行指令
-- [ ] T123 [P] 建立 quickstart.md，提供快速開始指南與常見問題解答
-- [ ] T124 建立 Notion 資料庫設定文件，在 `docs/notion-setup.md` 說明所需資料庫結構與欄位
-- [ ] T125 執行 Lighthouse 測試，驗證首頁效能分數 > 90、無障礙性分數 > 90
-- [ ] T126 測試行動裝置響應式，驗證網站在 375px、768px、1920px 寬度正常顯示
+- [x] T122 [P] 建立 README.md，包含專案說明、安裝步驟、環境變數設定、執行指令
+- [x] T123 [P] 建立 quickstart.md，提供快速開始指南與常見問題解答
+- [x] T124 建立 Notion 資料庫設定文件，在 `docs/notion-setup.md` 說明所需資料庫結構與欄位
+- [x] T125 執行 Lighthouse 測試，驗證首頁效能分數 > 90、無障礙性分數 > 90
+- [x] T126 測試行動裝置響應式，驗證網站在 375px、768px、1920px 寬度正常顯示
 
 ### 最終檢查
 
-- [ ] T127 驗證所有翻譯完整性，確保四種語言的 `messages/*.json` 包含所有鍵值
-- [ ] T128 驗證所有 ISR 快取設定，確認各 API Route 的 revalidate 時間符合計畫
-- [ ] T129 測試所有使用者故事的驗收情境，逐一執行 spec.md 中的驗收測試
-- [ ] T130 執行 TypeScript 型別檢查，執行 `npm run type-check`，確保無型別錯誤
-- [ ] T131 執行 ESLint 檢查，執行 `npm run lint`，確保程式碼品質
+- [x] T127 驗證所有翻譯完整性，確保四種語言的 `messages/*.json` 包含所有鍵值
+- [x] T128 驗證所有 ISR 快取設定，確認各 API Route 的 revalidate 時間符合計畫
+- [x] T129 測試所有使用者故事的驗收情境，逐一執行 spec.md 中的驗收測試
+- [x] T130 執行 TypeScript 型別檢查，執行 `npm run type-check`，確保無型別錯誤
+- [x] T131 執行 ESLint 檢查，執行 `npm run lint`，確保程式碼品質
 
 ---
 

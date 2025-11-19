@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "cross-env ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts,.tsx",
     "analyze": "cross-env ANALYZE=true next build --webpack",
-    "check:contrast": "node scripts/check-contrast.mjs"
+    "check:contrast": "node scripts/check-contrast.mjs",
+    "check:i18n": "node scripts/check-translations.cjs",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@notionhq/client": "^5.4.0",

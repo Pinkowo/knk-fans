@@ -319,10 +319,10 @@
 
 ### Vercel 部署準備
 
-- [ ] T118 建立 On-Demand Revalidation API，在 `src/app/api/revalidate/route.ts` 實作手動觸發 ISR 重新驗證端點
-- [ ] T119 設定環境變數，在 Vercel Dashboard 設定所有 NOTION_* 環境變數與 REVALIDATION_SECRET
+- [x] T118 建立 On-Demand Revalidation API，在 `src/app/api/revalidate/route.ts` 實作手動觸發 ISR 重新驗證端點
+- [x] T119 設定環境變數，在 Vercel Dashboard 設定所有 NOTION_* 環境變數與 REVALIDATION_SECRET
 - [x] T120 整合 Vercel Analytics，在 `src/app/layout.tsx` 新增 `<Analytics />` 元件
-- [ ] T121 設定 Web Vitals 追蹤，在 `src/app/[locale]/layout.tsx` 實作 `useReportWebVitals` Hook
+- [x] T121 設定 Web Vitals 追蹤，在 `src/app/[locale]/layout.tsx` 實作 `useReportWebVitals` Hook
 
 ### 文件與測試
 

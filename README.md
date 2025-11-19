@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# KNK 粉絲網站
 
-## Getting Started
+多語系的 KNK 粉絲入口網站，以 Next.js 16 App Router 建置，整合 Notion 內容、音樂歌詞、綜藝與互動元件。此專案已針對 ISR、Vercel 部署與 Web Vitals 追蹤進行優化。
 
-First, run the development server:
+## 主要技術
+
+- Next.js 16（App Router） + TypeScript
+- `next-intl` 語系管理（zh / ko / ja / en）
+- `@vercel/analytics/react` + 自訂 Web Vitals Reporter
+- Notion API（`@notionhq/client`）與 ISR 快取
+- Tailwind CSS、Framer Motion
+
+## 開發指令
+
+| 指令 | 說明 |
+| --- | --- |
+| `npm run dev` | 啟動開發伺服器 |
+| `npm run build` | 產生正式環境 build（含 ISR 頁面） |
+| `npm run analyze` | 以 webpack + Bundle Analyzer 檢視 bundle |
+| `npm run lint` | 執行 ESLint |
+| `npm run check:contrast` | 依 WCAG 2.1 AA 驗證主題對比度 |
+
+## 環境變數
+
+`cp .env.local.example .env.local` 後，填入以下變數；部署到 Vercel 時請在 Project Settings → Environment Variables 逐一設定（Production 與 Preview 皆需設定）。
+
+| 變數 | 說明 |
+| --- | --- |
+| `NOTION_API_KEY` | Notion 整合專用金鑰 |
+| `NOTION_GUIDE_DATABASE_ID` ~ `NOTION_LINKS_DATABASE_ID` | 各內容資料庫 ID |
+| `NEXT_PUBLIC_SITE_URL` | 站點網址（用於 metadata） |
+| `REVALIDATION_SECRET` | On-Demand Revalidation 用隨機字串 |
+| `NEXT_PUBLIC_WEB_VITALS_ENDPOINT` | （選填）Web Vitals 上報 API 路徑，未設定時在開發模式會輸出至 console |
+
+> **部署檢查**：Vercel Dashboard → Settings → Environment Variables 中輸入上述值後重新部署，方可啟用 ISR 與 Revalidate API。
+
+## On-Demand Revalidation
+
+`POST /api/revalidate` 允許以 Secret 觸發特定路徑或 Tag 的重新驗證：
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+curl -X POST https://your-domain.com/api/revalidate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "secret": "YOUR_SECRET",
+    "path": "/zh/members",
+    "tag": "members"
+  }'
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+回應：
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```json
+{
+  "revalidated": true,
+  "paths": ["/zh/members"],
+  "tags": ["members"],
+  "timestamp": 1710000000000
+}
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Web Vitals 追蹤
 
-## Learn More
+`src/components/analytics/WebVitalsReporter.tsx` 會在 Client 端呼叫 `useReportWebVitals`。  
 
-To learn more about Next.js, take a look at the following resources:
+- 若設定 `NEXT_PUBLIC_WEB_VITALS_ENDPOINT`，會使用 `navigator.sendBeacon` 上報。
+- 若未設定，開發模式會於 console 顯示量測值，可自行接上 GA、Log Server 等服務。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 重新整理快取
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+所有 API Route 與頁面已針對內容特性設定 ISR。若內容更新可以：
 
-## Deploy on Vercel
+1. 透過 `POST /api/revalidate` 指定檢查的 path/tag。
+2. 或等待對應的 `revalidate` 週期自動刷新（詳見 `src/app/**/page.tsx` 中的 `export const revalidate`）。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 部署流程摘要
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. `npm run lint && npm run build`，確認無錯誤。
+2. 將 `.env.local.example` 中的變數全部填入 Vercel Dashboard。
+3. 重新部署後，在 Production URL 測試語言切換、API 資料與 Web Vitals（可透過 console 觀察）是否正常。

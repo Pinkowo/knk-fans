@@ -3,6 +3,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import WebVitalsReporter from "@/components/analytics/WebVitalsReporter";
 import Footer from "@/components/common/Footer";
 import Header from "@/components/common/Header";
 import PetSettingsPanel from "@/components/pets/PetSettings";
@@ -69,6 +70,7 @@ export default async function LocaleLayout({
           <SitePet />
           <PetSettingsPanel />
           <MusicPlayer />
+          <WebVitalsReporter />
         </div>
       </PlayerProvider>
     </NextIntlClientProvider>

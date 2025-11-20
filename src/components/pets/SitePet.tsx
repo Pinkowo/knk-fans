@@ -16,12 +16,64 @@ interface PetSprite {
   spriteSheet: string;
   columns: number;
   rows: number;
+  directionalRows?:
+    | {
+        leftDown?: number;
+        rightDown?: number;
+        left?: number;
+        right?: number;
+        up?: number;
+        default?: number;
+      }
+    | undefined;
 }
 
 const SPRITE_SIZE = 64;
 const DEFAULT_SPRITE_SHEET = "/sprites/pets.png";
 const DEFAULT_COLUMNS = 4;
 const DEFAULT_ROWS = 4;
+const VELOCITY_THRESHOLD = 0.08;
+
+function resolveSpriteRow(pet: PetSprite) {
+  const mapping = pet.directionalRows;
+  if (!mapping) {
+    return Math.min(pet.spriteRow, pet.rows - 1);
+  }
+
+  const vx = pet.vx;
+  const vy = pet.vy;
+  const movingLeft = vx < -VELOCITY_THRESHOLD;
+  const movingRight = vx > VELOCITY_THRESHOLD;
+  const movingDown = vy > VELOCITY_THRESHOLD;
+  const movingUp = vy < -VELOCITY_THRESHOLD;
+  const nearlyHorizontal = Math.abs(vy) <= VELOCITY_THRESHOLD;
+
+  if (movingLeft && movingDown && mapping.leftDown !== undefined) {
+    return mapping.leftDown;
+  }
+
+  if (movingRight && movingDown && mapping.rightDown !== undefined) {
+    return mapping.rightDown;
+  }
+
+  if (movingLeft && nearlyHorizontal && mapping.left !== undefined) {
+    return mapping.left;
+  }
+
+  if (movingRight && nearlyHorizontal && mapping.right !== undefined) {
+    return mapping.right;
+  }
+
+  if (movingUp && mapping.up !== undefined) {
+    return mapping.up;
+  }
+
+  if (mapping.default !== undefined) {
+    return mapping.default;
+  }
+
+  return Math.min(pet.spriteRow, pet.rows - 1);
+}
 
 export default function SitePet() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -72,6 +124,7 @@ export default function SitePet() {
         spriteSheet: pet.spriteSheet ?? DEFAULT_SPRITE_SHEET,
         columns: pet.columns ?? DEFAULT_COLUMNS,
         rows: pet.rows ?? DEFAULT_ROWS,
+        directionalRows: pet.directionalRows,
       }));
     };
 
@@ -106,7 +159,8 @@ export default function SitePet() {
         if (image?.complete) {
           const frameWidth = image.width / pet.columns || SPRITE_SIZE;
           const frameHeight = image.height / pet.rows || SPRITE_SIZE;
-          const rowIndex = Math.min(pet.spriteRow, pet.rows - 1);
+
+          const rowIndex = resolveSpriteRow(pet);
 
           ctx.drawImage(
             image,

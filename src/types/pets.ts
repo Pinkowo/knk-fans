@@ -6,6 +6,14 @@ export interface Pet {
   spriteSheet?: string;
   columns?: number;
   rows?: number;
+  directionalRows?: {
+    leftDown?: number;
+    rightDown?: number;
+    left?: number;
+    right?: number;
+    up?: number;
+    default?: number;
+  };
 }
 
 export interface PetSettings {
@@ -25,7 +33,15 @@ export const DEFAULT_PETS: Pet[] = [
     spriteRow: 1,
     spriteSheet: "/sprites/inseong.png",
     columns: 3,
-    rows: 3,
+    rows: 5,
+    directionalRows: {
+      leftDown: 0,
+      rightDown: 1,
+      left: 2,
+      right: 3,
+      up: 4,
+      default: 3,
+    },
   },
 ];
 

@@ -3,6 +3,9 @@ export interface Pet {
   name: string;
   color: string;
   spriteRow: number;
+  spriteSheet?: string;
+  columns?: number;
+  rows?: number;
 }
 
 export interface PetSettings {
@@ -15,7 +18,15 @@ export const DEFAULT_PETS: Pet[] = [
   { id: "beta", name: "Beta", color: "#ff7ac3", spriteRow: 0 },
   { id: "gamma", name: "Gamma", color: "#ffd166", spriteRow: 1 },
   { id: "delta", name: "Delta", color: "#83e0ff", spriteRow: 2 },
-  { id: "epsilon", name: "Epsilon", color: "#b694ff", spriteRow: 3 },
+  {
+    id: "inseong",
+    name: "Inseong",
+    color: "#ff9f43",
+    spriteRow: 1,
+    spriteSheet: "/sprites/inseong.png",
+    columns: 3,
+    rows: 3,
+  },
 ];
 
 export const defaultPetSettings: PetSettings = {

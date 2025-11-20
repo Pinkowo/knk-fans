@@ -13,16 +13,21 @@ interface PetSprite {
   vy: number;
   frame: number;
   spriteRow: number;
+  spriteSheet: string;
+  columns: number;
+  rows: number;
 }
 
 const SPRITE_SIZE = 64;
-const SPRITE_SHEET = "/sprites/pets.png";
+const DEFAULT_SPRITE_SHEET = "/sprites/pets.png";
+const DEFAULT_COLUMNS = 4;
+const DEFAULT_ROWS = 4;
 
 export default function SitePet() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const animationRef = useRef<number | null>(null);
   const petsRef = useRef<PetSprite[]>([]);
-  const spriteImage = useRef<HTMLImageElement | null>(null);
+  const spriteCache = useRef<Record<string, HTMLImageElement>>({});
   const { settings } = usePetSettings();
   const targetRef = useRef<{ x: number; y: number } | null>(null);
 
@@ -37,11 +42,6 @@ export default function SitePet() {
       return;
     }
 
-    if (!spriteImage.current) {
-      spriteImage.current = new Image();
-      spriteImage.current.src = SPRITE_SHEET;
-    }
-
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -52,6 +52,15 @@ export default function SitePet() {
 
     const initializePets = () => {
       const activePets = DEFAULT_PETS.filter((pet) => settings.activePets[pet.id]);
+      activePets.forEach((pet) => {
+        const sheetPath = pet.spriteSheet ?? DEFAULT_SPRITE_SHEET;
+        if (!spriteCache.current[sheetPath]) {
+          const image = new Image();
+          image.src = sheetPath;
+          spriteCache.current[sheetPath] = image;
+        }
+      });
+
       petsRef.current = activePets.map((pet) => ({
         id: pet.id,
         x: Math.random() * (canvas.width - SPRITE_SIZE),
@@ -60,6 +69,9 @@ export default function SitePet() {
         vy: Math.random() * 0.6 + 0.2,
         frame: 0,
         spriteRow: pet.spriteRow,
+        spriteSheet: pet.spriteSheet ?? DEFAULT_SPRITE_SHEET,
+        columns: pet.columns ?? DEFAULT_COLUMNS,
+        rows: pet.rows ?? DEFAULT_ROWS,
       }));
     };
 
@@ -88,15 +100,20 @@ export default function SitePet() {
           pet.vy *= -1;
         }
 
-        pet.frame = (pet.frame + 0.2) % 4;
+        pet.frame = (pet.frame + 0.2) % pet.columns;
 
-        if (spriteImage.current?.complete) {
+        const image = spriteCache.current[pet.spriteSheet];
+        if (image?.complete) {
+          const frameWidth = image.width / pet.columns || SPRITE_SIZE;
+          const frameHeight = image.height / pet.rows || SPRITE_SIZE;
+          const rowIndex = Math.min(pet.spriteRow, pet.rows - 1);
+
           ctx.drawImage(
-            spriteImage.current,
-            Math.floor(pet.frame) * SPRITE_SIZE,
-            pet.spriteRow * SPRITE_SIZE,
-            SPRITE_SIZE,
-            SPRITE_SIZE,
+            image,
+            Math.floor(pet.frame) * frameWidth,
+            rowIndex * frameHeight,
+            frameWidth,
+            frameHeight,
             pet.x,
             pet.y,
             SPRITE_SIZE,

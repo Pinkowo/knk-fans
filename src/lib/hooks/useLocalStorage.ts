@@ -7,6 +7,7 @@ type Initializer<T> = T | (() => T);
 type UseLocalStorageResult<T> = [T, (value: T | ((previous: T) => T)) => void, () => void];
 
 const isBrowser = typeof window !== "undefined";
+const LOCAL_EVENT_NAME = "local-storage";
 
 function readValue<T>(key: string, initialValue: Initializer<T>): T {
   if (!isBrowser) {
@@ -47,6 +48,11 @@ export function useLocalStorage<T>(
         if (isBrowser) {
           try {
             window.localStorage.setItem(key, JSON.stringify(newValue));
+            window.dispatchEvent(
+              new CustomEvent(LOCAL_EVENT_NAME, {
+                detail: { key, value: newValue },
+              })
+            );
           } catch (error) {
             console.warn(`useLocalStorage: failed to write key "${key}"`, error);
           }
@@ -77,9 +83,20 @@ export function useLocalStorage<T>(
 
       setStoredValue(event.newValue ? (JSON.parse(event.newValue) as T) : readValue(key, initialValueRef.current));
     };
+    const handleLocalEvent = (event: Event) => {
+      const customEvent = event as CustomEvent<{ key: string; value: T }>;
+      if (customEvent.detail?.key !== key) {
+        return;
+      }
+      setStoredValue(customEvent.detail.value);
+    };
 
     window.addEventListener("storage", handleStorage);
-    return () => window.removeEventListener("storage", handleStorage);
+    window.addEventListener(LOCAL_EVENT_NAME, handleLocalEvent as EventListener);
+    return () => {
+      window.removeEventListener("storage", handleStorage);
+      window.removeEventListener(LOCAL_EVENT_NAME, handleLocalEvent as EventListener);
+    };
   }, [key]);
 
   return [storedValue, setValue, resetValue];

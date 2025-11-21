@@ -117,6 +117,15 @@ export default function SitePet() {
   const scatterRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
+    if (!settings.enabled) {
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
+        animationRef.current = null;
+      }
+      petsRef.current = [];
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) {
       return;
@@ -257,10 +266,10 @@ export default function SitePet() {
       }
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [settings]);
+  }, [settings.enabled, settings.activePets, settings.interactions]);
 
   useEffect(() => {
-    if (!settings.interactions) {
+    if (!settings.enabled || !settings.interactions) {
       scatterRef.current = null;
       return;
     }
@@ -271,7 +280,7 @@ export default function SitePet() {
 
     window.addEventListener("click", handleClick);
     return () => window.removeEventListener("click", handleClick);
-  }, [settings.interactions]);
+  }, [settings.enabled, settings.interactions]);
 
   if (!settings.enabled) {
     return null;

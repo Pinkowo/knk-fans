@@ -1,9 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import type { Member } from "@/types/member";
 
@@ -12,12 +11,24 @@ interface MemberModalProps {
   onClose: () => void;
 }
 
+function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...props}>
+      <path
+        d="M16.5 3h-9A4.5 4.5 0 0 0 3 7.5v9A4.5 4.5 0 0 0 7.5 21h9a4.5 4.5 0 0 0 4.5-4.5v-9A4.5 4.5 0 0 0 16.5 3zm3 12.5A3.5 3.5 0 0 1 16 19H8a3.5 3.5 0 0 1-3.5-3.5V7.5A3.5 3.5 0 0 1 8 4h8a3.5 3.5 0 0 1 3.5 3.5v7zm-7-7.25A4.75 4.75 0 1 0 17.25 13 4.76 4.76 0 0 0 12.5 8.25zm0 7.5A2.75 2.75 0 1 1 15.25 13 2.75 2.75 0 0 1 12.5 15.75zm4.88-8.88a1.12 1.12 0 1 0-1.12-1.12 1.13 1.13 0 0 0 1.12 1.12z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 export default function MemberModal({ member, onClose }: MemberModalProps) {
   const t = useTranslations();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const overlayRef = useRef<HTMLDivElement | null>(null);
   const titleId = member ? `member-modal-title-${member.id}` : undefined;
   const descriptionId = member ? `member-modal-desc-${member.id}` : undefined;
+  const [latestPost, setLatestPost] = useState<{ handle: string; url: string | null } | null>(null);
 
   useEffect(() => {
     if (!member) {
@@ -39,20 +50,73 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
     };
   }, [member, onClose]);
 
-  const instagramEmbedUrl = useMemo(() => {
-    if (!member) return null;
+  const { instagramHandle, profileEmbedUrl, instagramLinkUrl } = useMemo(() => {
+    if (!member) {
+      return { instagramHandle: null, profileEmbedUrl: null, instagramLinkUrl: null };
+    }
     const instagramLink = member.links?.find((link) => link.url.includes("instagram.com"));
-    if (!instagramLink) return null;
+    if (!instagramLink) {
+      return { instagramHandle: null, profileEmbedUrl: null, instagramLinkUrl: null };
+    }
 
     try {
       const url = new URL(instagramLink.url);
       const [handle] = url.pathname.split("/").filter(Boolean);
-      if (!handle) return null;
-      return `https://www.instagram.com/${handle}/embed`;
+      if (!handle) {
+        return { instagramHandle: null, profileEmbedUrl: null, instagramLinkUrl: null };
+      }
+      return {
+        instagramHandle: handle,
+        profileEmbedUrl: `https://www.instagram.com/${handle}/embed`,
+        instagramLinkUrl: instagramLink.url,
+      };
     } catch {
-      return null;
+      return { instagramHandle: null, profileEmbedUrl: null, instagramLinkUrl: null };
     }
   }, [member]);
+
+  useEffect(() => {
+    if (!instagramHandle) {
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadLatest = async () => {
+      try {
+        // indicate loading for this handle
+        setLatestPost((prev) => (prev?.handle === instagramHandle ? prev : { handle: instagramHandle, url: null }));
+
+        const response = await fetch(`/api/instagram/latest/${instagramHandle}`);
+        if (!response.ok) {
+          return;
+        }
+        const data = (await response.json()) as { embedUrl?: string };
+        if (!cancelled) {
+          setLatestPost({ handle: instagramHandle, url: data.embedUrl ?? null });
+        }
+      } catch (error) {
+        console.warn("Failed to load instagram embed", error);
+        if (!cancelled) {
+          setLatestPost({ handle: instagramHandle, url: null });
+        }
+      }
+    };
+
+    void loadLatest();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [instagramHandle]);
+
+  const embedSrc = useMemo(() => {
+    if (!instagramHandle) {
+      return null;
+    }
+    const latestForHandle = latestPost?.handle === instagramHandle ? latestPost.url : null;
+    return latestForHandle ?? profileEmbedUrl ?? null;
+  }, [instagramHandle, latestPost, profileEmbedUrl]);
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === overlayRef.current) {
@@ -60,19 +124,26 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
     }
   };
 
+  const otherLinks = useMemo(() => {
+    if (!member?.links) {
+      return [];
+    }
+    return member.links.filter((link) => !link.url.includes("instagram.com"));
+  }, [member]);
+
   return (
     <AnimatePresence>
       {member ? (
         <motion.div
           ref={overlayRef}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 md:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={handleOverlayClick}
         >
           <motion.div
-            className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-surface-muted text-white"
+            className="relative w-full max-w-5xl overflow-hidden rounded-3xl bg-surface-muted text-white md:min-h-[640px]"
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
@@ -92,60 +163,59 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
             >
               {t("members.close")}
             </button>
-            <div className="grid gap-0 md:grid-cols-2">
-              <div className="relative h-full min-h-[340px] w-full overflow-hidden bg-black/30">
-                {instagramEmbedUrl ? (
-                  <iframe
-                    src={instagramEmbedUrl}
-                    title={`${member.name} Instagram`}
-                    className="h-full w-full"
-                    loading="lazy"
-                  />
-                ) : (
-                  <Image
-                    src={
-                      member.photo ||
-                      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"
-                    }
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    placeholder="blur"
-                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMScgaGVpZ2h0PScxJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHdpZHRoPScxJyBoZWlnaHQ9JzEnIGZpbGw9JyMxNjIyMzMnIC8+PC9zdmc+"
-                  />
-                )}
+            <div className="grid gap-0 md:grid-cols-2 md:min-h-[640px]">
+              <div className="relative hidden h-full w-full overflow-hidden bg-black/30 md:block">
+                <div className="absolute inset-0">
+                  {embedSrc ? (
+                    <iframe
+                      key={embedSrc}
+                      src={embedSrc}
+                      title={`${member.name} Instagram`}
+                      className="h-full w-full"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface-muted via-surface to-black text-center text-sm font-semibold text-text-secondary">
+                      Instagram
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="flex flex-col gap-4 p-8">
+              <div className="flex flex-col gap-4 p-6 md:p-8">
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-yellow">
-                  {member.status === "current"
-                    ? t("members.status.current")
-                    : t("members.status.former")}
+                  {member.status === "current" ? t("members.status.current") : t("members.status.former")}
                 </span>
                 <h3 className="text-3xl font-bold text-white" id={titleId}>
                   {member.name}
                 </h3>
-                {member.position && (
-                  <p className="text-sm text-accent-pink">{member.position}</p>
-                )}
+                {member.position && <p className="text-sm text-accent-pink">{member.position}</p>}
                 <p className="text-sm text-text-secondary" id={descriptionId}>
                   {member.bio}
                 </p>
-                {member.links && member.links.length > 0 && (
-                  <div className="flex flex-wrap gap-3">
-                    {member.links.map((link) => (
-                      <a
-                        key={`${member.id}-${link.url}`}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white"
-                      >
-                        {link.label}
-                      </a>
-                    ))}
-                  </div>
-                )}
+                <div className="flex flex-wrap gap-3">
+                  {instagramHandle && instagramLinkUrl ? (
+                    <a
+                      href={instagramLinkUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white"
+                    >
+                      <InstagramIcon className="h-4 w-4" />
+                      <span>@{instagramHandle}</span>
+                    </a>
+                  ) : null}
+                  {otherLinks.map((link) => (
+                    <a
+                      key={`${member.id}-${link.url}`}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white"
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
               </div>
             </div>
           </motion.div>

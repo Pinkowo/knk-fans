@@ -27,7 +27,7 @@ export default function RecommendedSongs({ items }: RecommendedSongsProps) {
             {t("guide.sections.songs")}
           </p>
           <h2 className="text-3xl font-bold text-white" id={headingId}>
-            Playlist Starter
+            {t("guide.sections.playlistHeading")}
           </h2>
         </div>
       </div>

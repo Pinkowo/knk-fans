@@ -27,7 +27,7 @@ export default function RecommendedShows({ items }: RecommendedShowsProps) {
             {t("guide.sections.stages")}
           </p>
           <h2 className="text-3xl font-bold text-white" id={headingId}>
-            Stages & Variety Picks
+            {t("guide.sections.stagesHeading")}
           </h2>
         </div>
       </div>

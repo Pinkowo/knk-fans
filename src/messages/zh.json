@@ -85,8 +85,11 @@
     },
     "sections": {
       "songs": "推薦歌曲",
+      "playlistHeading": "歌單起點",
       "stages": "舞台 / 綜藝",
-      "charms": "團體魅力亮點"
+      "stagesHeading": "舞台與綜藝精選",
+      "charms": "團體魅力亮點",
+      "charmsHeading": "為什麼是 KNK？"
     }
   },
   "variety": {

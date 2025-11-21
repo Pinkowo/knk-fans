@@ -85,8 +85,11 @@
     },
     "sections": {
       "songs": "Recommended Songs",
+      "playlistHeading": "Playlist Starter",
       "stages": "Stages / Variety",
-      "charms": "Group Charms"
+      "stagesHeading": "Stages & Variety Picks",
+      "charms": "Group Charms",
+      "charmsHeading": "Why KNK?"
     }
   },
   "variety": {

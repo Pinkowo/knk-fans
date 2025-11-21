@@ -12,7 +12,7 @@ interface DiscographyPageParams {
 
 export default async function DiscographyPage({ params }: DiscographyPageParams) {
   const { locale } = await params;
-  const [t, albums] = await Promise.all([getTranslations({ locale }), fetchAlbums()]);
+  const [t, albums] = await Promise.all([getTranslations({ locale }), fetchAlbums(locale)]);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12 text-white">

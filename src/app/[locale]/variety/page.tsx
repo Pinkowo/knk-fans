@@ -12,7 +12,7 @@ interface VarietyPageParams {
 
 export default async function VarietyPage({ params }: VarietyPageParams) {
   const { locale } = await params;
-  const [t, seriesList] = await Promise.all([getTranslations({ locale }), fetchVarietySeries()]);
+  const [t, seriesList] = await Promise.all([getTranslations({ locale }), fetchVarietySeries(locale)]);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12 text-white">

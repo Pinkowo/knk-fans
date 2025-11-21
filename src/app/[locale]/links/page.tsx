@@ -12,7 +12,7 @@ interface PageParams {
 
 export default async function LinksPage({ params }: PageParams) {
   const { locale } = await params;
-  const [t, links] = await Promise.all([getTranslations({ locale }), fetchExternalLinks()]);
+  const [t, links] = await Promise.all([getTranslations({ locale }), fetchExternalLinks(locale)]);
 
   return (
     <div className="mx-auto max-w-4xl space-y-8 px-6 py-12 text-white">

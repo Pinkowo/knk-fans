@@ -3,10 +3,16 @@ import { getTranslations } from "next-intl/server";
 import GroupCharms from "@/components/guide/GroupCharms";
 import RecommendedShows from "@/components/guide/RecommendedShows";
 import RecommendedSongs from "@/components/guide/RecommendedSongs";
+import type { AppLocale } from "@/i18n";
 import { fetchGuideData } from "@/lib/notion/guide";
 
-export default async function GuidePage() {
-  const [t, guideData] = await Promise.all([getTranslations(), fetchGuideData()]);
+interface GuidePageParams {
+  params: Promise<{ locale: AppLocale }>;
+}
+
+export default async function GuidePage({ params }: GuidePageParams) {
+  const { locale } = await params;
+  const [t, guideData] = await Promise.all([getTranslations({ locale }), fetchGuideData(locale)]);
 
   return (
     <div className="pb-16">

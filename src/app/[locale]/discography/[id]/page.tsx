@@ -14,7 +14,7 @@ interface SongPageParams {
 
 export default async function SongPage({ params }: SongPageParams) {
   const { locale, id } = await params;
-  const [t, song] = await Promise.all([getTranslations({ locale }), fetchSongById(id)]);
+  const [t, song] = await Promise.all([getTranslations({ locale }), fetchSongById(id, locale)]);
 
   if (!song) {
     notFound();

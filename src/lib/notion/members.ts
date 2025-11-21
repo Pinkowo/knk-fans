@@ -1,3 +1,5 @@
+import { defaultLocale, type AppLocale } from "@/i18n";
+import { getLocalizedValue } from "@/lib/localization";
 import { notionClient } from "@/lib/notion/client";
 import { getFirstFileUrl, getRichTextValue, getTitleValue, sanitizeUrl } from "@/lib/notion/utils";
 import type { Member, MemberStatus } from "@/types/member";
@@ -11,13 +13,28 @@ import type {
   NotionUrlProperty,
 } from "@/types/notion";
 
-const fallbackMembers: Member[] = [
+type LocalizedMember = Omit<Member, "bio" | "position"> & {
+  bio: Record<AppLocale, string>;
+  position?: Record<AppLocale, string>;
+};
+
+const localizedMembers: LocalizedMember[] = [
   {
     id: "inseong",
     name: "Inseong (허인성)",
     status: "current",
-    bio: "1994 年 7 月 1 日出生，主唱兼聲樂指導。以寬廣音域與穩定高音著稱，參與〈Lonely Night〉、〈Sunset〉作詞，並活躍於音樂劇《Midnight Sun》《On Air》。",
-    position: "Main Vocal / Vocal Director",
+    bio: {
+      zh: "1994 年 7 月 1 日出生，主唱兼聲樂指導。以寬廣音域與穩定高音著稱，參與〈Lonely Night〉、〈Sunset〉作詞，並活躍於音樂劇《Midnight Sun》《On Air》。",
+      en: "Born July 1, 1994. Main vocal and vocal director with a wide range and steady high notes, co-wrote “Lonely Night” and “Sunset,” and appears in musicals such as Midnight Sun and On Air.",
+      ko: "1994년 7월 1일생 메인보컬 겸 보컬 디렉터. 넓은 음역과 안정적인 고음으로 알려져 있으며 ‘Lonely Night’, ‘Sunset’ 작사에 참여했고 뮤지컬 ‘Midnight Sun’, ‘On Air’에 출연했다.",
+      ja: "1994年7月1日生まれ。メインボーカル兼ボーカルディレクター。広い音域と安定した高音で知られ、『Lonely Night』『Sunset』の作詞に参加し、ミュージカル『Midnight Sun』『On Air』にも出演している。",
+    },
+    position: {
+      zh: "主唱 / 聲樂指導",
+      en: "Main Vocal / Vocal Director",
+      ko: "메인보컬 / 보컬 디렉터",
+      ja: "メインボーカル／ボーカルディレクター",
+    },
     photo: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/in_ddoni/" }],
   },
@@ -25,8 +42,18 @@ const fallbackMembers: Member[] = [
     id: "jihun",
     name: "Jihun (김지훈)",
     status: "current",
-    bio: "1995 年 2 月 20 日出生的隊長，主力舞者兼副唱。以細膩表情與精準走位著名，是〈Gone〉、〈Ride〉舞台的編舞顧問，現役公益兵服役中。",
-    position: "Leader / Main Dancer",
+    bio: {
+      zh: "1995 年 2 月 20 日出生的隊長，主力舞者兼副唱。以細膩表情與精準走位著名，是〈Gone〉、〈Ride〉舞台的編舞顧問，現役公益兵服役中。",
+      en: "Leader born on February 20, 1995. Main dancer and vocalist known for expressive faces and precise blocking, choreo advisor for “Gone” and “Ride,” currently serving public service duty.",
+      ko: "1995년 2월 20일생 리더이자 메인댄서. 섬세한 표정과 정확한 동선으로 사랑받으며 ‘Gone’, ‘Ride’ 무대의 안무 자문을 맡았고 현재 사회복무요원으로 복무 중이다.",
+      ja: "1995年2月20日生まれのリーダー。メインダンサー兼ボーカルで、繊細な表情と正確なフォーメーションで知られ、『Gone』『Ride』の振付アドバイザーを務め、現在は公益勤務中。",
+    },
+    position: {
+      zh: "隊長 / 主舞",
+      en: "Leader / Main Dancer",
+      ko: "리더 / 메인댄서",
+      ja: "リーダー／メインダンサー",
+    },
     photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/hvlf__00/" }],
   },
@@ -34,8 +61,18 @@ const fallbackMembers: Member[] = [
     id: "dongwon",
     name: "Dongwon (이동원)",
     status: "current",
-    bio: "1994 年 1 月 1 日出生，2018 年加入 KNK 的主唱。以磁性中低音補強團體厚度，負責〈Lonely Night〉中段的說唱段落，私下也是團隊音樂製作幫手。",
-    position: "Lead Vocal",
+    bio: {
+      zh: "1994 年 1 月 1 日出生，2018 年加入 KNK 的主唱。以磁性中低音補強團體厚度，負責〈Lonely Night〉中段的說唱段落，私下也是團隊音樂製作幫手。",
+      en: "Born January 1, 1994 and joined KNK in 2018. A lead vocal with a magnetic mid-low tone who handles the rap-like section in “Lonely Night” and often assists with production.",
+      ko: "1994년 1월 1일생으로 2018년에 합류한 보컬. 자성 같은 중저음으로 팀의 두께를 채우며 ‘Lonely Night’ 중반 랩 파트를 맡고, 비하인드에서는 음악 작업을 돕는다.",
+      ja: "1994年1月1日生まれ。2018年にKNKへ加入したボーカル。磁力のような中低音で厚みを加え、『Lonely Night』中盤のラップパートも担当し、裏では制作も支える。",
+    },
+    position: {
+      zh: "主唱",
+      en: "Lead Vocal",
+      ko: "리드보컬",
+      ja: "リードボーカル",
+    },
     photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/2_dongwon_/" }],
   },
@@ -43,8 +80,18 @@ const fallbackMembers: Member[] = [
     id: "hyunjong",
     name: "Hyunjong (김현종)",
     status: "current",
-    bio: "1994 年 9 月 17 日出生，2023 年 12 月宣布加入。曾以藝名 Hyunkyung 活動於 ROMEO，是 KNK 最新的主唱與副舞者，也參與《MIXNINE》節目並拿下 17 名。",
-    position: "Vocal / Performer",
+    bio: {
+      zh: "1994 年 9 月 17 日出生，2023 年 12 月宣布加入。曾以藝名 Hyunkyung 活動於 ROMEO，是 KNK 最新的主唱與副舞者，也參與《MIXNINE》節目並拿下 17 名。",
+      en: "Born September 17, 1994 and announced as a new member in December 2023. Previously promoted as Hyunkyung in ROMEO, now KNK’s newest vocal and performer who also ranked 17th on MIXNINE.",
+      ko: "1994년 9월 17일생으로 2023년 12월 새 멤버로 합류했다. 과거 ROMEO에서 현경이라는 예명으로 활동했고, 믹스나인에서 17위를 기록한 보컬 겸 퍼포머다.",
+      ja: "1994年9月17日生まれ。2023年12月に新メンバーとして合流。かつてROMEOでヒョンギョンとして活動し、MIXNINEでは17位を獲得したボーカル兼パフォーマー。",
+    },
+    position: {
+      zh: "主唱 / 副舞者",
+      en: "Vocal / Performer",
+      ko: "보컬 / 퍼포머",
+      ja: "ボーカル／パフォーマー",
+    },
     photo: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/kimhyunzzong/" }],
   },
@@ -52,8 +99,18 @@ const fallbackMembers: Member[] = [
     id: "seoham",
     name: "Seoham (박서함)",
     status: "former",
-    bio: "1993 年生，藝名 Seoham，本名 Park Seung-jun。曾為 KNK 最顯眼的副唱與 Rapper，2018 年開始專注演戲並在《語意錯誤》中爆紅。",
-    position: "Former Vocal / Rapper",
+    bio: {
+      zh: "1993 年生，藝名 Seoham，本名 Park Seung-jun。曾為 KNK 最顯眼的副唱與 Rapper，2018 年開始專注演戲並在《語意錯誤》中爆紅。",
+      en: "Born in 1993; stage name Seoham (Park Seung-jun). A standout vocalist and rapper in KNK who left in 2018 to focus on acting and later rose to fame through “Semantic Error.”",
+      ko: "1993년생으로 예명은 서함, 본명은 박승준. KNK에서 눈에 띄는 보컬 겸 래퍼였으며 2018년 연기에 집중하기 위해 팀을 떠난 뒤 드라마 ‘시맨틱 에러’로 큰 인기를 얻었다.",
+      ja: "1993年生まれ。芸名ソハム（本名パク・スンジュン）。KNKで目立つボーカル兼ラッパーだったが2018年に演技へ専念するため脱退し、『セマンティックエラー』でブレイクした。",
+    },
+    position: {
+      zh: "前任 副唱 / Rapper",
+      en: "Former Vocal / Rapper",
+      ko: "전 멤버 보컬 / 래퍼",
+      ja: "元メンバー ボーカル／ラッパー",
+    },
     photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/parkseoham/" }],
   },
@@ -61,8 +118,18 @@ const fallbackMembers: Member[] = [
     id: "heejun",
     name: "Heejun (오희준)",
     status: "former",
-    bio: "1996 年生，KNK 的 Rapper 與吉他手，參與多首 B-side 作詞，2022 年離團後投入個人音樂與漫畫創作。",
-    position: "Former Rapper / Guitar",
+    bio: {
+      zh: "1996 年生，KNK 的 Rapper 與吉他手，參與多首 B-side 作詞，2022 年離團後投入個人音樂與漫畫創作。",
+      en: "Born in 1996. KNK’s rapper and guitarist who penned several B-sides; left in 2022 to focus on solo music and comic work.",
+      ko: "1996년생으로 KNK의 래퍼이자 기타리스트. 여러 수록곡 작사에 참여했고 2022년 팀을 떠나 개인 음악과 만화 작업을 이어가고 있다.",
+      ja: "1996年生まれ。KNKのラッパー兼ギタリストで、多くのB面曲の作詞に参加。2022年に脱退後はソロ音楽と漫画制作に専念している。",
+    },
+    position: {
+      zh: "前任 Rapper / 吉他手",
+      en: "Former Rapper / Guitar",
+      ko: "전 멤버 래퍼 / 기타",
+      ja: "元メンバー ラッパー／ギタリスト",
+    },
     photo: "https://images.unsplash.com/photo-1464863979621-258859e62245?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/imwoowow/" }],
   },
@@ -70,8 +137,18 @@ const fallbackMembers: Member[] = [
     id: "youjin",
     name: "Youjin (김유진)",
     status: "former",
-    bio: "KNK 初期的主唱，以厚實音色著稱。2018 年因健康離開團體，現專注於聲樂教學與個人音樂計畫。",
-    position: "Former Main Vocal",
+    bio: {
+      zh: "KNK 初期的主唱，以厚實音色著稱。2018 年因健康離開團體，現專注於聲樂教學與個人音樂計畫。",
+      en: "Original main vocal known for his rich tone; left in 2018 for health reasons and now focuses on vocal coaching and solo music projects.",
+      ko: "KNK 초창기의 메인보컬로 묵직한 음색이 특징. 2018년 건강상의 이유로 탈퇴한 뒤 현재는 보컬 트레이닝과 개인 음악 활동에 집중하고 있다.",
+      ja: "KNK初期のメインボーカルで、厚みのある声が魅力。2018年に健康上の理由で脱退し、現在はボーカルトレーニングやソロ音楽活動に専念している。",
+    },
+    position: {
+      zh: "前任 主唱",
+      en: "Former Main Vocal",
+      ko: "전 멤버 메인보컬",
+      ja: "元メンバー メインボーカル",
+    },
     photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=640&q=80",
   },
 ];
@@ -102,10 +179,18 @@ function mapMember(page: NotionPage<MemberDatabaseProperties>): Member {
   };
 }
 
-export async function fetchMembers(): Promise<Member[]> {
+function buildFallbackMembers(locale: AppLocale): Member[] {
+  return localizedMembers.map((member) => ({
+    ...member,
+    bio: getLocalizedValue(member.bio, locale),
+    position: member.position ? getLocalizedValue(member.position, locale) : undefined,
+  }));
+}
+
+export async function fetchMembers(locale: AppLocale = defaultLocale): Promise<Member[]> {
   const databaseId = process.env.NOTION_MEMBERS_DATABASE_ID;
   if (!databaseId || !process.env.NOTION_API_KEY) {
-    return fallbackMembers;
+    return buildFallbackMembers(locale);
   }
 
   try {
@@ -126,11 +211,11 @@ export async function fetchMembers(): Promise<Member[]> {
       .filter((member): member is Member => Boolean(member));
   } catch (error) {
     console.error("Failed to fetch members", error);
-    return fallbackMembers;
+    return buildFallbackMembers(locale);
   }
 }
 
-export async function fetchMemberById(id: string): Promise<Member | null> {
-  const members = await fetchMembers();
+export async function fetchMemberById(id: string, locale: AppLocale = defaultLocale): Promise<Member | null> {
+  const members = await fetchMembers(locale);
   return members.find((member) => member.id === id) ?? null;
 }

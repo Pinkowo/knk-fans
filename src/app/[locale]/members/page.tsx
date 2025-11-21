@@ -1,12 +1,18 @@
 import { getTranslations } from "next-intl/server";
 
 import MembersGrid from "@/components/members/MembersGrid";
+import type { AppLocale } from "@/i18n";
 import { fetchMembers } from "@/lib/notion/members";
 
 export const revalidate = 3600; // 1 小時重新驗證
 
-export default async function MembersPage() {
-  const [t, members] = await Promise.all([getTranslations(), fetchMembers()]);
+interface MembersPageParams {
+  params: Promise<{ locale: AppLocale }>;
+}
+
+export default async function MembersPage({ params }: MembersPageParams) {
+  const { locale } = await params;
+  const [t, members] = await Promise.all([getTranslations({ locale }), fetchMembers(locale)]);
 
   const current = members.filter((member) => member.status === "current");
   const former = members.filter((member) => member.status === "former");

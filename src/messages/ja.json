@@ -85,8 +85,11 @@
     },
     "sections": {
       "songs": "おすすめ曲",
+      "playlistHeading": "プレイリスト入門",
       "stages": "ステージ / バラエティ",
-      "charms": "グループの魅力"
+      "stagesHeading": "ステージ＆バラエティ特選",
+      "charms": "グループの魅力",
+      "charmsHeading": "なぜ KNK？"
     }
   },
   "variety": {

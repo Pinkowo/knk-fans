@@ -1,17 +1,18 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
+import type { AppLocale } from "@/i18n";
 import { fetchGroupInfo } from "@/lib/notion/about";
 
 export const revalidate = 604800;
 
 interface AboutPageParams {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: AppLocale }>;
 }
 
 export default async function AboutPage({ params }: AboutPageParams) {
   const { locale } = await params;
-  const [t, group] = await Promise.all([getTranslations({ locale }), fetchGroupInfo()]);
+  const [t, group] = await Promise.all([getTranslations({ locale }), fetchGroupInfo(locale)]);
 
   return (
     <div className="mx-auto max-w-5xl space-y-10 px-6 py-12 text-white">

@@ -23,7 +23,7 @@ export default function GroupCharms({ charms }: GroupCharmsProps) {
             {t("guide.sections.charms")}
           </p>
           <h2 className="text-3xl font-bold text-white" id={headingId}>
-            Why KNK?
+            {t("guide.sections.charmsHeading")}
           </h2>
         </div>
       </div>

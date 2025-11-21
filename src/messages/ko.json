@@ -85,8 +85,11 @@
     },
     "sections": {
       "songs": "추천곡",
+      "playlistHeading": "입문 플레이리스트",
       "stages": "무대 / 예능",
-      "charms": "단체 매력 포인트"
+      "stagesHeading": "무대 & 예능 추천",
+      "charms": "단체 매력 포인트",
+      "charmsHeading": "왜 KNK인가?"
     }
   },
   "variety": {

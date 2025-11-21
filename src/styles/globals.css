@@ -67,4 +67,26 @@ select:focus-visible {
   .text-gradient {
     @apply bg-gradient-to-r from-accent-pink via-brand-400 to-accent-teal bg-clip-text text-transparent;
   }
+
+  .hover-highlight {
+    @apply relative inline-block;
+  }
+
+  .hover-highlight::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #ff7ac3, #7b8dff, #59c3c3);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease-out;
+  }
+
+  .hover-highlight:hover::after,
+  .group:hover .hover-highlight::after {
+    transform: scaleX(1);
+  }
 }

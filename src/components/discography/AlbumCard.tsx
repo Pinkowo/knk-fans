@@ -37,25 +37,24 @@ export default function AlbumCard({ album, locale, priority = false }: AlbumCard
           {album.tracks.map((track, index) => {
             const content = (
               <>
-                <span>
-                  {index + 1}. {track.title}
+                <span className="flex items-center gap-2">
+                  <span>{index + 1}.</span>
+                  <span className="hover-highlight">{track.title}</span>
                 </span>
                 {track.duration && <span>{track.duration}</span>}
               </>
             );
+            const hoverUnderline =
+              "group relative flex items-center justify-between overflow-hidden rounded-xl px-3 py-2 transition hover:bg-white/5 hover:text-white after:absolute after:inset-x-2 after:bottom-1 after:h-0.5 after:origin-left after:scale-x-0 after:rounded-full after:bg-gradient-to-r after:from-accent-pink after:via-brand-400 after:to-accent-teal after:transition-transform after:duration-300 group-hover:after:scale-x-100";
 
             return (
               <li key={track.id}>
                 {track.songId ? (
-                  <Link
-                    href={`/${locale}/discography/${track.songId}`}
-                    className="group flex items-center justify-between rounded-xl px-3 py-2 transition hover:bg-white/5 hover:text-white"
-                    aria-label={track.title}
-                  >
+                  <Link href={`/${locale}/discography/${track.songId}`} className={hoverUnderline} aria-label={track.title}>
                     {content}
                   </Link>
                 ) : (
-                  <div className="flex items-center justify-between rounded-xl px-3 py-2">
+                  <div className={hoverUnderline} role="presentation" tabIndex={-1}>
                     {content}
                   </div>
                 )}

@@ -3,7 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import type { Member } from "@/types/member";
 
@@ -15,6 +15,7 @@ interface MemberModalProps {
 export default function MemberModal({ member, onClose }: MemberModalProps) {
   const t = useTranslations();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const overlayRef = useRef<HTMLDivElement | null>(null);
   const titleId = member ? `member-modal-title-${member.id}` : undefined;
   const descriptionId = member ? `member-modal-desc-${member.id}` : undefined;
 
@@ -38,14 +39,37 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
     };
   }, [member, onClose]);
 
+  const instagramEmbedUrl = useMemo(() => {
+    if (!member) return null;
+    const instagramLink = member.links?.find((link) => link.url.includes("instagram.com"));
+    if (!instagramLink) return null;
+
+    try {
+      const url = new URL(instagramLink.url);
+      const [handle] = url.pathname.split("/").filter(Boolean);
+      if (!handle) return null;
+      return `https://www.instagram.com/${handle}/embed`;
+    } catch {
+      return null;
+    }
+  }, [member]);
+
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === overlayRef.current) {
+      onClose();
+    }
+  };
+
   return (
     <AnimatePresence>
       {member ? (
         <motion.div
+          ref={overlayRef}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          onClick={handleOverlayClick}
         >
           <motion.div
             className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-surface-muted text-white"
@@ -57,6 +81,7 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={member?.bio ? descriptionId : undefined}
+            onClick={(event) => event.stopPropagation()}
           >
             <button
               type="button"
@@ -68,19 +93,28 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
               {t("members.close")}
             </button>
             <div className="grid gap-0 md:grid-cols-2">
-              <div className="relative h-80 w-full">
-                <Image
-                  src={
-                    member.photo ||
-                    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"
-                  }
-                  alt={member.name}
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  placeholder="blur"
-                  blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMScgaGVpZ2h0PScxJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHdpZHRoPScxJyBoZWlnaHQ9JzEnIGZpbGw9JyMxNjIyMzMnIC8+PC9zdmc+"
-                />
+              <div className="relative h-full min-h-[340px] w-full overflow-hidden bg-black/30">
+                {instagramEmbedUrl ? (
+                  <iframe
+                    src={instagramEmbedUrl}
+                    title={`${member.name} Instagram`}
+                    className="h-full w-full"
+                    loading="lazy"
+                  />
+                ) : (
+                  <Image
+                    src={
+                      member.photo ||
+                      "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"
+                    }
+                    alt={member.name}
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    placeholder="blur"
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMScgaGVpZ2h0PScxJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHdpZHRoPScxJyBoZWlnaHQ9JzEnIGZpbGw9JyMxNjIyMzMnIC8+PC9zdmc+"
+                  />
+                )}
               </div>
               <div className="flex flex-col gap-4 p-8">
                 <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-yellow">

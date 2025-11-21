@@ -44,7 +44,9 @@
     "play": "Play",
     "pause": "Pause",
     "collapse": "Collapse",
-    "noVideo": "No video to play"
+    "noVideo": "No video to play",
+    "channelPlaylist": "KNK YouTube channel playlist",
+    "channelPlaylistDescription": "Plays the official uploads when no track video is selected."
   },
   "links": {
     "title": "Community",

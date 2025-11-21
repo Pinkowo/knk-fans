@@ -6,6 +6,8 @@ import { useMemo } from "react";
 import YouTubeEmbed from "@/components/music/YouTubeEmbed";
 import { usePlayer } from "@/lib/context/PlayerContext";
 
+const CHANNEL_PLAYLIST_ID = "UUWfJjnpqSIWpKJ-ntZ2GShA";
+
 export default function MusicPlayer() {
   const t = useTranslations();
   const { state, togglePlay, toggleVisible } = usePlayer();
@@ -19,7 +21,7 @@ export default function MusicPlayer() {
       <button
         type="button"
         onClick={toggleVisible}
-        className="fixed bottom-6 left-6 z-50 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-sm text-white backdrop-blur"
+        className="fixed bottom-6 right-6 z-50 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-sm text-white backdrop-blur"
         aria-haspopup="dialog"
         aria-controls={panelId}
         aria-expanded={false}
@@ -43,9 +45,12 @@ export default function MusicPlayer() {
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-accent-yellow">{t("player.nowPlaying")}</p>
           <h3 className="text-xl font-semibold" id={headingId}>
-            {currentTrack?.title ?? t("player.queueEmpty")}
+            {currentTrack?.title ?? t("player.channelPlaylist")}
           </h3>
           {currentTrack?.artist && <p className="text-sm text-text-secondary">{currentTrack.artist}</p>}
+          {!youtubeId && (
+            <p className="text-sm text-text-secondary">{t("player.channelPlaylistDescription")}</p>
+          )}
         </div>
         <div className="flex items-center gap-2">
           <button
@@ -64,13 +69,13 @@ export default function MusicPlayer() {
           </button>
         </div>
       </div>
-      {youtubeId ? (
-        <div className="mt-4">
-          <YouTubeEmbed videoId={youtubeId} title={currentTrack?.title ?? "track"} />
-        </div>
-      ) : (
-        <p className="mt-4 text-sm text-text-secondary">{t("player.noVideo")}</p>
-      )}
+      <div className="mt-4">
+        {youtubeId ? (
+          <YouTubeEmbed videoId={youtubeId} title={currentTrack?.title ?? t("player.nowPlaying")} />
+        ) : (
+          <YouTubeEmbed playlistId={CHANNEL_PLAYLIST_ID} title={t("player.channelPlaylist")} />
+        )}
+      </div>
     </div>
   );
 }

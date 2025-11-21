@@ -44,7 +44,9 @@
     "play": "再生",
     "pause": "一時停止",
     "collapse": "閉じる",
-    "noVideo": "再生できる動画がありません"
+    "noVideo": "再生できる動画がありません",
+    "channelPlaylist": "KNK公式YouTubeプレイリスト",
+    "channelPlaylistDescription": "曲の動画がない場合は公式アップロードを流します。"
   },
   "links": {
     "title": "リンク",

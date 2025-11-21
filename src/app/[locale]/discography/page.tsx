@@ -27,7 +27,6 @@ export default async function DiscographyPage({ params }: DiscographyPageParams)
             key={album.id}
             album={album}
             locale={locale}
-            trackLinkLabel={(title) => t("discography.trackLink", { title })}
             priority={index < 2}
           />
         ))}

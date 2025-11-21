@@ -6,12 +6,10 @@ import type { Album } from "@/types/music";
 interface AlbumCardProps {
   album: Album;
   locale: string;
-  trackLinkLabel: (title: string) => string;
   priority?: boolean;
 }
 
-export default function AlbumCard({ album, locale, trackLinkLabel, priority = false }: AlbumCardProps) {
-
+export default function AlbumCard({ album, locale, priority = false }: AlbumCardProps) {
   return (
     <article className="flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5">
       <div className="relative h-64 w-full">
@@ -36,30 +34,35 @@ export default function AlbumCard({ album, locale, trackLinkLabel, priority = fa
           {album.description && <p className="mt-1 text-sm text-text-secondary">{album.description}</p>}
         </div>
         <ul className="space-y-1 text-sm text-text-secondary">
-          {album.tracks.map((track, index) => (
-            <li className="flex items-center justify-between" key={track.id}>
-              <span>
-                {index + 1}. {track.title}
-              </span>
-              {track.duration && <span>{track.duration}</span>}
-            </li>
-          ))}
+          {album.tracks.map((track, index) => {
+            const content = (
+              <>
+                <span>
+                  {index + 1}. {track.title}
+                </span>
+                {track.duration && <span>{track.duration}</span>}
+              </>
+            );
+
+            return (
+              <li key={track.id}>
+                {track.songId ? (
+                  <Link
+                    href={`/${locale}/discography/${track.songId}`}
+                    className="group flex items-center justify-between rounded-xl px-3 py-2 transition hover:bg-white/5 hover:text-white"
+                    aria-label={track.title}
+                  >
+                    {content}
+                  </Link>
+                ) : (
+                  <div className="flex items-center justify-between rounded-xl px-3 py-2">
+                    {content}
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
-        {album.tracks.some((track) => track.songId) && (
-          <div className="mt-auto flex flex-wrap gap-2 text-sm">
-            {album.tracks
-              .filter((track) => track.songId)
-              .map((track) => (
-                <Link
-                  key={track.songId}
-                  href={`/${locale}/discography/${track.songId}`}
-                  className="rounded-full border border-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white/60"
-                >
-                  {trackLinkLabel(track.title)}
-                </Link>
-              ))}
-          </div>
-        )}
       </div>
     </article>
   );

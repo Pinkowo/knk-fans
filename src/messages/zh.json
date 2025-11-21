@@ -44,7 +44,9 @@
     "play": "播放",
     "pause": "暫停",
     "collapse": "收起",
-    "noVideo": "目前沒有可播放的影片"
+    "noVideo": "目前沒有可播放的影片",
+    "channelPlaylist": "KNK 官方 YouTube 播放清單",
+    "channelPlaylistDescription": "尚未選歌時會播放官方頻道的最新影片。"
   },
   "links": {
     "title": "社群連結",

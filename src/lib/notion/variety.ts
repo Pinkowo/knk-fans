@@ -12,17 +12,45 @@ import type { Episode, VarietySeries } from "@/types/variety";
 
 const fallbackSeries: VarietySeries[] = [
   {
-    id: "weekly-idol",
-    name: "Weekly Idol",
-    description: "KNK 參加 Weekly Idol 的經典集數，包含 Random Play Dance 等經典橋段。",
-    cover: "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=700&q=80",
+    id: "weekly-idol-2017",
+    name: "Weekly Idol EP.297",
+    description: "2017 年《Sun, Moon, Star》回歸期到 Weekly Idol 的經典集數，隊長 Jihun 還臨時改編 Random Play Dance 以符合長腿隊形。",
+    cover: "https://i.ytimg.com/vi/ylFw1rMjD0I/hqdefault.jpg",
     episodes: [
       {
-        id: "weekly-idol-1",
-        title: "Episode 1",
-        episodeNumber: 1,
-        videoId: "ZKpew5jvwjI",
-        description: "KNK 的首次 Weekly Idol 出演，展示團魂與搞笑功力。",
+        id: "weekly-idol-rpd",
+        title: "Random Play Dance & Limbo Mission",
+        episodeNumber: 297,
+        videoId: "ylFw1rMjD0I",
+        description: "包含招牌 RPD 與搞笑的 90 度鞠躬懲罰，充分展現 KNK 的團魂。",
+      },
+    ],
+  },
+  {
+    id: "idol-room-sunset",
+    name: "Idol Room",
+    description: "宣傳《Sunset》時出演 JTBC《Idol Room》，除了 Talk 之外也重現舞台走位與 1 秒 Ending Fairy 挑戰。",
+    cover: "https://i.ytimg.com/vi/8zwvxPucE7Q/hqdefault.jpg",
+    episodes: [
+      {
+        id: "idol-room-choreo",
+        title: "Sunset Promotion Clip",
+        videoId: "8zwvxPucE7Q",
+        description: "以即興舞蹈與問答遊戲介紹單曲《Sunset》，適合快速了解成員性格。",
+      },
+    ],
+  },
+  {
+    id: "idol-radio-lonely-night",
+    name: "Idol Radio Live",
+    description: "MBC FM4U 的 Idol Radio 現場表演，KNK 帶來不插電版本的《Lonely Night》以及日常分享。",
+    cover: "https://i.ytimg.com/vi/Yc5GlJ9KdKY/hqdefault.jpg",
+    episodes: [
+      {
+        id: "idol-radio-live",
+        title: "Lonely Night Acoustic Stage",
+        videoId: "Yc5GlJ9KdKY",
+        description: "成員各自負責和聲與即興 ad-lib，展現穩定 Live 實力。",
       },
     ],
   },

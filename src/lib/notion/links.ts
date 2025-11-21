@@ -11,16 +11,39 @@ import type {
 
 const fallbackLinks: ExternalLink[] = [
   {
-    id: "facebook",
-    platform: "Facebook",
-    url: "https://www.facebook.com/knkofficial",
-    description: "台灣粉絲團",
-  },
-  {
     id: "instagram",
     platform: "Instagram",
-    url: "https://www.instagram.com/knkofficial",
-    description: "官方 IG",
+    url: "https://www.instagram.com/knk_official_knk/",
+    description: "官方 IG，更新行程、概念照與 Hyunjong 入隊公告。",
+    icon: "📸",
+  },
+  {
+    id: "youtube",
+    platform: "YouTube",
+    url: "https://www.youtube.com/@knk_official",
+    description: "크나큰 KNK 官方頻道，收看 MV、練習室與 vlog。",
+    icon: "▶️",
+  },
+  {
+    id: "twitter",
+    platform: "X (Twitter)",
+    url: "https://twitter.com/KNKOFFICIAL220",
+    description: "即時公告、巡演行程與粉絲活動資訊。",
+    icon: "🐦",
+  },
+  {
+    id: "fancafe",
+    platform: "Daum Fan Cafe",
+    url: "https://cafe.daum.net/knkofficial",
+    description: "韓國官方 Fan Cafe，可查閱公告、行程與成員手寫信。",
+    icon: "💌",
+  },
+  {
+    id: "spotify",
+    platform: "Spotify",
+    url: "https://open.spotify.com/artist/6tr0GrHnO8V9E1oSxYwJ8y",
+    description: "串流 KNK 全部專輯與新單曲。",
+    icon: "🎧",
   },
 ];
 

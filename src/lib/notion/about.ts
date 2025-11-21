@@ -55,7 +55,7 @@ function buildFallbackGroup(locale: AppLocale): GroupInfo {
     description: getLocalizedValue(groupDescription, locale),
     achievements: getLocalizedList(groupAchievements, locale),
     membersCount: 4,
-    cover: "https://upload.wikimedia.org/wikipedia/commons/3/3a/KNK-MusicBank-2019.jpg",
+    cover: "/images/members/KNK.png",
   };
 }
 

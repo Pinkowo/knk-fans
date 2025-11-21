@@ -35,7 +35,7 @@ const localizedMembers: LocalizedMember[] = [
       ko: "메인보컬 / 보컬 디렉터",
       ja: "メインボーカル／ボーカルディレクター",
     },
-    photo: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=640&q=80",
+    photo: "/images/members/inseong.jpg",
     links: [{ label: "Instagram", url: "https://www.instagram.com/in_ddoni/" }],
   },
   {
@@ -54,7 +54,7 @@ const localizedMembers: LocalizedMember[] = [
       ko: "리더 / 메인댄서",
       ja: "リーダー／メインダンサー",
     },
-    photo: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=640&q=80",
+    photo: "/images/members/jihun.jpg",
     links: [{ label: "Instagram", url: "https://www.instagram.com/hvlf__00/" }],
   },
   {
@@ -73,7 +73,7 @@ const localizedMembers: LocalizedMember[] = [
       ko: "리드보컬",
       ja: "リードボーカル",
     },
-    photo: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=640&q=80",
+    photo: "/images/members/dongwon.jpg",
     links: [{ label: "Instagram", url: "https://www.instagram.com/2_dongwon_/" }],
   },
   {
@@ -92,7 +92,7 @@ const localizedMembers: LocalizedMember[] = [
       ko: "보컬 / 퍼포머",
       ja: "ボーカル／パフォーマー",
     },
-    photo: "https://images.unsplash.com/photo-1504593811423-6dd665756598?auto=format&fit=crop&w=640&q=80",
+    photo: "/images/members/hyunjong.jpg",
     links: [{ label: "Instagram", url: "https://www.instagram.com/kimhyunzzong/" }],
   },
   {
@@ -111,7 +111,8 @@ const localizedMembers: LocalizedMember[] = [
       ko: "전 멤버 보컬 / 래퍼",
       ja: "元メンバー ボーカル／ラッパー",
     },
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=640&q=80",
+    photo:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/parkseoham/" }],
   },
   {
@@ -130,7 +131,8 @@ const localizedMembers: LocalizedMember[] = [
       ko: "전 멤버 래퍼 / 기타",
       ja: "元メンバー ラッパー／ギタリスト",
     },
-    photo: "https://images.unsplash.com/photo-1464863979621-258859e62245?auto=format&fit=crop&w=640&q=80",
+    photo:
+      "https://images.unsplash.com/photo-1464863979621-258859e62245?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/imwoowow/" }],
   },
   {
@@ -149,7 +151,8 @@ const localizedMembers: LocalizedMember[] = [
       ko: "전 멤버 메인보컬",
       ja: "元メンバー メインボーカル",
     },
-    photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=640&q=80",
+    photo:
+      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=640&q=80",
     links: [{ label: "Instagram", url: "https://www.instagram.com/k_yu.jin/" }],
   },
 ];
@@ -195,7 +198,9 @@ export async function fetchMembers(locale: AppLocale = defaultLocale): Promise<M
   }
 
   try {
-    const response = await notionClient.queryDatabase<NotionQueryResponse<MemberDatabaseProperties>>({
+    const response = await notionClient.queryDatabase<
+      NotionQueryResponse<MemberDatabaseProperties>
+    >({
       database_id: databaseId,
       sorts: [{ property: "Order", direction: "ascending" }],
     });
@@ -216,7 +221,10 @@ export async function fetchMembers(locale: AppLocale = defaultLocale): Promise<M
   }
 }
 
-export async function fetchMemberById(id: string, locale: AppLocale = defaultLocale): Promise<Member | null> {
+export async function fetchMemberById(
+  id: string,
+  locale: AppLocale = defaultLocale,
+): Promise<Member | null> {
   const members = await fetchMembers(locale);
   return members.find((member) => member.id === id) ?? null;
 }

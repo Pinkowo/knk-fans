@@ -6,7 +6,9 @@
     "variety": "Variety",
     "about": "About KNK",
     "contact": "Contact",
-    "ariaMain": "Primary navigation"
+    "ariaMain": "Primary navigation",
+    "menu": "Menu",
+    "close": "Close menu"
   },
   "about": {
     "title": "About KNK",

@@ -39,6 +39,27 @@ export function useLocalStorage<T>(
 ): UseLocalStorageResult<T> {
   const [storedValue, setStoredValue] = useState<T>(() => readValue(key, initialValue));
   const initialValueRef = useRef(initialValue);
+  const broadcastTimeoutRef = useRef<number | null>(null);
+
+  const broadcastValue = useCallback(
+    (value: T) => {
+      if (!isBrowser) {
+        return;
+      }
+      if (broadcastTimeoutRef.current !== null) {
+        window.clearTimeout(broadcastTimeoutRef.current);
+      }
+      broadcastTimeoutRef.current = window.setTimeout(() => {
+        window.dispatchEvent(
+          new CustomEvent(LOCAL_EVENT_NAME, {
+            detail: { key, value },
+          })
+        );
+        broadcastTimeoutRef.current = null;
+      }, 0);
+    },
+    [key]
+  );
 
   const setValue = useCallback(
     (valueOrUpdater: T | ((previous: T) => T)) => {
@@ -48,11 +69,7 @@ export function useLocalStorage<T>(
         if (isBrowser) {
           try {
             window.localStorage.setItem(key, JSON.stringify(newValue));
-            window.dispatchEvent(
-              new CustomEvent(LOCAL_EVENT_NAME, {
-                detail: { key, value: newValue },
-              })
-            );
+            broadcastValue(newValue);
           } catch (error) {
             console.warn(`useLocalStorage: failed to write key "${key}"`, error);
           }
@@ -61,15 +78,16 @@ export function useLocalStorage<T>(
         return newValue;
       });
     },
-    [key]
+    [broadcastValue, key]
   );
 
   const resetValue = useCallback(() => {
     setStoredValue(() => readValue(key, initialValueRef.current));
     if (isBrowser) {
       window.localStorage.removeItem(key);
+      broadcastValue(readValue(key, initialValueRef.current));
     }
-  }, [key]);
+  }, [broadcastValue, key]);
 
   useEffect(() => {
     if (!isBrowser) {
@@ -96,8 +114,11 @@ export function useLocalStorage<T>(
     return () => {
       window.removeEventListener("storage", handleStorage);
       window.removeEventListener(LOCAL_EVENT_NAME, handleLocalEvent as EventListener);
+      if (broadcastTimeoutRef.current !== null) {
+        window.clearTimeout(broadcastTimeoutRef.current);
+      }
     };
-  }, [key]);
+  }, [key, broadcastValue]);
 
   return [storedValue, setValue, resetValue];
 }

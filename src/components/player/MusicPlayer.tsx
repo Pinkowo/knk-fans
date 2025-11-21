@@ -21,7 +21,7 @@ export default function MusicPlayer() {
       <button
         type="button"
         onClick={toggleVisible}
-        className="fixed bottom-6 right-6 z-50 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-sm text-white backdrop-blur"
+        className="fixed bottom-5 right-5 z-50 rounded-full border border-white/15 bg-black/50 px-4 py-2 text-sm text-white backdrop-blur md:bottom-6 md:right-6"
         aria-haspopup="dialog"
         aria-controls={panelId}
         aria-expanded={false}
@@ -38,7 +38,7 @@ export default function MusicPlayer() {
       aria-live="polite"
       aria-atomic="true"
       aria-labelledby={headingId}
-      className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-3xl rounded-3xl border border-white/10 bg-black/80 p-4 text-white backdrop-blur"
+      className="fixed bottom-3 left-3 right-3 z-50 mx-auto max-w-full rounded-3xl border border-white/10 bg-black/80 p-4 text-white backdrop-blur md:bottom-4 md:left-4 md:right-4 md:max-w-3xl md:p-5"
       id={panelId}
     >
       <div className="flex items-center justify-between">

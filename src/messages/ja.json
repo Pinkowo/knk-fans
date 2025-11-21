@@ -6,7 +6,9 @@
     "variety": "バラエティ",
     "about": "KNK について",
     "contact": "お問い合わせ",
-    "ariaMain": "メインナビゲーション"
+    "ariaMain": "メインナビゲーション",
+    "menu": "メニュー",
+    "close": "メニューを閉じる"
   },
   "about": {
     "title": "グループ紹介",

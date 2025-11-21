@@ -6,7 +6,9 @@
     "variety": "예능 추천",
     "about": "KNK 소개",
     "contact": "문의하기",
-    "ariaMain": "메인 내비게이션"
+    "ariaMain": "메인 내비게이션",
+    "menu": "메뉴",
+    "close": "메뉴 닫기"
   },
   "about": {
     "title": "그룹 소개",

@@ -11,19 +11,30 @@ import type { VarietySeries } from "@/types/variety";
 interface SeriesCardProps {
   series: VarietySeries;
   priority?: boolean;
+  isOpen?: boolean;
+  onToggle?: (seriesId: string) => void;
 }
 
-export default function SeriesCard({ series, priority = false }: SeriesCardProps) {
-  const [open, setOpen] = useState(false);
+export default function SeriesCard({ series, priority = false, isOpen, onToggle }: SeriesCardProps) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = typeof isOpen === "boolean" ? isOpen : internalOpen;
   const t = useTranslations();
   const headingId = `series-heading-${series.id}`;
   const panelId = `series-panel-${series.id}`;
+
+  const handleToggle = () => {
+    if (onToggle) {
+      onToggle(series.id);
+    } else {
+      setInternalOpen((prev) => !prev);
+    }
+  };
 
   return (
     <article className="rounded-3xl border border-white/10 bg-white/5">
       <button
         type="button"
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={handleToggle}
         className="flex w-full items-center gap-4 p-4 text-left"
         aria-expanded={open}
         aria-controls={panelId}

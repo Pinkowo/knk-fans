@@ -86,7 +86,7 @@ export default function Header({ locale }: HeaderProps) {
                 href={href}
                 key={item.id}
               >
-                {t(item.id)}
+                <span className="hover-highlight">{t(item.id)}</span>
               </Link>
             );
           })}
@@ -139,7 +139,7 @@ export default function Header({ locale }: HeaderProps) {
                       active ? "bg-white/10 text-white shadow-inner" : "text-text-secondary hover:bg-white/5 hover:text-white"
                     }`}
                   >
-                    {t(item.id)}
+                    <span className="hover-highlight">{t(item.id)}</span>
                   </Link>
                 );
               })}

@@ -133,6 +133,7 @@
     "countLabel": "{count} 人",
     "empty": "表示できるメンバーがいません",
     "close": "閉じる",
+    "loading": "Instagram を閉じています…",
     "status": {
       "current": "現役",
       "former": "卒業"

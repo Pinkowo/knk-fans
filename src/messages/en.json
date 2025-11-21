@@ -133,6 +133,7 @@
     "countLabel": "{count} members",
     "empty": "No members to display yet",
     "close": "Close",
+    "loading": "Closing Instagram…",
     "status": {
       "current": "Current",
       "former": "Former"

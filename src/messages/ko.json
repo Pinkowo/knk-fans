@@ -133,6 +133,7 @@
     "countLabel": "총 {count}명",
     "empty": "표시할 멤버가 없습니다",
     "close": "닫기",
+    "loading": "Instagram 정리 중…",
     "status": {
       "current": "현역",
       "former": "전 멤버"

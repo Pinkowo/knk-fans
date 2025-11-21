@@ -133,6 +133,7 @@
     "countLabel": "{count} 位成員",
     "empty": "暫時沒有資料",
     "close": "關閉",
+    "loading": "正在關閉 Instagram…",
     "status": {
       "current": "現任",
       "former": "已退團"

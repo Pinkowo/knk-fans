@@ -150,6 +150,7 @@ const localizedMembers: LocalizedMember[] = [
       ja: "元メンバー メインボーカル",
     },
     photo: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=640&q=80",
+    links: [{ label: "Instagram", url: "https://www.instagram.com/k_yu.jin/" }],
   },
 ];
 

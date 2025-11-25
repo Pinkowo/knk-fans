@@ -14,7 +14,26 @@
     "title": "그룹 소개",
     "debut": "데뷔일",
     "members": "{count}명의 멤버",
-    "achievements": "주요 활동"
+    "achievements": "주요 활동",
+    "links": {
+      "title": "공식 링크",
+      "description": "KNK의 공식 채널과 SNS를 한눈에 확인하세요.",
+      "visit": "바로가기",
+      "items": {
+        "officialYoutube": {
+          "label": "KNK 공식 유튜브",
+          "description": "뮤직비디오, 연습 영상, 무대 비하인드."
+        },
+        "varietyChannel": {
+          "label": "KNK 예능 채널",
+          "description": "JTBC 출연, 랜덤플레이댄스, 라디오 영상."
+        },
+        "instagram": {
+          "label": "KNK 인스타그램",
+          "description": "스케줄, 콘셉트 사진, 일상 업데이트."
+        }
+      }
+    }
   },
   "aboutMe": {
     "title": "About Me",

@@ -14,7 +14,26 @@
     "title": "グループ紹介",
     "debut": "デビュー日",
     "members": "{count} 名のメンバー",
-    "achievements": "主な実績"
+    "achievements": "主な実績",
+    "links": {
+      "title": "公式リンク",
+      "description": "公式チャンネルと SNS をここからチェックできます。",
+      "visit": "アクセス",
+      "items": {
+        "officialYoutube": {
+          "label": "KNK 公式 YouTube",
+          "description": "MV、練習映像、ステージの舞台裏。"
+        },
+        "varietyChannel": {
+          "label": "KNK バラエティチャンネル",
+          "description": "JTBC 出演、Random Play Dance、ラジオ映像。"
+        },
+        "instagram": {
+          "label": "KNK Instagram",
+          "description": "スケジュール、コンセプト写真、日常アップデート。"
+        }
+      }
+    }
   },
   "aboutMe": {
     "title": "運営について",

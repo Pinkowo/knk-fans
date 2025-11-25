@@ -14,7 +14,26 @@
     "title": "About KNK",
     "debut": "Debut date",
     "members": "{count} members",
-    "achievements": "Milestones"
+    "achievements": "Milestones",
+    "links": {
+      "title": "Official links",
+      "description": "Watch KNK’s uploads or follow their official socials.",
+      "visit": "Visit",
+      "items": {
+        "officialYoutube": {
+          "label": "KNK official YouTube",
+          "description": "Music videos, behind-the-scenes clips, and performances."
+        },
+        "varietyChannel": {
+          "label": "KNK variety channel",
+          "description": "JTBC appearances, Random Play Dance, and radio shows."
+        },
+        "instagram": {
+          "label": "KNK Instagram",
+          "description": "Schedules, concept photos, and daily updates."
+        }
+      }
+    }
   },
   "aboutMe": {
     "title": "About Me",

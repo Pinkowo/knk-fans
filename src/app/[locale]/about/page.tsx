@@ -13,6 +13,28 @@ interface AboutPageParams {
 export default async function AboutPage({ params }: AboutPageParams) {
   const { locale } = await params;
   const [t, group] = await Promise.all([getTranslations({ locale }), fetchGroupInfo(locale)]);
+  const visitLabel = t("about.links.visit");
+  const officialLinks = [
+    {
+      id: "officialYoutube",
+      url: "https://www.youtube.com/@knk5601",
+      platform: "YOUTUBE",
+    },
+    {
+      id: "varietyChannel",
+      url: "https://www.youtube.com/@%EB%8B%A4%ED%81%B0%EB%86%88%EB%93%A4",
+      platform: "YOUTUBE",
+    },
+    {
+      id: "instagram",
+      url: "https://www.instagram.com/knk_official_knk",
+      platform: "INSTAGRAM",
+    },
+  ].map((link) => ({
+    ...link,
+    label: t(`about.links.items.${link.id}.label`),
+    description: t(`about.links.items.${link.id}.description`),
+  }));
 
   return (
     <div className="mx-auto max-w-5xl space-y-10 px-6 py-12 text-white">
@@ -23,10 +45,14 @@ export default async function AboutPage({ params }: AboutPageParams) {
       </header>
       <section className="grid gap-6 md:grid-cols-2">
         <div className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">{t("about.debut")}</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">
+            {t("about.debut")}
+          </p>
           <p className="text-2xl font-semibold">{group.debutDate}</p>
           {group.membersCount && (
-            <p className="text-sm text-text-secondary">{t("about.members", { count: group.membersCount })}</p>
+            <p className="text-sm text-text-secondary">
+              {t("about.members", { count: group.membersCount })}
+            </p>
           )}
         </div>
         <div className="relative h-80 w-full overflow-hidden rounded-3xl">
@@ -53,6 +79,39 @@ export default async function AboutPage({ params }: AboutPageParams) {
           </ul>
         </section>
       )}
+      <section className="space-y-4">
+        <div className="space-y-2">
+          <p className="text-xs uppercase tracking-[0.3em] text-accent-yellow">
+            {t("about.links.title")}
+          </p>
+          <p className="text-sm text-text-secondary">{t("about.links.description")}</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-3">
+          {officialLinks.map((link) => (
+            <a
+              key={link.id}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex h-full flex-col gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 text-left transition hover:border-white/30"
+            >
+              <div className="flex-1 space-y-1">
+                <p className="text-xs uppercase tracking-[0.3em] text-accent-teal">
+                  {link.platform}
+                </p>
+                <h3 className="text-lg font-semibold text-white">{link.label}</h3>
+                <p className="text-sm text-text-secondary">{link.description}</p>
+              </div>
+              <div className="mt-auto flex" style={{ justifyContent: "flex-end" }}>
+                <span className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.3em] text-accent-yellow">
+                  {visitLabel}
+                  <span aria-hidden="true">↗</span>
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

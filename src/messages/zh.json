@@ -14,7 +14,26 @@
     "title": "團體介紹",
     "debut": "出道日期",
     "members": "{count} 位成員",
-    "achievements": "重要里程碑"
+    "achievements": "重要里程碑",
+    "links": {
+      "title": "官方連結",
+      "description": "直接追蹤官方頻道與社群，掌握最新消息。",
+      "visit": "前往",
+      "items": {
+        "officialYoutube": {
+          "label": "KNK 官方 YouTube",
+          "description": "音樂錄影帶、練習室與舞台花絮。"
+        },
+        "varietyChannel": {
+          "label": "KNK 綜藝頻道",
+          "description": "JTBC 節目、Random Play Dance、電台等片段。"
+        },
+        "instagram": {
+          "label": "KNK Instagram",
+          "description": "行程公告、概念照與日常更新。"
+        }
+      }
+    }
   },
   "aboutMe": {
     "title": "關於我",

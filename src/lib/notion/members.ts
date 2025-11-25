@@ -205,6 +205,11 @@ export async function fetchMembers(locale: AppLocale = defaultLocale): Promise<M
       sorts: [{ property: "Order", direction: "ascending" }],
     });
 
+    if (response.results.length === 0) {
+      console.warn("No members found in Notion, using fallback data");
+      return buildFallbackMembers(locale);
+    }
+
     return response.results
       .map((page) => {
         try {

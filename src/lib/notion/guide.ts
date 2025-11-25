@@ -336,6 +336,11 @@ export async function fetchGuideData(locale: AppLocale = defaultLocale): Promise
       .filter((page): page is NotionPage<GuideDatabaseProperties> => Boolean(page))
       .map((page) => mapGuideItem(page));
 
+    if (items.length === 0 && charms.length === 0) {
+      console.warn("No guide data found in Notion, using fallback data");
+      return buildGuideFallback(locale);
+    }
+
     return {
       songs: items.filter((item) => item.category === "song"),
       shows: items.filter((item) => item.category !== "song"),

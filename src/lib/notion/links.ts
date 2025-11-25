@@ -115,7 +115,12 @@ export async function fetchExternalLinks(locale: AppLocale = defaultLocale): Pro
       sorts: [{ property: "Order", direction: "ascending" }],
     });
 
-    return response.results
+    if (response.results.length === 0) {
+      console.warn("No external links found in Notion, using fallback data");
+      return buildFallbackLinks(locale);
+    }
+
+    const links = response.results
       .map((page) => {
         try {
           return mapLink(page);
@@ -125,6 +130,13 @@ export async function fetchExternalLinks(locale: AppLocale = defaultLocale): Pro
         }
       })
       .filter((link): link is ExternalLink => Boolean(link));
+
+    if (links.length === 0) {
+      console.warn("No valid external links after mapping, using fallback data");
+      return buildFallbackLinks(locale);
+    }
+
+    return links;
   } catch (error) {
     console.error("Failed to fetch external links", error);
     return buildFallbackLinks(locale);

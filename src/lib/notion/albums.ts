@@ -167,7 +167,12 @@ export async function fetchAlbums(locale: AppLocale = defaultLocale): Promise<Al
       sorts: [{ property: "ReleaseDate", direction: "descending" }],
     });
 
-    return response.results
+    if (response.results.length === 0) {
+      console.warn("No albums found in Notion, using fallback data");
+      return buildFallbackAlbums(locale);
+    }
+
+    const albums = response.results
       .map((page) => {
         try {
           return mapAlbum(page as NotionPage<AlbumProperties>);
@@ -177,6 +182,13 @@ export async function fetchAlbums(locale: AppLocale = defaultLocale): Promise<Al
         }
       })
       .filter((album): album is Album => Boolean(album));
+
+    if (albums.length === 0) {
+      console.warn("No valid albums after mapping, using fallback data");
+      return buildFallbackAlbums(locale);
+    }
+
+    return albums;
   } catch (error) {
     console.error("Failed to fetch albums", error);
     return buildFallbackAlbums(locale);

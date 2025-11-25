@@ -160,7 +160,12 @@ export async function fetchVarietySeries(locale: AppLocale = defaultLocale): Pro
       sorts: [{ property: "Order", direction: "ascending" }],
     });
 
-    return response.results
+    if (response.results.length === 0) {
+      console.warn("No variety series found in Notion, using fallback data");
+      return buildFallbackSeries(locale);
+    }
+
+    const series = response.results
       .map((page) => {
         try {
           return mapSeries(page);
@@ -170,6 +175,13 @@ export async function fetchVarietySeries(locale: AppLocale = defaultLocale): Pro
         }
       })
       .filter((series): series is VarietySeries => Boolean(series));
+
+    if (series.length === 0) {
+      console.warn("No valid variety series after mapping, using fallback data");
+      return buildFallbackSeries(locale);
+    }
+
+    return series;
   } catch (error) {
     console.error("Failed to fetch variety series", error);
     return buildFallbackSeries(locale);

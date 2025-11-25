@@ -35,7 +35,8 @@
       },
       "contact": {
         "title": "Contact",
-        "body": "Want to contribute data, report an issue, or work together? Email or DM me anytime."
+        "body": "Want to contribute data, report an issue, or work together? Email or DM me anytime.",
+        "instagram": "Instagram @knkfansite"
       }
     }
   },
@@ -140,7 +141,8 @@
     },
     "modal": {
       "titleSuffix": "profile"
-    }
+    },
+    "instagram": "Instagram"
   },
   "errors": {
     "generic": "Something went wrong. Please try again."

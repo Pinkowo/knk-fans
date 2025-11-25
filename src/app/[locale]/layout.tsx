@@ -52,7 +52,7 @@ export default async function LocaleLayout({
   const resolvedLocale = resolveLocale(locale);
 
   setRequestLocale(resolvedLocale);
-  const messages = await getMessages();
+  const messages = await getMessages({ locale: resolvedLocale });
   const t = await getTranslations({ locale: resolvedLocale });
 
   return (
@@ -66,7 +66,7 @@ export default async function LocaleLayout({
           <main id="main-content" className="flex-1 bg-gradient-to-b from-surface via-surface-muted to-surface">
             {children}
           </main>
-          <Footer />
+          <Footer locale={resolvedLocale} />
           <SitePet />
           <PetSettingsPanel />
           <MusicPlayer />

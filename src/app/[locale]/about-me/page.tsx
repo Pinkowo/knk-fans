@@ -33,7 +33,7 @@ export default async function AboutMePage({ params }: AboutMePageParams) {
         <div className="flex flex-col gap-1 text-sm">
           <a className="text-accent-teal" href="mailto:hello@knkfansite.tw">hello@knkfansite.tw</a>
           <a className="text-accent-pink" href="https://instagram.com/knkfansite" target="_blank" rel="noopener noreferrer">
-            Instagram @knkfansite
+            {t("aboutMe.sections.contact.instagram")}
           </a>
         </div>
       </section>

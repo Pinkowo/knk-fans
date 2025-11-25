@@ -221,7 +221,7 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
                       />
                     ) : (
                       <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface-muted via-surface to-black text-center text-sm font-semibold text-text-secondary">
-                        Instagram
+                        {t("members.instagram")}
                       </div>
                     )}
                   </div>

@@ -35,7 +35,8 @@
       },
       "contact": {
         "title": "聯絡方式",
-        "body": "如果你想貢獻資料、提供建議或合作，歡迎寫信或透過 IG 私訊我。"
+        "body": "如果你想貢獻資料、提供建議或合作，歡迎寫信或透過 IG 私訊我。",
+        "instagram": "Instagram @knkfansite"
       }
     }
   },
@@ -140,7 +141,8 @@
     },
     "modal": {
       "titleSuffix": "成員介紹"
-    }
+    },
+    "instagram": "Instagram"
   },
   "errors": {
     "generic": "發生錯誤，請稍後再試。"

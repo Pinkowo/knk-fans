@@ -35,7 +35,8 @@
       },
       "contact": {
         "title": "コンタクト",
-        "body": "資料提供やコラボの提案があれば、メールまたは Instagram でお気軽にご連絡ください。"
+        "body": "資料提供やコラボの提案があれば、メールまたは Instagram でお気軽にご連絡ください。",
+        "instagram": "Instagram @knkfansite"
       }
     }
   },
@@ -140,7 +141,8 @@
     },
     "modal": {
       "titleSuffix": "プロフィール"
-    }
+    },
+    "instagram": "Instagram"
   },
   "errors": {
     "generic": "問題が発生しました。しばらくしてから再度お試しください。"

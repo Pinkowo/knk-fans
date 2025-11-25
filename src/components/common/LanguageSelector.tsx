@@ -40,6 +40,7 @@ export default function LanguageSelector() {
     })();
 
     router.replace(newPath);
+    router.refresh();
   };
 
   return (

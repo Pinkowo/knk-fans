@@ -35,7 +35,8 @@
       },
       "contact": {
         "title": "연락처",
-        "body": "자료 제공, 피드백, 협업은 메일이나 인스타 DM으로 언제든지 환영합니다."
+        "body": "자료 제공, 피드백, 협업은 메일이나 인스타 DM으로 언제든지 환영합니다.",
+        "instagram": "Instagram @knkfansite"
       }
     }
   },
@@ -140,7 +141,8 @@
     },
     "modal": {
       "titleSuffix": "프로필"
-    }
+    },
+    "instagram": "Instagram"
   },
   "errors": {
     "generic": "문제가 발생했습니다. 잠시 후 다시 시도해주세요."

@@ -11,11 +11,11 @@ import type { AppLocale } from "@/i18n";
 type NavPath = "" | "/members" | "/discography" | "/variety" | "/about";
 
 const NAV_LINKS: Array<{ id: string; path: NavPath }> = [
-  { id: "nav.home", path: "" },
-  { id: "nav.members", path: "/members" },
-  { id: "nav.discography", path: "/discography" },
-  { id: "nav.variety", path: "/variety" },
-  { id: "nav.about", path: "/about" },
+  { id: "home", path: "" },
+  { id: "members", path: "/members" },
+  { id: "discography", path: "/discography" },
+  { id: "variety", path: "/variety" },
+  { id: "about", path: "/about" },
 ];
 
 interface HeaderProps {
@@ -30,7 +30,7 @@ function buildHref(locale: AppLocale, path: NavPath) {
 }
 
 export default function Header({ locale }: HeaderProps) {
-  const t = useTranslations();
+  const t = useTranslations("nav");
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -74,7 +74,7 @@ export default function Header({ locale }: HeaderProps) {
           KNK GUIDE
         </Link>
         <nav
-          aria-label={t("nav.ariaMain")}
+          aria-label={t("ariaMain")}
           className="hidden gap-6 text-sm font-medium text-text-secondary md:flex"
           role="navigation"
         >
@@ -99,34 +99,34 @@ export default function Header({ locale }: HeaderProps) {
             type="button"
             className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-2 text-sm font-semibold text-white transition hover:border-white/40 md:hidden"
             onClick={() => setIsMenuOpen(true)}
-            aria-label={t("nav.menu")}
+            aria-label={t("menu")}
             aria-expanded={isMenuOpen}
           >
-            <span>{t("nav.menu")}</span>
+            <span>{t("menu")}</span>
           </button>
         </div>
       </div>
 
       {isMenuOpen ? (
-        <div className="fixed inset-0 z-[60] md:hidden" role="dialog" aria-label={t("nav.menu")}>
+        <div className="fixed inset-0 z-[60] md:hidden" role="dialog" aria-label={t("menu")}>
           <button
             type="button"
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            aria-label={t("nav.close")}
+            aria-label={t("close")}
             onClick={() => setIsMenuOpen(false)}
           />
           <div className="absolute inset-x-0 top-0 space-y-5 rounded-b-3xl border-b border-white/10 bg-surface p-6 shadow-2xl">
             <div className="flex items-center justify-between">
-              <span className="text-xs uppercase tracking-[0.3em] text-text-secondary">{t("nav.ariaMain")}</span>
+              <span className="text-xs uppercase tracking-[0.3em] text-text-secondary">{t("ariaMain")}</span>
               <button
                 type="button"
                 className="rounded-full border border-white/20 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t("nav.close")}
+                {t("close")}
               </button>
             </div>
-            <nav className="flex flex-col gap-2" aria-label={t("nav.ariaMain")}>
+            <nav className="flex flex-col gap-2" aria-label={t("ariaMain")}>
               {NAV_LINKS.map((item) => {
                 const href = buildHref(locale, item.path);
                 const active = isActive(href);

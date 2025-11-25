@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import type { Member } from "@/types/member";
 
@@ -11,6 +12,7 @@ interface MemberCardProps {
 }
 
 export default function MemberCard({ member, onSelect, priority = false }: MemberCardProps) {
+  const t = useTranslations();
   const label = member.position ? `${member.name} · ${member.position}` : member.name;
 
   return (
@@ -41,7 +43,7 @@ export default function MemberCard({ member, onSelect, priority = false }: Membe
       )}
       <div className="relative flex flex-1 flex-col gap-2 p-6">
         <span className="absolute right-4 top-4 rounded-full bg-black/40 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-white">
-          {member.status === "current" ? "ACTIVE" : "FORMER"}
+          {member.status === "current" ? t("members.status.current") : t("members.status.former")}
         </span>
         <p className="text-sm text-text-secondary">{member.position}</p>
         <h3 className="text-xl font-semibold text-white">{member.name}</h3>

@@ -13,6 +13,8 @@ import type {
   NotionUrlProperty,
 } from "@/types/notion";
 
+type LocalizedRichTextKey = `${"Bio" | "Position"} (${AppLocale})`;
+
 type LocalizedMember = Omit<Member, "bio" | "position"> & {
   bio: Record<AppLocale, string>;
   position?: Record<AppLocale, string>;
@@ -162,11 +164,34 @@ interface MemberDatabaseProperties {
   Status: NotionSelectProperty;
   Bio?: NotionRichTextProperty;
   Position?: NotionRichTextProperty;
+  "Bio (zh)"?: NotionRichTextProperty;
+  "Bio (ko)"?: NotionRichTextProperty;
+  "Bio (ja)"?: NotionRichTextProperty;
+  "Bio (en)"?: NotionRichTextProperty;
+  "Position (zh)"?: NotionRichTextProperty;
+  "Position (ko)"?: NotionRichTextProperty;
+  "Position (ja)"?: NotionRichTextProperty;
+  "Position (en)"?: NotionRichTextProperty;
   Photo?: NotionFilesProperty;
   Profile?: NotionUrlProperty;
 }
 
-function mapMember(page: NotionPage<MemberDatabaseProperties>): Member {
+function getLocalizedRichText(
+  properties: MemberDatabaseProperties,
+  baseKey: "Bio" | "Position",
+  locale: AppLocale,
+): string | undefined {
+  const localizedKey = `${baseKey} (${locale})` as LocalizedRichTextKey;
+  const defaultKey = `${baseKey} (${defaultLocale})` as LocalizedRichTextKey;
+
+  return (
+    getRichTextValue(properties[localizedKey]) ??
+    getRichTextValue(properties[defaultKey]) ??
+    getRichTextValue(properties[baseKey])
+  );
+}
+
+function mapMember(page: NotionPage<MemberDatabaseProperties>, locale: AppLocale): Member {
   const { properties } = page;
   const status = (properties.Status.select?.name?.toLowerCase() as MemberStatus) || "current";
 
@@ -176,8 +201,8 @@ function mapMember(page: NotionPage<MemberDatabaseProperties>): Member {
     id: page.id,
     name: getTitleValue(properties.Name),
     status,
-    bio: getRichTextValue(properties.Bio) || "",
-    position: getRichTextValue(properties.Position) || undefined,
+    bio: getLocalizedRichText(properties, "Bio", locale) || "",
+    position: getLocalizedRichText(properties, "Position", locale) || undefined,
     photo: getFirstFileUrl(properties.Photo) ?? profileLink,
     links: profileLink ? [{ label: "Profile", url: profileLink }] : undefined,
   };
@@ -213,7 +238,7 @@ export async function fetchMembers(locale: AppLocale = defaultLocale): Promise<M
     return response.results
       .map((page) => {
         try {
-          return mapMember(page);
+          return mapMember(page, locale);
         } catch (error) {
           console.warn("Failed to map member", error);
           return null;

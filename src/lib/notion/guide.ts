@@ -17,6 +17,8 @@ import type {
   NotionUrlProperty,
 } from "@/types/notion";
 
+type LocalizedRichTextKey = `${"Description" | "Title" | "Category"} (${AppLocale})`;
+
 type LocalizedString = Record<AppLocale, string>;
 type LocalizedTags = Record<AppLocale, string[]>;
 
@@ -257,6 +259,10 @@ function buildGuideFallback(locale: AppLocale): GuideData {
 type GuideDatabaseProperties = {
   Title: NotionTitleProperty;
   Description: NotionRichTextProperty;
+  "Description (zh)"?: NotionRichTextProperty;
+  "Description (ko)"?: NotionRichTextProperty;
+  "Description (ja)"?: NotionRichTextProperty;
+  "Description (en)"?: NotionRichTextProperty;
   Category: NotionSelectProperty;
   Link: NotionUrlProperty;
   Tags: NotionMultiSelectProperty;
@@ -269,9 +275,35 @@ type CharmDatabaseProperties = {
   Description: NotionRichTextProperty;
   Category: NotionSelectProperty;
   Icon: NotionRichTextProperty;
+  "Title (zh)"?: NotionRichTextProperty;
+  "Title (ko)"?: NotionRichTextProperty;
+  "Title (ja)"?: NotionRichTextProperty;
+  "Title (en)"?: NotionRichTextProperty;
+  "Description (zh)"?: NotionRichTextProperty;
+  "Description (ko)"?: NotionRichTextProperty;
+  "Description (ja)"?: NotionRichTextProperty;
+  "Description (en)"?: NotionRichTextProperty;
+  "Category (zh)"?: NotionRichTextProperty;
+  "Category (ko)"?: NotionRichTextProperty;
+  "Category (ja)"?: NotionRichTextProperty;
+  "Category (en)"?: NotionRichTextProperty;
 };
 
-function mapGuideItem(page: NotionPage<GuideDatabaseProperties>): RecommendedItem {
+function getLocalizedRichText(
+  properties: Record<string, NotionRichTextProperty | undefined>,
+  baseKey: "Description" | "Title" | "Category",
+  locale: AppLocale,
+): string | undefined {
+  const localizedKey = `${baseKey} (${locale})` as LocalizedRichTextKey;
+  const defaultKey = `${baseKey} (${defaultLocale})` as LocalizedRichTextKey;
+  return (
+    getRichTextValue(properties[localizedKey]) ??
+    getRichTextValue(properties[defaultKey]) ??
+    getRichTextValue(properties[baseKey])
+  );
+}
+
+function mapGuideItem(page: NotionPage<GuideDatabaseProperties>, locale: AppLocale): RecommendedItem {
   const { properties } = page;
   const categoryValue = properties.Category.select?.name?.toLowerCase() as GuideCategory | undefined;
   const categories: GuideCategory[] = ["song", "stage", "variety"];
@@ -280,7 +312,7 @@ function mapGuideItem(page: NotionPage<GuideDatabaseProperties>): RecommendedIte
   return {
     id: page.id,
     title: getTitleValue(properties.Title),
-    description: getRichTextValue(properties.Description),
+    description: getLocalizedRichText(properties, "Description", locale),
     category,
     link: sanitizeUrl(properties.Link?.url ?? undefined),
     thumbnail: getFirstFileUrl(properties.Thumbnail),
@@ -288,14 +320,15 @@ function mapGuideItem(page: NotionPage<GuideDatabaseProperties>): RecommendedIte
   };
 }
 
-function mapCharmItem(page: NotionPage<CharmDatabaseProperties>): GroupCharm {
+function mapCharmItem(page: NotionPage<CharmDatabaseProperties>, locale: AppLocale): GroupCharm {
   const { properties } = page;
   return {
     id: page.id,
-    title: getTitleValue(properties.Title),
-    description: getRichTextValue(properties.Description),
+    title: getLocalizedRichText(properties, "Title", locale) || getTitleValue(properties.Title),
+    description: getLocalizedRichText(properties, "Description", locale),
     icon: getRichTextValue(properties.Icon) || "✨",
-    category: properties.Category.select?.name ?? "general",
+    category:
+      getLocalizedRichText(properties, "Category", locale) ?? properties.Category.select?.name ?? "general",
   };
 }
 
@@ -313,7 +346,7 @@ async function fetchCharmsFromNotion(locale: AppLocale) {
   return response.results
     .map((page) => toNotionPage<CharmDatabaseProperties>(page))
     .filter((page): page is NotionPage<CharmDatabaseProperties> => Boolean(page))
-    .map((page) => mapCharmItem(page));
+    .map((page) => mapCharmItem(page, locale));
 }
 
 export async function fetchGuideData(locale: AppLocale = defaultLocale): Promise<GuideData> {
@@ -334,7 +367,7 @@ export async function fetchGuideData(locale: AppLocale = defaultLocale): Promise
     const items = guideResponse.results
       .map((page) => toNotionPage<GuideDatabaseProperties>(page))
       .filter((page): page is NotionPage<GuideDatabaseProperties> => Boolean(page))
-      .map((page) => mapGuideItem(page));
+      .map((page) => mapGuideItem(page, locale));
 
     if (items.length === 0 && charms.length === 0) {
       console.warn("No guide data found in Notion, using fallback data");

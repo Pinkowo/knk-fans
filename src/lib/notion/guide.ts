@@ -290,16 +290,16 @@ type CharmDatabaseProperties = {
 };
 
 function getLocalizedRichText(
-  properties: Record<string, NotionRichTextProperty | undefined>,
+  properties: Record<string, unknown>,
   baseKey: "Description" | "Title" | "Category",
   locale: AppLocale,
 ): string | undefined {
   const localizedKey = `${baseKey} (${locale})` as LocalizedRichTextKey;
   const defaultKey = `${baseKey} (${defaultLocale})` as LocalizedRichTextKey;
   return (
-    getRichTextValue(properties[localizedKey]) ??
-    getRichTextValue(properties[defaultKey]) ??
-    getRichTextValue(properties[baseKey])
+    getRichTextValue(properties[localizedKey] as NotionRichTextProperty | undefined) ??
+    getRichTextValue(properties[defaultKey] as NotionRichTextProperty | undefined) ??
+    getRichTextValue(properties[baseKey] as NotionRichTextProperty | undefined)
   );
 }
 
@@ -312,7 +312,7 @@ function mapGuideItem(page: NotionPage<GuideDatabaseProperties>, locale: AppLoca
   return {
     id: page.id,
     title: getTitleValue(properties.Title),
-    description: getLocalizedRichText(properties, "Description", locale),
+    description: getLocalizedRichText(properties, "Description", locale) || "",
     category,
     link: sanitizeUrl(properties.Link?.url ?? undefined),
     thumbnail: getFirstFileUrl(properties.Thumbnail),
@@ -325,7 +325,7 @@ function mapCharmItem(page: NotionPage<CharmDatabaseProperties>, locale: AppLoca
   return {
     id: page.id,
     title: getLocalizedRichText(properties, "Title", locale) || getTitleValue(properties.Title),
-    description: getLocalizedRichText(properties, "Description", locale),
+    description: getLocalizedRichText(properties, "Description", locale) || "",
     icon: getRichTextValue(properties.Icon) || "✨",
     category:
       getLocalizedRichText(properties, "Category", locale) ?? properties.Category.select?.name ?? "general",

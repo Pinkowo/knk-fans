@@ -12,6 +12,8 @@ import type {
   NotionUrlProperty,
 } from "@/types/notion";
 
+type SongDescriptionKey = `Description (${AppLocale})`;
+
 type LocalizedSongDetail = Omit<SongDetail, "description"> & {
   description?: Record<AppLocale, string>;
 };
@@ -313,6 +315,10 @@ interface SongProperties {
   Title: NotionTitleProperty;
   Album?: NotionSelectProperty;
   Description?: NotionRichTextProperty;
+  "Description (zh)"?: NotionRichTextProperty;
+  "Description (ko)"?: NotionRichTextProperty;
+  "Description (ja)"?: NotionRichTextProperty;
+  "Description (en)"?: NotionRichTextProperty;
   "Lyrics (ko)"?: NotionRichTextProperty;
   "Lyrics (zh)"?: NotionRichTextProperty;
   "Lyrics (ja)"?: NotionRichTextProperty;
@@ -325,7 +331,18 @@ function mapLyricsValue(property?: NotionRichTextProperty): string[] | undefined
   return value ? value.split("\n").map((line) => line.trim()).filter(Boolean) : undefined;
 }
 
-function mapSong(page: NotionPage<SongProperties>): SongDetail {
+function getLocalizedDescription(properties: SongProperties, locale: AppLocale) {
+  const key = `Description (${locale})` as SongDescriptionKey;
+  const defaultKey = `Description (${defaultLocale})` as SongDescriptionKey;
+  return (
+    getRichTextValue(properties[key]) ??
+    getRichTextValue(properties[defaultKey]) ??
+    getRichTextValue(properties.Description) ??
+    undefined
+  );
+}
+
+function mapSong(page: NotionPage<SongProperties>, locale: AppLocale): SongDetail {
   const { properties } = page;
   const videoUrl = sanitizeUrl(properties.Video?.url ?? undefined);
 
@@ -340,7 +357,7 @@ function mapSong(page: NotionPage<SongProperties>): SongDetail {
     id: page.id,
     title: getTitleValue(properties.Title),
     album: properties.Album?.select?.name,
-    description: getRichTextValue(properties.Description) || undefined,
+    description: getLocalizedDescription(properties, locale),
     videoUrl,
     videoPlatform: videoUrl?.includes("youtube") ? "youtube" : "spotify",
     lyrics,
@@ -378,7 +395,7 @@ export async function fetchSongById(id: string, locale: AppLocale = defaultLocal
       return buildFallbackSong(id, locale);
     }
 
-    return mapSong(response.results[0]);
+    return mapSong(response.results[0], locale);
   } catch (error) {
     console.error("Failed to fetch song", error);
     return buildFallbackSong(id, locale);

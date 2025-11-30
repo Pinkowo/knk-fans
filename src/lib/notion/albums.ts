@@ -12,6 +12,8 @@ import type {
   NotionUrlProperty,
 } from "@/types/notion";
 
+type AlbumDescriptionKey = `Description (${AppLocale})`;
+
 type LocalizedAlbum = Omit<Album, "description"> & {
   description?: Record<AppLocale, string>;
 };
@@ -113,6 +115,10 @@ interface AlbumProperties {
   ReleaseDate?: NotionRichTextProperty;
   Cover?: NotionFilesProperty;
   Description?: NotionRichTextProperty;
+  "Description (zh)"?: NotionRichTextProperty;
+  "Description (ko)"?: NotionRichTextProperty;
+  "Description (ja)"?: NotionRichTextProperty;
+  "Description (en)"?: NotionRichTextProperty;
   Tracks?: NotionRichTextProperty;
   Link?: NotionUrlProperty;
 }
@@ -127,23 +133,35 @@ function mapTrackList(raw: string | undefined): TrackSummary[] {
     .map((line) => line.trim())
     .filter(Boolean)
     .map((line, index) => {
-      const [title, duration] = line.split("|").map((part) => part.trim());
+      const [title, duration, songId] = line.split("|").map((part) => part.trim());
       return {
         id: `${title}-${index}`,
         title,
         duration,
+        songId: songId || undefined,
       };
     });
 }
 
-function mapAlbum(page: NotionPage<AlbumProperties>): Album {
+function getLocalizedDescription(properties: AlbumProperties, locale: AppLocale) {
+  const key = `Description (${locale})` as AlbumDescriptionKey;
+  const defaultKey = `Description (${defaultLocale})` as AlbumDescriptionKey;
+  return (
+    getRichTextValue(properties[key]) ??
+    getRichTextValue(properties[defaultKey]) ??
+    getRichTextValue(properties.Description) ??
+    undefined
+  );
+}
+
+function mapAlbum(page: NotionPage<AlbumProperties>, locale: AppLocale): Album {
   const { properties } = page;
   return {
     id: page.id,
     title: getTitleValue(properties.Title),
     releaseDate: getRichTextValue(properties.ReleaseDate) || undefined,
     cover: getFirstFileUrl(properties.Cover) ?? sanitizeUrl(properties.Link?.url ?? undefined),
-    description: getRichTextValue(properties.Description) || undefined,
+    description: getLocalizedDescription(properties, locale),
     tracks: mapTrackList(getRichTextValue(properties.Tracks)),
   };
 }
@@ -175,7 +193,7 @@ export async function fetchAlbums(locale: AppLocale = defaultLocale): Promise<Al
     const albums = response.results
       .map((page) => {
         try {
-          return mapAlbum(page as NotionPage<AlbumProperties>);
+          return mapAlbum(page as NotionPage<AlbumProperties>, locale);
         } catch (error) {
           console.warn("Failed to map album", error);
           return null;

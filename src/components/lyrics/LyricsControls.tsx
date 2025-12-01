@@ -5,8 +5,13 @@ import { useMemo } from "react";
 
 import type { LyricsDisplayMode } from "@/lib/utils/lyrics";
 
+interface LanguageOption {
+  key: string;
+  label: string;
+}
+
 interface LyricsControlsProps {
-  availableLanguages: string[];
+  availableLanguages: LanguageOption[];
   selectedLanguages: string[];
   onLanguagesChange: (languages: string[]) => void;
   mode: LyricsDisplayMode;
@@ -38,16 +43,16 @@ export default function LyricsControls({
         <span className="text-xs uppercase tracking-[0.2em] text-text-secondary">{t("lyrics.language")}</span>
         {normalizedAvailable.map((language) => (
           <button
-            key={language}
+            key={language.key}
             type="button"
             className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wide transition ${
-              selectedLanguages.includes(language)
+              selectedLanguages.includes(language.key)
                 ? "border-accent-teal text-accent-teal"
                 : "border-white/15 text-text-secondary"
             }`}
-            onClick={() => toggleLanguage(language)}
+            onClick={() => toggleLanguage(language.key)}
           >
-            {language}
+            {language.label}
           </button>
         ))}
       </div>

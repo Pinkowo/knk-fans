@@ -25,20 +25,22 @@ export default async function SongPage({ params }: SongPageParams) {
     : undefined;
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-12 text-white">
-      <Link className="text-sm text-accent-teal transition hover:text-white" href={`/${locale}/discography`}>
-        ← {t("discography.back")}
-      </Link>
-      <div className="mt-4 space-y-4">
-        <p className="text-sm uppercase tracking-[0.3em] text-accent-yellow">{song.album}</p>
-        <h1 className="text-4xl font-bold">{song.title}</h1>
-        {song.description && <p className="text-text-secondary">{song.description}</p>}
-      </div>
-      {youtubeId && (
-        <div className="mt-8">
-          <YouTubeEmbed videoId={youtubeId} title={song.title} />
+    <div className="text-white">
+      <div className="mx-auto max-w-4xl px-6 py-12">
+        <Link className="text-sm text-accent-teal transition hover:text-white" href={`/${locale}/discography`}>
+          ← {t("discography.back")}
+        </Link>
+        <div className="mt-4 space-y-4">
+          <p className="text-sm uppercase tracking-[0.3em] text-accent-yellow">{song.album}</p>
+          <h1 className="text-4xl font-bold">{song.title}</h1>
+          {song.description && <p className="text-text-secondary">{song.description}</p>}
         </div>
-      )}
+        {youtubeId && (
+          <div className="mt-8">
+            <YouTubeEmbed videoId={youtubeId} title={song.title} />
+          </div>
+        )}
+      </div>
       <div className="mt-10">
         <LyricsDisplay lyrics={song.lyrics} />
       </div>

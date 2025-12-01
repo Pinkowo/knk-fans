@@ -323,6 +323,7 @@ interface SongProperties {
   "Lyrics (zh)"?: NotionRichTextProperty;
   "Lyrics (ja)"?: NotionRichTextProperty;
   "Lyrics (en)"?: NotionRichTextProperty;
+  "Lyrics (ro)"?: NotionRichTextProperty;
   Video?: NotionUrlProperty;
 }
 
@@ -351,6 +352,7 @@ function mapSong(page: NotionPage<SongProperties>, locale: AppLocale): SongDetai
     zh: mapLyricsValue(properties["Lyrics (zh)"]),
     ja: mapLyricsValue(properties["Lyrics (ja)"]),
     en: mapLyricsValue(properties["Lyrics (en)"]),
+    romanization: mapLyricsValue(properties["Lyrics (ro)"]),
   };
 
   return {

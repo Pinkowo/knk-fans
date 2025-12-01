@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { defaultLocale, locales, type AppLocale } from "@/i18n";
 import { fetchExternalLinks } from "@/lib/notion/links";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 604800; // 7 天
 
 export async function GET(request: Request) {

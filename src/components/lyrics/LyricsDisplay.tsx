@@ -27,6 +27,8 @@ function getLanguageMeta(key: string) {
 function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
   const t = useTranslations();
   const [mode, setMode] = useState<LyricsDisplayMode>("line");
+  const [isMounted, setIsMounted] = useState(false);
+
   const availableLanguageOptions = useMemo(
     () => LANGUAGE_OPTIONS.filter((option) => getLyricsLines(lyrics, option.key).length > 0),
     [lyrics],
@@ -39,10 +41,19 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
     return availableLanguageOptions.length ? [availableLanguageOptions[0].key] : [];
   }, [availableLanguageOptions]);
 
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>(fallbackSelection);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     setSelectedLanguages((previous) => {
+      if (previous.length === 0) {
+        return fallbackSelection;
+      }
       const filtered = previous.filter((lang) => availableLanguageOptions.some((option) => option.key === lang));
       if (filtered.length === previous.length && filtered.every((lang, index) => lang === previous[index])) {
         return previous;
@@ -52,7 +63,7 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
       }
       return fallbackSelection;
     });
-  }, [availableLanguageOptions, fallbackSelection]);
+  }, [isMounted, availableLanguageOptions, fallbackSelection]);
 
   const mergedLyrics = useMemo(
     () => mergeLyricsByLanguage(lyrics, mode === "paragraph" ? selectedLanguages : selectedLanguages.slice(0, 1)),
@@ -78,7 +89,8 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
   }, [lyrics, selectedLanguages, mode]);
 
   const hasLyrics = availableLanguageOptions.length > 0;
-  const isSingleColumn = mode === "line" || selectedLanguages.length <= 1;
+  const isParagraphMulti = mode === "paragraph" && selectedLanguages.length > 1;
+  const controlsWrapperClass = isParagraphMulti ? "mx-auto w-fit" : "mx-auto max-w-4xl";
   const handleLanguagesChange = (languages: string[]) => {
     if (languages.length === 0) {
       setSelectedLanguages(fallbackSelection);
@@ -87,52 +99,71 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
     }
   };
 
+  if (!isMounted) {
+    return (
+      <div className="space-y-6 px-6" style={{ contain: "content" }}>
+        <div className={controlsWrapperClass}>
+          <LyricsControls
+            availableLanguages={availableLanguageOptions}
+            selectedLanguages={[]}
+            onLanguagesChange={handleLanguagesChange}
+            mode={mode}
+            onModeChange={setMode}
+          />
+        </div>
+        <p className="rounded-3xl border border-dashed border-white/15 bg-white/5 p-6 text-text-secondary">
+          {t("lyrics.empty")}
+        </p>
+      </div>
+    );
+  }
+
   return (
-    <div
-      className={`${isSingleColumn ? "mx-auto max-w-4xl" : "w-full"} space-y-6 px-6`}
-      style={{ contain: "content" }}
-    >
-      <LyricsControls
-        availableLanguages={availableLanguageOptions}
-        selectedLanguages={selectedLanguages}
-        onLanguagesChange={handleLanguagesChange}
-        mode={mode}
-        onModeChange={setMode}
-      />
+    <div className="space-y-6 px-6" style={{ contain: "content" }}>
+      <div className={controlsWrapperClass}>
+        <LyricsControls
+          availableLanguages={availableLanguageOptions}
+          selectedLanguages={selectedLanguages}
+          onLanguagesChange={handleLanguagesChange}
+          mode={mode}
+          onModeChange={setMode}
+        />
+      </div>
       {!hasLyrics ? (
         <p className="rounded-3xl border border-dashed border-white/15 bg-white/5 p-6 text-text-secondary">
           {t("lyrics.empty")}
         </p>
       ) : mode === "paragraph" ? (
         mergedLyrics.length > 0 ? (
-          isSingleColumn ? (
+          isParagraphMulti ? (
+            <div className="mx-auto w-fit">
+              <div className="flex w-fit flex-wrap items-center justify-center gap-4">
+                {mergedLyrics.map((entry) => {
+                  const meta = getLanguageMeta(entry.lang);
+                  return (
+                    <div
+                      key={entry.lang}
+                      className="min-w-[420px] max-w-[420px] rounded-3xl border border-white/10 bg-white/5 p-6"
+                    >
+                      <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">
+                        {meta?.label ?? entry.lang.toUpperCase()}
+                      </p>
+                      <div className="mt-4 space-y-3 text-sm leading-relaxed text-white whitespace-pre-line">
+                        {formatLyrics(entry.lines, mode).map((line, index) => (
+                          <p key={`${entry.lang}-${index}`}>{line}</p>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
             mergedLyrics.map((entry) => {
               const meta = getLanguageMeta(entry.lang);
               return (
-                <div
-                  key={entry.lang}
-                  className="rounded-3xl border border-white/10 bg-white/5 p-6"
-                >
-                  <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">
-                    {meta?.label ?? entry.lang.toUpperCase()}
-                  </p>
-                  <div className="mt-4 space-y-3 text-sm leading-relaxed text-white whitespace-pre-line">
-                    {formatLyrics(entry.lines, mode).map((line, index) => (
-                      <p key={`${entry.lang}-${index}`}>{line}</p>
-                    ))}
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="mx-auto flex w-fit max-w-full flex-col items-center gap-4 px-6 md:flex-row md:flex-nowrap md:items-stretch md:overflow-x-auto md:pb-2">
-              {mergedLyrics.map((entry) => {
-                const meta = getLanguageMeta(entry.lang);
-                return (
-                  <div
-                    key={entry.lang}
-                    className="min-w-[420px] max-w-[420px] rounded-3xl border border-white/10 bg-white/5 p-6"
-                  >
+                <div key={entry.lang} className="mx-auto max-w-4xl">
+                  <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
                     <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">
                       {meta?.label ?? entry.lang.toUpperCase()}
                     </p>
@@ -142,9 +173,9 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
                       ))}
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })
           )
         ) : (
           <p className="rounded-3xl border border-dashed border-white/15 bg-white/5 p-6 text-text-secondary">
@@ -152,26 +183,28 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
           </p>
         )
       ) : lineGroups.length > 0 ? (
-        <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
-          <div className="space-y-4">
-            {lineGroups.map((group, lineIndex) => (
-              <div key={`line-${lineIndex}`} className="space-y-1">
-                {group.map((segment, segmentIndex) => {
-                  const meta = getLanguageMeta(segment.lang);
-                  return (
-                    <p
-                      key={`${segment.lang}-${lineIndex}-${segmentIndex}`}
-                      className={`text-sm leading-relaxed ${meta?.color ?? "text-white"}`}
-                    >
-                      <span className="mr-2 inline-flex items-center rounded-full border border-white/20 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-white/70">
-                        {meta?.label ?? segment.lang.toUpperCase()}
-                      </span>
-                      {segment.text}
-                    </p>
-                  );
-                })}
-              </div>
-            ))}
+        <div className="mx-auto max-w-4xl">
+          <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div className="space-y-4">
+              {lineGroups.map((group, lineIndex) => (
+                <div key={`line-${lineIndex}`} className="space-y-1">
+                  {group.map((segment, segmentIndex) => {
+                    const meta = getLanguageMeta(segment.lang);
+                    return (
+                      <p
+                        key={`${segment.lang}-${lineIndex}-${segmentIndex}`}
+                        className={`text-sm leading-relaxed ${meta?.color ?? "text-white"}`}
+                      >
+                        <span className="mr-2 inline-flex items-center rounded-full border border-white/20 px-2 py-0.5 text-[10px] uppercase tracking-[0.2em] text-white/70">
+                          {meta?.label ?? segment.lang.toUpperCase()}
+                        </span>
+                        {segment.text}
+                      </p>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ) : (

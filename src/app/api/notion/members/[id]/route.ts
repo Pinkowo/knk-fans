@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { defaultLocale, locales, type AppLocale } from "@/i18n";
 import { fetchMemberById } from "@/lib/notion/members";
 
+export const dynamic = "force-dynamic";
 export const revalidate = 86400; // 24 小時
 
 interface RouteContext {

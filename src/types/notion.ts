@@ -55,6 +55,19 @@ export interface NotionMultiSelectProperty extends BaseProperty<"multi_select"> 
   multi_select: NotionSelectOption[];
 }
 
+export interface NotionDateProperty extends BaseProperty<"date"> {
+  date: { start: string | null; end: string | null; time_zone?: string | null } | null;
+}
+
+export interface NotionFormulaProperty extends BaseProperty<"formula"> {
+  formula:
+    | { type: "string"; string: string | null }
+    | { type: "number"; number: number | null }
+    | { type: "boolean"; boolean: boolean | null }
+    | { type: "date"; date: { start: string | null; end: string | null; time_zone?: string | null } | null }
+    | { type: "rich_text"; rich_text: NotionRichText[] };
+}
+
 export interface NotionFilesProperty extends BaseProperty<"files"> {
   files: Array<{
     name: string;
@@ -71,6 +84,8 @@ export type NotionPropertyValue =
   | NotionNumberProperty
   | NotionSelectProperty
   | NotionMultiSelectProperty
+  | NotionDateProperty
+  | NotionFormulaProperty
   | NotionFilesProperty;
 
 export type NotionProperties = Record<string, NotionPropertyValue>;

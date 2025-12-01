@@ -11,6 +11,23 @@ interface MemberModalProps {
   onClose: () => void;
 }
 
+type ProfileFieldKey =
+  | "birthday"
+  | "age"
+  | "zodiac"
+  | "bloodType"
+  | "mbti"
+  | "height"
+  | "representativeAnimal"
+  | "favoriteFood"
+  | "dislikedFood"
+  | "alcoholTolerance"
+  | "hobbies"
+  | "specialSkills"
+  | "soloActivities"
+  | "joinDate"
+  | "leaveDate";
+
 function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...props}>
@@ -30,7 +47,6 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
   const openingRafRef = useRef<number | null>(null);
   const titleId = member ? `member-modal-title-${member.id}` : undefined;
   const descriptionId = member ? `member-modal-desc-${member.id}` : undefined;
-  const [latestPost, setLatestPost] = useState<{ handle: string; url: string | null } | null>(null);
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = useCallback(() => {
@@ -109,50 +125,7 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
     }
   }, [member]);
 
-  useEffect(() => {
-    if (!instagramHandle) {
-      return;
-    }
-
-    let cancelled = false;
-
-    const loadLatest = async () => {
-      try {
-        // indicate loading for this handle
-        setLatestPost((prev) => (prev?.handle === instagramHandle ? prev : { handle: instagramHandle, url: null }));
-
-        const response = await fetch(`/api/instagram/latest/${instagramHandle}`);
-        if (!response.ok) {
-          return;
-        }
-        const data = (await response.json()) as { embedUrl?: string };
-        if (!cancelled) {
-          setLatestPost({ handle: instagramHandle, url: data.embedUrl ?? null });
-        }
-      } catch (error) {
-        console.warn("Failed to load instagram embed", error);
-        if (!cancelled) {
-          setLatestPost({ handle: instagramHandle, url: null });
-        }
-      }
-    };
-
-    void loadLatest();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [instagramHandle]);
-
-  const embedSrc = useMemo(() => {
-    if (!instagramHandle) {
-      return null;
-    }
-    const latestForHandle = latestPost?.handle === instagramHandle ? latestPost.url : null;
-    return latestForHandle ?? profileEmbedUrl ?? null;
-  }, [instagramHandle, latestPost, profileEmbedUrl]);
-
-  const activeEmbedSrc = !isClosing ? embedSrc : null;
+  const activeEmbedSrc = !isClosing && instagramHandle ? profileEmbedUrl : null;
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === overlayRef.current) {
@@ -165,6 +138,30 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
       return [];
     }
     return member.links.filter((link) => !link.url.includes("instagram.com"));
+  }, [member]);
+
+  const profileDetails = useMemo<Array<{ key: ProfileFieldKey; value: string }>>(() => {
+    if (!member) {
+      return [];
+    }
+    const entries: Array<[ProfileFieldKey, string | undefined]> = [
+      ["birthday", member.birthday],
+      ["age", member.age],
+      ["zodiac", member.zodiac],
+      ["bloodType", member.bloodType],
+      ["mbti", member.mbti],
+      ["height", member.height],
+      ["representativeAnimal", member.representativeAnimal],
+      ["favoriteFood", member.favoriteFood],
+      ["dislikedFood", member.dislikedFood],
+      ["alcoholTolerance", member.alcoholTolerance],
+      ["hobbies", member.hobbies],
+      ["specialSkills", member.specialSkills],
+      ["soloActivities", member.soloActivities],
+      ["joinDate", member.joinDate],
+      ["leaveDate", member.leaveDate],
+    ];
+    return entries.filter(([, value]) => Boolean(value)).map(([key, value]) => ({ key, value: value as string }));
   }, [member]);
 
   return (
@@ -237,6 +234,22 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
                   <p className="text-sm text-text-secondary" id={descriptionId}>
                     {member.bio}
                   </p>
+                  {profileDetails.length > 0 && (
+                    <ul className="space-y-1 text-sm text-white/90">
+                      {profileDetails.map(({ key, value }) => (
+                        <li key={`${member.id}-${key}`} className="flex items-start gap-2">
+                          <span className="text-accent-yellow">•</span>
+                          <span>
+                            <span className="font-semibold text-white/80">
+                              {t(`members.profileFields.${key}` as any)}
+                            </span>
+                            {": "}
+                            <span>{value}</span>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                   <div className="flex flex-wrap gap-3">
                     {instagramHandle && instagramLinkUrl ? (
                       <a
@@ -246,7 +259,7 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
                         className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white transition hover:border-white"
                       >
                         <InstagramIcon className="h-4 w-4" />
-                        <span>@{instagramHandle}</span>
+                        <span>{instagramHandle}</span>
                       </a>
                     ) : null}
                     {otherLinks.map((link) => (

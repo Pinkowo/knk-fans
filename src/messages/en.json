@@ -161,7 +161,24 @@
     "modal": {
       "titleSuffix": "profile"
     },
-    "instagram": "Instagram"
+    "instagram": "Instagram",
+    "profileFields": {
+      "birthday": "Birthday",
+      "age": "Age",
+      "zodiac": "Zodiac",
+      "bloodType": "Blood Type",
+      "mbti": "MBTI",
+      "height": "Height",
+      "representativeAnimal": "Representative Animal",
+      "favoriteFood": "Favorite Food",
+      "dislikedFood": "Disliked Food",
+      "alcoholTolerance": "Alcohol tolerance",
+      "hobbies": "Hobbies",
+      "specialSkills": "Special skills",
+      "soloActivities": "Solo activities",
+      "joinDate": "Join date",
+      "leaveDate": "Leave date"
+    }
   },
   "errors": {
     "generic": "Something went wrong. Please try again."

@@ -4,7 +4,10 @@ import { notionClient } from "@/lib/notion/client";
 import { getFirstFileUrl, getRichTextValue, getTitleValue, sanitizeUrl } from "@/lib/notion/utils";
 import type { Member, MemberStatus } from "@/types/member";
 import type {
+  NotionDateProperty,
   NotionFilesProperty,
+  NotionFormulaProperty,
+  NotionNumberProperty,
   NotionPage,
   NotionQueryResponse,
   NotionRichTextProperty,
@@ -164,6 +167,21 @@ interface MemberDatabaseProperties {
   Status: NotionSelectProperty;
   Bio?: NotionRichTextProperty;
   Position?: NotionRichTextProperty;
+  Birthday?: NotionDateProperty;
+  Age?: NotionFormulaProperty;
+  Zodiac?: NotionSelectProperty;
+  "Blood Type"?: NotionSelectProperty;
+  MBTI?: NotionSelectProperty;
+  Height?: NotionNumberProperty;
+  "Representative Animal"?: NotionRichTextProperty;
+  "Favorite Food"?: NotionRichTextProperty;
+  "Disliked Food"?: NotionRichTextProperty;
+  "Alcohol Tolerance"?: NotionRichTextProperty;
+  Hobbies?: NotionRichTextProperty;
+  "Special Skills"?: NotionRichTextProperty;
+  "Solo Activities"?: NotionRichTextProperty;
+  "Join Date"?: NotionDateProperty;
+  "Leave Date"?: NotionDateProperty;
   "Bio (zh)"?: NotionRichTextProperty;
   "Bio (ko)"?: NotionRichTextProperty;
   "Bio (ja)"?: NotionRichTextProperty;
@@ -174,6 +192,31 @@ interface MemberDatabaseProperties {
   "Position (en)"?: NotionRichTextProperty;
   Photo?: NotionFilesProperty;
   Profile?: NotionUrlProperty;
+}
+
+function getDateValue(property?: NotionDateProperty): string | undefined {
+  return property?.date?.start ?? undefined;
+}
+
+function getFormulaValue(property?: NotionFormulaProperty): string | undefined {
+  if (!property?.formula) {
+    return undefined;
+  }
+  const formula = property.formula;
+  switch (formula.type) {
+    case "string":
+      return formula.string ?? undefined;
+    case "number":
+      return typeof formula.number === "number" ? String(formula.number) : undefined;
+    case "boolean":
+      return typeof formula.boolean === "boolean" ? (formula.boolean ? "Yes" : "No") : undefined;
+    case "date":
+      return formula.date?.start ?? undefined;
+    case "rich_text":
+      return formula.rich_text?.map((item) => item.plain_text).join("") ?? undefined;
+    default:
+      return undefined;
+  }
 }
 
 function getLocalizedRichText(
@@ -204,6 +247,21 @@ function mapMember(page: NotionPage<MemberDatabaseProperties>, locale: AppLocale
     bio: getLocalizedRichText(properties, "Bio", locale) || "",
     position: getLocalizedRichText(properties, "Position", locale) || undefined,
     photo: getFirstFileUrl(properties.Photo) ?? profileLink,
+    birthday: getDateValue(properties.Birthday),
+    age: getFormulaValue(properties.Age),
+    zodiac: properties.Zodiac?.select?.name ?? undefined,
+    bloodType: properties["Blood Type"]?.select?.name ?? undefined,
+    mbti: properties.MBTI?.select?.name ?? undefined,
+    height: typeof properties.Height?.number === "number" ? `${properties.Height.number} cm` : undefined,
+    representativeAnimal: getRichTextValue(properties["Representative Animal"]) || undefined,
+    favoriteFood: getRichTextValue(properties["Favorite Food"]) || undefined,
+    dislikedFood: getRichTextValue(properties["Disliked Food"]) || undefined,
+    alcoholTolerance: getRichTextValue(properties["Alcohol Tolerance"]) || undefined,
+    hobbies: getRichTextValue(properties.Hobbies) || undefined,
+    specialSkills: getRichTextValue(properties["Special Skills"]) || undefined,
+    soloActivities: getRichTextValue(properties["Solo Activities"]) || undefined,
+    joinDate: getDateValue(properties["Join Date"]),
+    leaveDate: getDateValue(properties["Leave Date"]),
     links: profileLink ? [{ label: "Profile", url: profileLink }] : undefined,
   };
 }

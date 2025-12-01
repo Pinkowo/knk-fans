@@ -161,7 +161,24 @@
     "modal": {
       "titleSuffix": "프로필"
     },
-    "instagram": "Instagram"
+    "instagram": "Instagram",
+    "profileFields": {
+      "birthday": "생일",
+      "age": "나이",
+      "zodiac": "별자리",
+      "bloodType": "혈액형",
+      "mbti": "MBTI",
+      "height": "키",
+      "representativeAnimal": "대표 동물",
+      "favoriteFood": "좋아하는 음식",
+      "dislikedFood": "싫어하는 음식",
+      "alcoholTolerance": "주량",
+      "hobbies": "취미",
+      "specialSkills": "특기",
+      "soloActivities": "개인 활동",
+      "joinDate": "입단일",
+      "leaveDate": "탈퇴일"
+    }
   },
   "errors": {
     "generic": "문제가 발생했습니다. 잠시 후 다시 시도해주세요."

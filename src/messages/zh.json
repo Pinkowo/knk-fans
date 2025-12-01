@@ -161,7 +161,24 @@
     "modal": {
       "titleSuffix": "成員介紹"
     },
-    "instagram": "Instagram"
+    "instagram": "Instagram",
+    "profileFields": {
+      "birthday": "生日",
+      "age": "年齡",
+      "zodiac": "星座",
+      "bloodType": "血型",
+      "mbti": "MBTI",
+      "height": "身高",
+      "representativeAnimal": "代表動物",
+      "favoriteFood": "喜歡的食物",
+      "dislikedFood": "討厭的食物",
+      "alcoholTolerance": "酒量",
+      "hobbies": "興趣",
+      "specialSkills": "特技",
+      "soloActivities": "個人活動",
+      "joinDate": "入團日期",
+      "leaveDate": "退團日期"
+    }
   },
   "errors": {
     "generic": "發生錯誤，請稍後再試。"

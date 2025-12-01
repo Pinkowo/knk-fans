@@ -161,7 +161,24 @@
     "modal": {
       "titleSuffix": "プロフィール"
     },
-    "instagram": "Instagram"
+    "instagram": "Instagram",
+    "profileFields": {
+      "birthday": "誕生日",
+      "age": "年齢",
+      "zodiac": "星座",
+      "bloodType": "血液型",
+      "mbti": "MBTI",
+      "height": "身長",
+      "representativeAnimal": "代表動物",
+      "favoriteFood": "好きな食べ物",
+      "dislikedFood": "苦手な食べ物",
+      "alcoholTolerance": "お酒の強さ",
+      "hobbies": "趣味",
+      "specialSkills": "特技",
+      "soloActivities": "ソロ活動",
+      "joinDate": "加入日",
+      "leaveDate": "脱退日"
+    }
   },
   "errors": {
     "generic": "問題が発生しました。しばらくしてから再度お試しください。"

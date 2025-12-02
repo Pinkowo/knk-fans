@@ -14,7 +14,8 @@ export function usePetSettings() {
   useEffect(() => {
     setSettings((prev) => {
       const validIds = new Set(DEFAULT_PETS.map((pet) => pet.id));
-      const nextActive = { ...prev.activePets };
+      const baseActive = prev.activePets ?? defaultPetSettings.activePets;
+      const nextActive = { ...baseActive };
       let changed = false;
 
       validIds.forEach((id) => {
@@ -31,7 +32,11 @@ export function usePetSettings() {
         }
       });
 
-      return changed ? { ...prev, activePets: nextActive } : prev;
+      if (!changed && prev.activePets) {
+        return prev;
+      }
+
+      return { ...prev, activePets: nextActive };
     });
   }, [setSettings]);
 
@@ -41,17 +46,19 @@ export function usePetSettings() {
 
   const togglePet = useCallback(
     (petId: string) => {
-      setSettings((prev) => ({
-        ...prev,
-        activePets: { ...prev.activePets, [petId]: !prev.activePets[petId] },
-      }));
+      setSettings((prev) => {
+        const nextActive = prev.activePets ?? defaultPetSettings.activePets;
+        return {
+          ...prev,
+          activePets: {
+            ...nextActive,
+            [petId]: !nextActive[petId],
+          },
+        };
+      });
     },
     [setSettings],
   );
 
-  const toggleInteractions = useCallback(() => {
-    setSettings((prev) => ({ ...prev, interactions: !prev.interactions }));
-  }, [setSettings]);
-
-  return { settings, setSettings, toggleEnabled, togglePet, toggleInteractions };
+  return { settings, setSettings, toggleEnabled, togglePet };
 }

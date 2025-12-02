@@ -76,13 +76,12 @@
     "subheading": "Official socials and fan hubs gathered in one place."
   },
   "pets": {
-    "show": "Show pet controls",
+    "show": "Show sprite controls",
     "hide": "Hide controls",
-    "globalToggle": "Site pets",
+    "globalToggle": "Site sprites",
     "enabled": "On",
     "disabled": "Off",
-    "characters": "Characters",
-    "interactions": "Click interactions"
+    "characters": "Characters"
   },
   "actions": {
     "listenNow": "Listen now",

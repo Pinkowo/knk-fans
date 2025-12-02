@@ -42,7 +42,7 @@
     "sections": {
       "story": {
         "title": "我們的故事",
-        "body": "從 2016 年開始跟著 KNK 走過每一次回歸與成員變動，我希望建立一個讓新老粉絲都能重溫舞台、了解團魂的地方。網站內容包含推坑指南、綜藝整理、歌詞翻譯與互動小寵物。"
+        "body": "從 2016 年開始跟著 KNK 走過每一次回歸與成員變動，我希望建立一個讓新老粉絲都能重溫舞台、了解團魂的地方。網站內容包含推坑指南、綜藝整理、歌詞翻譯與互動小精靈。"
       },
       "services": {
         "title": "我們提供",
@@ -76,13 +76,12 @@
     "subheading": "粉絲團、Instagram 等官方管道一次收藏。"
   },
   "pets": {
-    "show": "小寵物設定",
+    "show": "小精靈設定",
     "hide": "隱藏設定",
-    "globalToggle": "顯示小寵物",
+    "globalToggle": "顯示小精靈",
     "enabled": "開啟",
     "disabled": "關閉",
-    "characters": "角色",
-    "interactions": "點擊互動"
+    "characters": "角色"
   },
   "actions": {
     "listenNow": "立即收聽",

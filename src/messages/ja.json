@@ -76,13 +76,12 @@
     "subheading": "公式 SNS とファンコミュニティをまとめてチェック。"
   },
   "pets": {
-    "show": "ペット設定",
+    "show": "精霊設定",
     "hide": "設定を閉じる",
-    "globalToggle": "サイトペット",
+    "globalToggle": "サイト精霊",
     "enabled": "オン",
     "disabled": "オフ",
-    "characters": "キャラクター",
-    "interactions": "クリック反応"
+    "characters": "キャラクター"
   },
   "actions": {
     "listenNow": "今すぐ聴く",

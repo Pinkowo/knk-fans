@@ -19,7 +19,6 @@ export interface Pet {
 export interface PetSettings {
   enabled: boolean;
   activePets: Record<string, boolean>;
-  interactions: boolean;
 }
 
 export const DEFAULT_PETS: Pet[] = [
@@ -67,5 +66,4 @@ export const defaultPetSettings: PetSettings = {
     acc[pet.id] = true;
     return acc;
   }, {}),
-  interactions: true,
 };

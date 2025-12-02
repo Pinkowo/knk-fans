@@ -114,7 +114,6 @@ export default function SitePet() {
   const petsRef = useRef<PetSprite[]>([]);
   const spriteCache = useRef<Record<string, HTMLImageElement>>({});
   const { settings } = usePetSettings();
-  const scatterRef = useRef<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     if (!settings.enabled) {
@@ -183,18 +182,8 @@ export default function SitePet() {
       ctx.clearRect(0, 0, width, height);
 
       const currentTime = nowMs();
-      const scatterPoint = settings.interactions ? scatterRef.current : null;
-
       petsRef.current.forEach((pet) => {
-        if (scatterPoint) {
-          const dx = pet.x - scatterPoint.x;
-          const dy = pet.y - scatterPoint.y;
-          const distance = Math.hypot(dx, dy) || 1;
-          pet.vx += (dx / distance) * 0.05;
-          pet.vy += (dy / distance) * 0.05;
-          pet.isMoving = true;
-          pet.stateUntil = currentTime + randomDuration(MOVE_DURATION);
-        } else if (currentTime >= pet.stateUntil) {
+        if (currentTime >= pet.stateUntil) {
           pet.isMoving = !pet.isMoving;
           if (pet.isMoving) {
             const velocity = randomVelocity();
@@ -251,10 +240,6 @@ export default function SitePet() {
         }
       });
 
-      if (scatterPoint) {
-        scatterRef.current = null;
-      }
-
       animationRef.current = requestAnimationFrame(update);
     };
 
@@ -266,21 +251,7 @@ export default function SitePet() {
       }
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, [settings.enabled, settings.activePets, settings.interactions]);
-
-  useEffect(() => {
-    if (!settings.enabled || !settings.interactions) {
-      scatterRef.current = null;
-      return;
-    }
-
-    const handleClick = (event: MouseEvent) => {
-      scatterRef.current = { x: event.clientX, y: event.clientY };
-    };
-
-    window.addEventListener("click", handleClick);
-    return () => window.removeEventListener("click", handleClick);
-  }, [settings.enabled, settings.interactions]);
+  }, [settings.enabled, settings.activePets]);
 
   if (!settings.enabled) {
     return null;

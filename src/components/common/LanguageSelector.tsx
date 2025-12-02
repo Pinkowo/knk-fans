@@ -8,6 +8,13 @@ import { useEffect } from "react";
 import { locales, type AppLocale } from "@/i18n";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 
+const LOCALE_NAMES: Record<AppLocale, string> = {
+  zh: "繁體中文",
+  ko: "한국어",
+  ja: "日本語",
+  en: "English",
+};
+
 export default function LanguageSelector() {
   const activeLocale = useLocale() as AppLocale;
   const router = useRouter();
@@ -55,7 +62,7 @@ export default function LanguageSelector() {
         >
           {locales.map((locale) => (
             <option className="bg-surface-muted" key={locale} value={locale}>
-              {t(`language.${locale}`)}
+              {LOCALE_NAMES[locale] ?? locale.toUpperCase()}
             </option>
           ))}
         </select>

@@ -99,4 +99,6 @@ export interface NotionPage<T = NotionProperties> {
 
 export interface NotionQueryResponse<T = NotionProperties> {
   results: Array<NotionPage<T>>;
+  next_cursor?: string | null;
+  has_more?: boolean;
 }

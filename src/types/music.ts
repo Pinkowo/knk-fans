@@ -25,6 +25,7 @@ export interface LyricsContent {
 
 export interface SongDetail {
   id: string;
+  slug?: string;
   title: string;
   videoUrl?: string;
   videoPlatform?: "youtube" | "spotify";

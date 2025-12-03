@@ -3,15 +3,16 @@
 import { createContext, useContext, useMemo, useCallback } from "react";
 
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
-import type { PlayerState, Track } from "@/types/player";
+import type { PlayerState } from "@/types/player";
 import { defaultPlayerState } from "@/types/player";
 
 interface PlayerContextValue {
   state: PlayerState;
   setState: (updater: (prev: PlayerState) => PlayerState) => void;
-  playTrack: (track: Track) => void;
   togglePlay: () => void;
-  toggleVisible: () => void;
+  toggleExpanded: () => void;
+  setCurrentAlbum: (albumId: string) => void;
+  setCurrentTrack: (trackId: string) => void;
 }
 
 const PlayerContext = createContext<PlayerContextValue | undefined>(undefined);
@@ -20,24 +21,29 @@ const STORAGE_KEY = "knk-player-state";
 export function PlayerProvider({ children }: { children: React.ReactNode }) {
   const [state, setStateRaw] = useLocalStorage<PlayerState>(STORAGE_KEY, defaultPlayerState);
 
-  const playTrack = useCallback(
-    (track: Track) =>
-      setStateRaw((prev) => ({
-        ...prev,
-        isOpen: true,
-        isPlaying: true,
-        queue: [track, ...prev.queue.filter((item) => item.id !== track.id)],
-        currentIndex: 0,
-      })),
-    [setStateRaw],
-  );
-
   const togglePlay = useCallback(
     () => setStateRaw((prev) => ({ ...prev, isPlaying: !prev.isPlaying })),
     [setStateRaw],
   );
-  const toggleVisible = useCallback(
-    () => setStateRaw((prev) => ({ ...prev, isOpen: !prev.isOpen })),
+  const toggleExpanded = useCallback(
+    () => setStateRaw((prev) => ({ ...prev, isExpanded: !prev.isExpanded })),
+    [setStateRaw],
+  );
+  const setCurrentAlbum = useCallback(
+    (albumId: string) =>
+      setStateRaw((prev) => ({
+        ...prev,
+        currentAlbumId: albumId,
+        currentTrackId: undefined,
+      })),
+    [setStateRaw],
+  );
+  const setCurrentTrack = useCallback(
+    (trackId: string) =>
+      setStateRaw((prev) => ({
+        ...prev,
+        currentTrackId: trackId,
+      })),
     [setStateRaw],
   );
 
@@ -45,11 +51,12 @@ export function PlayerProvider({ children }: { children: React.ReactNode }) {
     () => ({
       state,
       setState: setStateRaw,
-      playTrack,
       togglePlay,
-      toggleVisible,
+      toggleExpanded,
+      setCurrentAlbum,
+      setCurrentTrack,
     }),
-    [state, setStateRaw, playTrack, togglePlay, toggleVisible],
+    [state, setStateRaw, togglePlay, toggleExpanded, setCurrentAlbum, setCurrentTrack],
   );
 
   return <PlayerContext.Provider value={contextValue}>{children}</PlayerContext.Provider>;

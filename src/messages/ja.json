@@ -60,15 +60,18 @@
     }
   },
   "player": {
-    "open": "音楽を再生",
-    "nowPlaying": "Now Playing",
-    "queueEmpty": "曲が選択されていません",
     "play": "再生",
     "pause": "一時停止",
-    "collapse": "閉じる",
-    "noVideo": "再生できる動画がありません",
-    "channelPlaylist": "KNK公式YouTubeプレイリスト",
-    "channelPlaylistDescription": "曲の動画がない場合は公式アップロードを流します。"
+    "expand": "展開",
+    "collapse": "折りたたむ",
+    "selectAlbum": "アルバムを選択",
+    "selectTrack": "曲を選択",
+    "albums": "アルバム一覧",
+    "tracks": "{album} の曲",
+    "close": "閉じる",
+    "previous": "前の曲",
+    "next": "次の曲",
+    "noCover": "カバーなし"
   },
   "links": {
     "title": "リンク",

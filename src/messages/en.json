@@ -60,15 +60,18 @@
     }
   },
   "player": {
-    "open": "Open player",
-    "nowPlaying": "Now Playing",
-    "queueEmpty": "No track selected yet",
     "play": "Play",
     "pause": "Pause",
+    "expand": "Expand",
     "collapse": "Collapse",
-    "noVideo": "No video to play",
-    "channelPlaylist": "KNK YouTube channel playlist",
-    "channelPlaylistDescription": "Plays the official uploads when no track video is selected."
+    "selectAlbum": "Select Album",
+    "selectTrack": "Select Track",
+    "albums": "Albums",
+    "tracks": "Tracks in {album}",
+    "close": "Close",
+    "previous": "Previous",
+    "next": "Next",
+    "noCover": "No cover available"
   },
   "links": {
     "title": "Community",

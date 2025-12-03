@@ -60,15 +60,18 @@
     }
   },
   "player": {
-    "open": "播放音樂",
-    "nowPlaying": "現在播放",
-    "queueEmpty": "尚未選擇歌曲",
     "play": "播放",
     "pause": "暫停",
-    "collapse": "收起",
-    "noVideo": "目前沒有可播放的影片",
-    "channelPlaylist": "KNK 官方 YouTube 播放清單",
-    "channelPlaylistDescription": "尚未選歌時會播放官方頻道的最新影片。"
+    "expand": "展開",
+    "collapse": "收合",
+    "selectAlbum": "選擇專輯",
+    "selectTrack": "選擇歌曲",
+    "albums": "專輯列表",
+    "tracks": "{album} 的歌曲",
+    "close": "關閉",
+    "previous": "上一首",
+    "next": "下一首",
+    "noCover": "無封面"
   },
   "links": {
     "title": "社群連結",

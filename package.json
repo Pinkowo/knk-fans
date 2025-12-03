@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:webpack": "next dev --turbo=false",
     "build": "next build",
     "start": "next start",
     "lint": "cross-env ESLINT_USE_FLAT_CONFIG=false eslint . --ext .ts,.tsx",
@@ -19,7 +20,8 @@
     "next": "16.0.3",
     "next-intl": "^4.5.3",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "react-youtube": "^10.1.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^16.0.3",

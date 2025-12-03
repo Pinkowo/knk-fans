@@ -18,7 +18,7 @@ type LocalizedSongDetail = Omit<SongDetail, "description"> & {
   description?: Record<AppLocale, string>;
 };
 
-const fallbackSongs: Record<string, LocalizedSongDetail> = {
+export const fallbackSongs: Record<string, LocalizedSongDetail> = {
   "song-gone": {
     id: "song-gone",
     title: "Gone",
@@ -313,6 +313,7 @@ const fallbackSongs: Record<string, LocalizedSongDetail> = {
 
 interface SongProperties {
   Title: NotionTitleProperty;
+  Slug?: NotionRichTextProperty;
   Album?: NotionSelectProperty;
   Description?: NotionRichTextProperty;
   "Description (zh)"?: NotionRichTextProperty;
@@ -346,6 +347,7 @@ function getLocalizedDescription(properties: SongProperties, locale: AppLocale) 
 function mapSong(page: NotionPage<SongProperties>, locale: AppLocale): SongDetail {
   const { properties } = page;
   const videoUrl = sanitizeUrl(properties.Video?.url ?? undefined);
+  const slug = getRichTextValue(properties.Slug);
 
   const lyrics: LyricsContent = {
     ko: mapLyricsValue(properties["Lyrics (ko)"]) ?? [],
@@ -357,6 +359,7 @@ function mapSong(page: NotionPage<SongProperties>, locale: AppLocale): SongDetai
 
   return {
     id: page.id,
+    slug,
     title: getTitleValue(properties.Title),
     album: properties.Album?.select?.name,
     description: getLocalizedDescription(properties, locale),
@@ -367,15 +370,15 @@ function mapSong(page: NotionPage<SongProperties>, locale: AppLocale): SongDetai
 }
 
 function buildFallbackSong(id: string, locale: AppLocale): SongDetail | null {
-  const song = fallbackSongs[id];
-  if (!song) {
-    return null;
-  }
+  return buildFallbackSongs(locale).find((song) => song.id === id) ?? null;
+}
 
-  return {
+function buildFallbackSongs(locale: AppLocale): SongDetail[] {
+  return Object.entries(fallbackSongs).map(([slug, song]) => ({
     ...song,
+    slug,
     description: song.description ? getLocalizedValue(song.description, locale) : undefined,
-  };
+  }));
 }
 
 export async function fetchSongById(id: string, locale: AppLocale = defaultLocale): Promise<SongDetail | null> {
@@ -401,5 +404,41 @@ export async function fetchSongById(id: string, locale: AppLocale = defaultLocal
   } catch (error) {
     console.error("Failed to fetch song", error);
     return buildFallbackSong(id, locale);
+  }
+}
+
+export async function fetchAllSongs(locale: AppLocale = defaultLocale): Promise<SongDetail[]> {
+  const databaseId = process.env.NOTION_SONGS_DATABASE_ID;
+  if (!databaseId || !process.env.NOTION_API_KEY) {
+    return buildFallbackSongs(locale);
+  }
+
+  try {
+    const songs: SongDetail[] = [];
+    let cursor: string | undefined;
+
+    do {
+      const response = await notionClient.queryDatabase<NotionQueryResponse<SongProperties>>({
+        database_id: databaseId,
+        start_cursor: cursor,
+      });
+
+      response.results.forEach((page) => {
+        const mapped = mapSong(page, locale);
+        if (mapped) {
+          songs.push(mapped);
+        }
+      });
+
+      cursor = response.has_more ? (response.next_cursor ?? undefined) : undefined;
+    } while (cursor);
+
+    if (songs.length === 0) {
+      return buildFallbackSongs(locale);
+    }
+    return songs;
+  } catch (error) {
+    console.error("Failed to fetch songs list", error);
+    return buildFallbackSongs(locale);
   }
 }

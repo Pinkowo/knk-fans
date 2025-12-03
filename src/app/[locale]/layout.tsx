@@ -11,6 +11,7 @@ import SitePet from "@/components/pets/SitePet";
 import MusicPlayer from "@/components/player/MusicPlayer";
 import { defaultLocale, locales, type AppLocale } from "@/i18n";
 import { PlayerProvider } from "@/lib/context/PlayerContext";
+import { fetchPlayerLibrary } from "@/lib/player/library";
 
 type LayoutParams = { locale: string };
 
@@ -54,6 +55,7 @@ export default async function LocaleLayout({
   setRequestLocale(resolvedLocale);
   const messages = await getMessages({ locale: resolvedLocale });
   const t = await getTranslations({ locale: resolvedLocale });
+  const playerLibrary = await fetchPlayerLibrary(resolvedLocale);
 
   return (
     <NextIntlClientProvider locale={resolvedLocale} messages={messages} timeZone="Asia/Taipei">
@@ -69,7 +71,7 @@ export default async function LocaleLayout({
           <Footer locale={resolvedLocale} />
           <SitePet />
           <PetSettingsPanel />
-          <MusicPlayer />
+          <MusicPlayer library={playerLibrary} />
           <WebVitalsReporter />
         </div>
       </PlayerProvider>

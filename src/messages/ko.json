@@ -60,15 +60,18 @@
     }
   },
   "player": {
-    "open": "음악 재생",
-    "nowPlaying": "Now Playing",
-    "queueEmpty": "재생 대기열이 비어 있습니다",
     "play": "재생",
     "pause": "일시정지",
-    "collapse": "닫기",
-    "noVideo": "재생 가능한 영상이 없습니다",
-    "channelPlaylist": "KNK 공식 유튜브 재생목록",
-    "channelPlaylistDescription": "곡 영상이 없을 때 공식 업로드 목록을 재생해요."
+    "expand": "펼치기",
+    "collapse": "접기",
+    "selectAlbum": "앨범 선택",
+    "selectTrack": "곡 선택",
+    "albums": "앨범 목록",
+    "tracks": "{album} 수록곡",
+    "close": "닫기",
+    "previous": "이전 곡",
+    "next": "다음 곡",
+    "noCover": "커버 없음"
   },
   "links": {
     "title": "공식 링크",

@@ -1,20 +1,27 @@
-export interface Track {
+export interface PlayerTrack {
   id: string;
   title: string;
   artist?: string;
   videoId?: string;
+  durationSeconds?: number;
+}
+
+export interface PlayerAlbum {
+  id: string;
+  title: string;
+  cover?: string;
+  artist?: string;
+  tracks: PlayerTrack[];
 }
 
 export interface PlayerState {
-  isOpen: boolean;
+  isExpanded: boolean;
   isPlaying: boolean;
-  queue: Track[];
-  currentIndex: number;
+  currentAlbumId?: string;
+  currentTrackId?: string;
 }
 
 export const defaultPlayerState: PlayerState = {
-  isOpen: false,
+  isExpanded: false,
   isPlaying: false,
-  queue: [],
-  currentIndex: 0,
 };

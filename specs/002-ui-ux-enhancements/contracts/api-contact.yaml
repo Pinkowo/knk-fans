@@ -1,0 +1,279 @@
+openapi: 3.1.0
+info:
+  title: KNK Fans Site - Contact Form API
+  description: |
+    聯絡表單 API 規格
+
+    提供錯誤回報、網站委託與其他詢問的表單提交功能。
+    支援附件上傳（最大 5MB）並透過 email 發送至指定信箱。
+  version: 1.0.0
+  contact:
+    email: pink.exp.studio@gmail.com
+
+servers:
+  - url: http://localhost:3000
+    description: 本地開發環境
+  - url: https://knk-fans.vercel.app
+    description: 正式環境
+
+paths:
+  /api/contact:
+    post:
+      summary: 提交聯絡表單
+      description: |
+        接收聯絡表單提交，驗證資料後透過 Resend API 發送 email 至指定信箱。
+
+        **功能需求對應**:
+        - FR-018: 提供聯絡表單
+        - FR-023: 發送至 pink.exp.studio@gmail.com
+        - FR-024: 信件主旨格式 "knk-fans-site:{類型}"（例如：knk-fans-site:錯誤回報）
+        - FR-025: 驗證必填欄位
+        - FR-026: 顯示確認訊息
+        - FR-027: 驗證附件大小限制
+        - FR-028: 顯示錯誤訊息
+
+        **更新說明**（2025-12-04）：
+        - 移除標題欄位
+        - Email 主旨改用 inquiryType（詢問類型）
+      operationId: submitContactForm
+      tags:
+        - Contact
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - inquiryType
+                - message
+                - locale
+              properties:
+                inquiryType:
+                  type: string
+                  enum:
+                    - error-report
+                    - service-request
+                    - other
+                  description: |
+                    詢問類型（將用於 Email 主旨）
+                    - error-report: 錯誤回報
+                    - service-request: 網站製作委託
+                    - other: 其他
+                  example: error-report
+                message:
+                  type: string
+                  minLength: 10
+                  maxLength: 5000
+                  description: 詢問內容
+                  example: 在歌詞頁面切換語言時，部分歌詞沒有正確顯示。
+                attachment:
+                  type: string
+                  format: binary
+                  description: |
+                    附件檔案（可選）
+
+                    **限制**:
+                    - 大小: ≤ 5MB
+                    - 格式: image/*, application/pdf, text/plain, .log
+                locale:
+                  type: string
+                  enum: [zh, ko, ja, en]
+                  description: 使用者選擇的語言
+                  example: zh
+            encoding:
+              attachment:
+                contentType: image/*, application/pdf, text/plain
+      responses:
+        '200':
+          description: 表單提交成功，email 已發送
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - message
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    description: 成功訊息（多語系）
+                    example: 感謝您的回饋！我們已收到您的訊息。
+                  emailId:
+                    type: string
+                    description: Resend email ID（用於追蹤）
+                    example: re_abc123xyz
+        '400':
+          description: 驗證錯誤（欄位不符合要求）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                validationError:
+                  summary: 欄位驗證錯誤
+                  value:
+                    success: false
+                    error: 表單驗證失敗
+                    code: VALIDATION_ERROR
+                    details:
+                      title:
+                        - 標題為必填欄位
+                      message:
+                        - 訊息至少需要 10 個字元
+                fileTooLarge:
+                  summary: 附件過大
+                  value:
+                    success: false
+                    error: 附件大小超過限制
+                    code: FILE_TOO_LARGE
+                    details:
+                      attachment:
+                        - 檔案大小不得超過 5MB
+        '429':
+          description: 請求頻率過高（Rate limiting）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error: 請求過於頻繁，請稍後再試
+                code: RATE_LIMIT_EXCEEDED
+        '500':
+          description: 伺服器錯誤（email 發送失敗）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error: Email 發送失敗，請稍後再試
+                code: EMAIL_SEND_ERROR
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+        - success
+        - error
+        - code
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          description: 錯誤訊息（多語系）
+        code:
+          type: string
+          enum:
+            - VALIDATION_ERROR
+            - EMAIL_SEND_ERROR
+            - FILE_TOO_LARGE
+            - RATE_LIMIT_EXCEEDED
+          description: 錯誤代碼
+        details:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          description: 詳細驗證錯誤（欄位層級）
+          example:
+            message:
+              - 訊息至少需要 10 個字元
+
+  securitySchemes: {}
+
+tags:
+  - name: Contact
+    description: 聯絡表單相關 API
+
+# 擴展資訊
+x-implementation-notes: |
+  ## 實作細節
+
+  ### Rate Limiting
+  - 實作方式：IP-based rate limiting（未來）
+  - 限制：10 次提交 / 小時 / IP
+  - 儲存：Redis 或 Vercel KV
+
+  ### Email 內容格式
+
+  **信件主旨**（已更新 2025-12-04）:
+  ```
+  knk-fans-site:{inquiryType}
+  ```
+
+  範例：
+  - `knk-fans-site:error-report`（英文）
+  - `knk-fans-site:錯誤回報`（中文，根據 locale 翻譯）
+
+  **信件內容**:
+  ```
+  詢問類型：{inquiryType 對應的翻譯}
+  提交時間：{ISO 8601 timestamp}
+  使用者語言：{locale}
+
+  訊息內容：
+  {message}
+
+  ---
+  User Agent: {userAgent}
+  IP Address: {ipAddress}
+  ```
+
+  **重要變更**：
+  - 移除標題欄位
+  - Email 主旨直接使用 inquiryType（詢問類型）
+
+  **附件**:
+  - 若有附件，轉換為 base64 並附加至 email
+  - 保留原始檔名
+
+  ### 安全考量
+  - 使用 Zod schema 驗證所有輸入
+  - 檔案類型白名單驗證（前端 + 後端）
+  - MIME type 檢查（不僅依賴副檔名）
+  - 未來新增 CAPTCHA（Cloudflare Turnstile）
+
+  ### 錯誤處理
+  - 捕獲所有錯誤，避免洩漏敏感資訊
+  - 記錄詳細錯誤至 Vercel Logs
+  - 回傳使用者友善的錯誤訊息
+
+  ### 多語系支援
+  - 根據 `locale` 參數回傳對應語言的成功/錯誤訊息
+  - 翻譯檔位置：`src/messages/{locale}.json`
+  - 錯誤訊息 key：`contact.success`, `contact.error.*`
+
+x-testing-requirements: |
+  ## 測試需求
+
+  ### 單元測試（未來）
+  - Zod schema 驗證測試
+  - 檔案大小/格式驗證測試
+  - Email 內容生成測試
+
+  ### 整合測試（未來）
+  - 完整表單提交流程
+  - Resend API 呼叫（使用 mock）
+  - 錯誤情境測試
+
+  ### 手動測試檢查清單（已更新 2025-12-04）
+  - [ ] 成功提交（無附件）
+  - [ ] 成功提交（有附件）
+  - [ ] 各種詢問類型（error-report, service-request, other）
+  - [ ] 四種語言的成功/錯誤訊息
+  - [ ] 欄位驗證錯誤（缺少 message）
+  - [ ] 附件過大
+  - [ ] 不支援的檔案格式
+  - [ ] Email 接收確認
+  - [ ] 信件主旨格式正確（knk-fans-site:{type}）
+  - [ ] 附件正確附加
+  - [ ] 確認無標題欄位（已移除）

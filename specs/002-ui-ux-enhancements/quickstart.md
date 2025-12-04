@@ -199,6 +199,18 @@ function LanguageSwitch() {
     // 路由切換...
   }
 }
+
+## GA4 / Vercel Analytics 驗證
+
+1. **啟動開發伺服器**：執行 `pnpm dev`，於瀏覽器開啟 `http://localhost:3000/zh`。
+2. **GA4 DebugView**：
+   - 進入 Google Analytics → Admin → DebugView。
+   - 在站上操作語言切換、展開推坑卡片、點擊綜藝卡片、送出聯絡表單。
+   - 確認事件 `language_switch`、`guide_card_expand`、`variety_card_click`、`form_submit`、`web_vitals` 都會出現在 DebugView。
+3. **Vercel Analytics**：
+   - 在 Vercel 專案的 Analytics 介面中切換到 “Realtime” 分頁。
+   - 重新整理頁面、展開推坑卡片、提交表單，確認事件在 Realtime stream 中出現。
+   - 若使用 AdBlock，需在瀏覽器停用後重新整理以驗證追蹤是否被阻擋。
 ```
 
 ### 2. 推坑指南卡片展開

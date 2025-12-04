@@ -6,8 +6,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import type { YouTubeEvent, YouTubePlayer } from "react-youtube";
 
-import { usePlayer } from "@/lib/context/PlayerContext";
 import { MUSIC_PLAYER_COLLAPSE_EVENT, PET_PANEL_CLOSE_EVENT } from "@/lib/constants/panels";
+import { usePlayer } from "@/lib/context/PlayerContext";
 import type { PlayerAlbum, PlayerTrack } from "@/types/player";
 
 interface MusicPlayerProps {
@@ -67,6 +67,8 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
   }, [activeTrack, setCurrentTrack, state.currentTrackId]);
 
   useEffect(() => {
+    // Persist hydration flag for client-only features (YouTube player + DOM APIs).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsHydrated(true);
   }, []);
 
@@ -113,7 +115,7 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
           if (dur && !Number.isNaN(dur)) {
             setDuration((prev) => prev || dur);
           }
-        } catch (error) {
+        } catch {
           // Player might not be ready yet, skip this update
         }
       }
@@ -134,6 +136,7 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
     // Reset UI progress whenever a new track loads.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentTime(0);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDuration(0);
 
     // Skip if no track or invalid video ID

@@ -3,9 +3,9 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
+import { MUSIC_PLAYER_COLLAPSE_EVENT, PET_PANEL_CLOSE_EVENT } from "@/lib/constants/panels";
 import { usePetSettings } from "@/lib/hooks/usePetSettings";
 import { DEFAULT_PETS } from "@/types/pets";
-import { MUSIC_PLAYER_COLLAPSE_EVENT, PET_PANEL_CLOSE_EVENT } from "@/lib/constants/panels";
 
 export default function PetSettingsPanel() {
   const t = useTranslations();

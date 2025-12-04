@@ -28,6 +28,8 @@ type ProfileFieldKey =
   | "joinDate"
   | "leaveDate";
 
+type ProfileFieldTranslationKey = `members.profileFields.${ProfileFieldKey}`;
+
 function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...props}>
@@ -241,7 +243,7 @@ export default function MemberModal({ member, onClose }: MemberModalProps) {
                           <span className="text-accent-yellow">•</span>
                           <span>
                             <span className="font-semibold text-white/80">
-                              {t(`members.profileFields.${key}` as any)}
+                              {t(`members.profileFields.${key}` as ProfileFieldTranslationKey)}
                             </span>
                             {": "}
                             <span>{value}</span>

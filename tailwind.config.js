@@ -30,6 +30,11 @@ module.exports = {
           muted: "#1c2436",
           highlight: "#273048",
         },
+        footer: {
+          background: "#080c16",
+          border: "#1e2538",
+          text: "#b7bfd9",
+        },
         text: {
           primary: "#f4f5fa",
           secondary: "#c3c8de",

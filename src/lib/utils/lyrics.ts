@@ -10,7 +10,7 @@ const LANGUAGE_FIELD_MAP: Record<string, keyof LyricsContent> = {
   ro: "romanization",
 };
 
-export function formatLyrics(lines: string[] = [], mode: LyricsDisplayMode = "line"): string[] {
+export function formatLyrics(lines: string[] = []): string[] {
   if (!Array.isArray(lines) || lines.length === 0) {
     return [];
   }

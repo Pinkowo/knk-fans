@@ -99,36 +99,101 @@
     "ja": "日本語",
     "en": "英語"
   },
+  "loadingOverlay": {
+    "title": "言語を切り替えています",
+    "description": "{locale} 版のページを読み込み中です。少々お待ちください。",
+    "ariaLabel": "{locale} 版を準備中",
+    "defaultLocaleLabel": "KNK ファンガイド"
+  },
   "layout": {
     "skip": "メインコンテンツへスキップ"
   },
   "footer": {
-    "byline": "Inspirits of Gravity 制作",
+    "byline": "KNKファン Pink（Inspirits of Gravity）制作",
+    "rights": "楽曲・歌詞・写真・映像の権利は 220 Entertainment と各著作者に帰属します。",
+    "aiNotice": "一部の要約は AI の補助を受けていますが、人間が必ず確認しています。",
+    "contactHint": "誤りを見つけた・コラボしたいなど、お気軽にどうぞ。",
+    "contactCta": "問い合わせる",
+    "contactAria": "お問い合わせフォームを開く",
     "copyright": "© {year} KNK ファンサイト. All rights reserved."
   },
   "guide": {
     "hero": {
       "title": "KNK 入門ガイドへようこそ",
-      "subtitle": "おすすめ曲、ステージ、魅力をまとめてチェック。"
+      "subtitle": "Why KNK から始め、舞台・楽曲・バラエティの名場面をページ内で再生できます。"
     },
     "sections": {
-      "songs": "おすすめ曲",
-      "playlistHeading": "プレイリスト入門",
-      "stages": "ステージ / バラエティ",
-      "stagesHeading": "ステージ＆バラエティ特選",
-      "charms": "グループの魅力",
-      "charmsHeading": "なぜ KNK？"
+      "whyEyebrow": "WHY",
+      "whyTitle": "なぜ KNK なのか",
+      "whyDescription": "長身フォーメーション、多層ハーモニー、セルフプロデュースが KNK の魅力です。",
+      "stageEyebrow": "STAGE",
+      "stageTitle": "存在感が伝わるステージ",
+      "stageDescription": "ランダムプレーダンスからシネマティックな動線まで、ファンを魅了した瞬間をピックアップ。",
+      "songEyebrow": "SONGS",
+      "songTitle": "一聴でハマる代表曲",
+      "songDescription": "バラードからキレのあるダンス曲まで、幅広い魅力をすぐに体験できます。",
+      "varietyEyebrow": "VARIETY",
+      "varietyTitle": "バラエティで見える素顔",
+      "varietyDescription": "インタビューやアコースティック演奏をページ内でそのまま視聴できます。",
+      "badges": {
+        "why-knk": "Why KNK",
+        "stage": "ステージ",
+        "song": "楽曲",
+        "variety": "バラエティ"
+      },
+      "expandCta": "動画を開く",
+      "collapseCta": "動画を閉じる",
+      "thumbnailAlt": "{title} のプレビュー"
+    },
+    "embed": {
+      "loading": "動画を読み込み中…",
+      "error": "動画を読み込めませんでした。YouTube で視聴してください。",
+      "openExternally": "YouTube で開く",
+      "ariaLabel": "{title} の動画"
     }
   },
   "variety": {
     "title": "バラエティ",
     "hero": {
       "heading": "名場面バラエティ特集",
-      "subheading": "ランダムダンスやラジオライブなど名シーンをまとめて視聴。"
+      "subheading": "おすすめステージやインタビューをカード表示し、クリックで新しいタブが開きます。"
     },
     "seriesLabel": "シリーズ",
     "episode": "EP",
-    "special": "スペシャル"
+    "special": "スペシャル",
+    "cta": "動画を観る",
+    "openNewTab": "新しいタブ",
+    "newTabAria": "{title} を新しいタブで開く"
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "CONTACT",
+      "title": "お気軽にご連絡ください",
+      "subtitle": "不具合報告、サイト制作のご相談、その他のメッセージはこちらのフォームからどうぞ。"
+    },
+    "form": {
+      "inquiryType": "お問い合わせ内容",
+      "message": "メッセージ",
+      "messagePlaceholder": "できるだけ詳しくお知らせください。リンクやタイムスタンプがあると助かります。",
+      "attachmentLabel": "添付ファイル（任意）",
+      "attachmentHint": "最大 5MB。PNG/JPG/GIF/WebP/PDF/TXT/LOG に対応。",
+      "submit": "送信する",
+      "submitting": "送信中…",
+      "success": "ありがとうございます！できるだけ早く返信します。",
+      "error": "送信に失敗しました。時間をおいて再度お試しください。",
+      "options": {
+        "error-report": "不具合の報告",
+        "service-request": "サイト制作・コラボ相談",
+        "other": "その他"
+      }
+    },
+    "validation": {
+      "inquiryType": "項目を選択してください。",
+      "messageMin": "10文字以上で入力してください。",
+      "messageMax": "メッセージは 5000 文字以内でお願いします。",
+      "fileTooLarge": "添付ファイルは 5MB 以下にしてください。",
+      "fileType": "対応していないファイル形式です。"
+    }
   },
   "discography": {
     "title": "ディスコグラフィー",

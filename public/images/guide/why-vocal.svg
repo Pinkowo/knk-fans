@@ -1,0 +1,20 @@
+<svg width="640" height="400" viewBox="0 0 640 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradVocal" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#281C60" />
+      <stop offset="100%" stop-color="#8440F4" />
+    </linearGradient>
+  </defs>
+  <rect width="640" height="400" fill="url(#gradVocal)" rx="32" />
+  <g fill="none" stroke="rgba(255,255,255,0.35)">
+    <path d="M60 320 Q80 180 100 320 T140 320" stroke-width="18" stroke-linecap="round" />
+    <path d="M180 320 Q200 120 220 320 T260 320" stroke-width="18" stroke-linecap="round" />
+    <path d="M300 320 Q320 200 340 320 T380 320" stroke-width="18" stroke-linecap="round" />
+    <path d="M420 320 Q440 150 460 320 T500 320" stroke-width="18" stroke-linecap="round" />
+    <path d="M540 320 Q560 210 580 320" stroke-width="18" stroke-linecap="round" />
+  </g>
+  <circle cx="120" cy="120" r="36" fill="rgba(255,255,255,0.15)" />
+  <circle cx="200" cy="90" r="20" fill="rgba(255,255,255,0.15)" />
+  <text x="64" y="88" fill="white" font-size="24" font-family="'Inter','Noto Sans JP',sans-serif" opacity="0.9">LAYERS</text>
+  <text x="64" y="130" fill="white" font-size="46" font-weight="700" font-family="'Inter','Noto Sans JP',sans-serif">HARMONY</text>
+</svg>

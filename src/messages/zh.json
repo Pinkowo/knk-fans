@@ -99,36 +99,101 @@
     "ja": "日文",
     "en": "英文"
   },
+  "loadingOverlay": {
+    "title": "語言切換中",
+    "description": "正在載入 {locale} 內容，請稍候。",
+    "ariaLabel": "正在準備 {locale} 版本",
+    "defaultLocaleLabel": "KNK 粉絲站"
+  },
   "layout": {
     "skip": "跳至主要內容"
   },
   "footer": {
-    "byline": "由 Inspirits of Gravity 製作",
+    "byline": "由小仙女 Pink 打造的粉絲站",
+    "rights": "所有歌曲、歌詞、照片與影片版權屬於 220 Entertainment 與原創作者。",
+    "aiNotice": "部分內容經 AI 協助整理，但皆由人工審核。",
+    "contactHint": "若發現資料錯誤或想合作，歡迎告訴我：",
+    "contactCta": "聯絡我",
+    "contactAria": "開啟聯絡表單",
     "copyright": "© {year} KNK 粉絲網站. 保留所有權利。"
   },
   "guide": {
     "hero": {
       "title": "歡迎來到 KNK 推坑指南",
-      "subtitle": "探索歌曲、舞台與團魂，一秒入坑。"
+      "subtitle": "從 Why KNK 開始，接著依序播放舞台、歌曲與綜藝精選，不用離開頁面。"
     },
     "sections": {
-      "songs": "推薦歌曲",
-      "playlistHeading": "歌單起點",
-      "stages": "舞台 / 綜藝",
-      "stagesHeading": "舞台與綜藝精選",
-      "charms": "團體魅力亮點",
-      "charmsHeading": "為什麼是 KNK？"
+      "whyEyebrow": "WHY",
+      "whyTitle": "為什麼是 KNK",
+      "whyDescription": "長腿排面、層層和聲與自製故事，是 KNK 入坑的三個關鍵。",
+      "stageEyebrow": "STAGE",
+      "stageTitle": "必看的舞台瞬間",
+      "stageDescription": "從 Random Play Dance 到戲劇化走位，這些片段讓新粉立刻記住 KNK。",
+      "songEyebrow": "SONGS",
+      "songTitle": "一聽就愛上的歌曲",
+      "songDescription": "按播放就能聽見抒情、電音與刀舞的完整範圍。",
+      "varietyEyebrow": "VARIETY",
+      "varietyTitle": "綜藝裡的真實樣貌",
+      "varietyDescription": "直接在頁面內看訪談、聲樂演出與即興遊戲，不用另開視窗。",
+      "badges": {
+        "why-knk": "Why KNK",
+        "stage": "舞台精選",
+        "song": "歌曲推薦",
+        "variety": "綜藝推薦"
+      },
+      "expandCta": "展開影片",
+      "collapseCta": "收合影片",
+      "thumbnailAlt": "{title} 預覽圖"
+    },
+    "embed": {
+      "loading": "正在載入影片…",
+      "error": "無法載入此影片，可改在 YouTube 觀看。",
+      "openExternally": "前往 YouTube",
+      "ariaLabel": "嵌入影片：{title}"
     }
   },
   "variety": {
     "title": "綜藝舞台",
     "hero": {
       "heading": "經典舞台與綜藝推薦",
-      "subheading": "隨時重溫 Random Play Dance、清唱片段與名場面。"
+      "subheading": "以卡片方式呈現所有綜藝與舞台，點擊即可在新分頁播放影片。"
     },
     "seriesLabel": "系列",
     "episode": "第",
-    "special": "特別篇"
+    "special": "特別篇",
+    "cta": "觀看影片",
+    "openNewTab": "新分頁",
+    "newTabAria": "以新分頁開啟 {title}"
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "CONTACT",
+      "title": "聯絡我",
+      "subtitle": "無論是錯誤回報、網站製作委託或其他想法都可以透過這個表單告訴我。"
+    },
+    "form": {
+      "inquiryType": "想詢問的項目",
+      "message": "訊息內容",
+      "messagePlaceholder": "請盡量描述詳細（可附上連結或時間戳）。",
+      "attachmentLabel": "附件（選填）",
+      "attachmentHint": "上限 5MB，可傳 PNG/JPG/GIF/WebP/PDF/TXT/LOG。",
+      "submit": "送出訊息",
+      "submitting": "傳送中…",
+      "success": "已收到！我會盡快回覆。",
+      "error": "送出時發生問題，請稍後再試。",
+      "options": {
+        "error-report": "錯誤回報",
+        "service-request": "網站製作/合作",
+        "other": "其他意見"
+      }
+    },
+    "validation": {
+      "inquiryType": "請選擇一個類型。",
+      "messageMin": "至少輸入 10 個字，讓我了解更多。",
+      "messageMax": "訊息上限為 5000 字。",
+      "fileTooLarge": "附件需小於 5MB。",
+      "fileType": "附件格式不支援。"
+    }
   },
   "discography": {
     "title": "音樂作品",

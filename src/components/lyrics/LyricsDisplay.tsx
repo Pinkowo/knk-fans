@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { memo, useEffect, useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 
 import LyricsControls from "@/components/lyrics/LyricsControls";
 import type { LyricsDisplayMode } from "@/lib/utils/lyrics";
@@ -27,7 +27,6 @@ function getLanguageMeta(key: string) {
 function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
   const t = useTranslations();
   const [mode, setMode] = useState<LyricsDisplayMode>("line");
-  const [isMounted, setIsMounted] = useState(false);
 
   const availableLanguageOptions = useMemo(
     () => LANGUAGE_OPTIONS.filter((option) => getLyricsLines(lyrics, option.key).length > 0),
@@ -41,40 +40,26 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
     return availableLanguageOptions.length ? [availableLanguageOptions[0].key] : [];
   }, [availableLanguageOptions]);
 
-  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>(fallbackSelection);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!isMounted) return;
-
-    setSelectedLanguages((previous) => {
-      if (previous.length === 0) {
-        return fallbackSelection;
-      }
-      const filtered = previous.filter((lang) => availableLanguageOptions.some((option) => option.key === lang));
-      if (filtered.length === previous.length && filtered.every((lang, index) => lang === previous[index])) {
-        return previous;
-      }
-      if (filtered.length > 0) {
-        return filtered;
-      }
+  const activeLanguages = useMemo(() => {
+    if (selectedLanguages.length === 0) {
       return fallbackSelection;
-    });
-  }, [isMounted, availableLanguageOptions, fallbackSelection]);
+    }
+    const filtered = selectedLanguages.filter((lang) => availableLanguageOptions.some((option) => option.key === lang));
+    return filtered.length > 0 ? filtered : fallbackSelection;
+  }, [selectedLanguages, fallbackSelection, availableLanguageOptions]);
 
   const mergedLyrics = useMemo(
-    () => mergeLyricsByLanguage(lyrics, mode === "paragraph" ? selectedLanguages : selectedLanguages.slice(0, 1)),
-    [lyrics, selectedLanguages, mode],
+    () => mergeLyricsByLanguage(lyrics, mode === "paragraph" ? activeLanguages : activeLanguages.slice(0, 1)),
+    [lyrics, activeLanguages, mode],
   );
 
   const lineGroups = useMemo(() => {
-    if (mode !== "line" || selectedLanguages.length === 0) {
+    if (mode !== "line" || activeLanguages.length === 0) {
       return [];
     }
-    const languageLines = selectedLanguages
+    const languageLines = activeLanguages
       .map((lang) => ({ lang, lines: getLyricsLines(lyrics, lang) }))
       .filter((entry) => entry.lines.length > 0);
     if (languageLines.length === 0) {
@@ -86,48 +71,25 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
         .map((entry) => ({ lang: entry.lang, text: entry.lines[lineIndex] }))
         .filter((segment) => segment.text && segment.text.trim().length > 0),
     ).filter((group) => group.length > 0);
-  }, [lyrics, selectedLanguages, mode]);
+  }, [lyrics, activeLanguages, mode]);
 
   const hasLyrics = availableLanguageOptions.length > 0;
-  const isParagraphMulti = mode === "paragraph" && selectedLanguages.length > 1;
+  const isParagraphMulti = mode === "paragraph" && activeLanguages.length > 1;
   const controlsWrapperClass = isParagraphMulti ? "mx-auto w-fit" : "mx-auto max-w-4xl";
   const handleLanguagesChange = (languages: string[]) => {
-    if (languages.length === 0) {
-      setSelectedLanguages(fallbackSelection);
-    } else {
-      setSelectedLanguages(languages);
-    }
+    setSelectedLanguages(languages);
   };
-
-  if (!isMounted) {
-    return (
-      <div className="space-y-6 px-6" style={{ contain: "content" }}>
-        <div className={controlsWrapperClass}>
-          <LyricsControls
-            availableLanguages={availableLanguageOptions}
-            selectedLanguages={[]}
-            onLanguagesChange={handleLanguagesChange}
-            mode={mode}
-            onModeChange={setMode}
-          />
-        </div>
-        <p className="rounded-3xl border border-dashed border-white/15 bg-white/5 p-6 text-text-secondary">
-          {t("lyrics.empty")}
-        </p>
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6 px-6" style={{ contain: "content" }}>
       <div className={controlsWrapperClass}>
-        <LyricsControls
-          availableLanguages={availableLanguageOptions}
-          selectedLanguages={selectedLanguages}
-          onLanguagesChange={handleLanguagesChange}
-          mode={mode}
-          onModeChange={setMode}
-        />
+          <LyricsControls
+            availableLanguages={availableLanguageOptions}
+            selectedLanguages={activeLanguages}
+            onLanguagesChange={handleLanguagesChange}
+            mode={mode}
+            onModeChange={setMode}
+          />
       </div>
       {!hasLyrics ? (
         <p className="rounded-3xl border border-dashed border-white/15 bg-white/5 p-6 text-text-secondary">
@@ -149,7 +111,7 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
                         {meta?.label ?? entry.lang.toUpperCase()}
                       </p>
                       <div className="mt-4 space-y-3 text-sm leading-relaxed text-white whitespace-pre-line">
-                        {formatLyrics(entry.lines, mode).map((line, index) => (
+                        {formatLyrics(entry.lines).map((line, index) => (
                           <p key={`${entry.lang}-${index}`}>{line}</p>
                         ))}
                       </div>
@@ -168,7 +130,7 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
                       {meta?.label ?? entry.lang.toUpperCase()}
                     </p>
                     <div className="mt-4 space-y-3 text-sm leading-relaxed text-white whitespace-pre-line">
-                      {formatLyrics(entry.lines, mode).map((line, index) => (
+                      {formatLyrics(entry.lines).map((line, index) => (
                         <p key={`${entry.lang}-${index}`}>{line}</p>
                       ))}
                     </div>

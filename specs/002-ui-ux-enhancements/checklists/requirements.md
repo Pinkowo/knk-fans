@@ -79,3 +79,34 @@ All clarification items have been resolved:
 - All sections complete and meet quality standards
 - Ready to proceed to `/speckit.plan` for implementation planning
 - Updates properly documented in specification history
+
+## Implementation Verification
+
+### 語言切換載入體驗
+- [ ] 切換任兩個語言時，<100ms 內出現全頁載入遮罩
+- [ ] 載入期間禁止再次觸發切換請求
+- [ ] 載入完成或失敗時遮罩立即消失並恢復可操作狀態
+
+### 推坑指南重構
+- [ ] 區塊順序依序為 Why → 舞台 → 歌曲 → 綜藝
+- [ ] 每張卡片含縮圖與描述，展開時於卡片內播放 YouTube
+- [ ] 展開/收合時觸發 `guide_card_expand` 事件
+
+### 綜藝卡片
+- [ ] `/[locale]/variety` 僅顯示單層卡片 grid，無系列分類
+- [ ] 卡片點擊後在新分頁開啟外部連結並觸發 `variety_card_click`
+- [ ] 具備「新分頁開啟」ARIA 描述與多語 CTA
+
+### 聯絡表單
+- [ ] 下拉類型含「錯誤回報 / 網站製作委託 / 其他」
+- [ ] 10~5000 字訊息驗證、5MB 附件限制與 MIME 驗證
+- [ ] 成功/失敗提示、重複提交阻擋、寄送 `knk-fans-site:{類型}` 主旨
+
+### Footer
+- [ ] 顯示 Pink 製作者、220 Entertainment 權利宣告、AI 聲明
+- [ ] 提供導向 `/contact` 的 CTA 並具有 aria-label
+
+### Analytics
+- [ ] GA4 DebugView 可看到 `language_switch`、`guide_card_expand`、`variety_card_click`、`form_submit`、`web_vitals`
+- [ ] Vercel Analytics Realtime 可同步觀察上述事件
+- [ ] GA `<GoogleAnalytics>` 僅在設定 Measurement ID 時注入一次

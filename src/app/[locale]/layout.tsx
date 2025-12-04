@@ -10,6 +10,7 @@ import PetSettingsPanel from "@/components/pets/PetSettings";
 import SitePet from "@/components/pets/SitePet";
 import MusicPlayer from "@/components/player/MusicPlayer";
 import { defaultLocale, locales, type AppLocale } from "@/i18n";
+import { LoadingProvider } from "@/lib/context/LoadingContext";
 import { PlayerProvider } from "@/lib/context/PlayerContext";
 import { fetchPlayerLibrary } from "@/lib/player/library";
 
@@ -59,22 +60,24 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={resolvedLocale} messages={messages} timeZone="Asia/Taipei">
-      <PlayerProvider>
-        <div className="flex min-h-screen flex-col bg-surface text-white">
-          <a className="skip-link" href="#main-content">
-            {t("layout.skip")}
-          </a>
-          <Header locale={resolvedLocale} />
-          <main id="main-content" className="flex-1 bg-gradient-to-b from-surface via-surface-muted to-surface">
-            {children}
-          </main>
-          <Footer locale={resolvedLocale} />
-          <SitePet />
-          <PetSettingsPanel />
-          <MusicPlayer library={playerLibrary} />
-          <WebVitalsReporter />
-        </div>
-      </PlayerProvider>
+      <LoadingProvider>
+        <PlayerProvider>
+          <div className="flex min-h-screen flex-col bg-surface text-white">
+            <a className="skip-link" href="#main-content">
+              {t("layout.skip")}
+            </a>
+            <Header locale={resolvedLocale} />
+            <main id="main-content" className="flex-1 bg-gradient-to-b from-surface via-surface-muted to-surface">
+              {children}
+            </main>
+            <Footer locale={resolvedLocale} />
+            <SitePet />
+            <PetSettingsPanel />
+            <MusicPlayer library={playerLibrary} />
+            <WebVitalsReporter />
+          </div>
+        </PlayerProvider>
+      </LoadingProvider>
     </NextIntlClientProvider>
   );
 }

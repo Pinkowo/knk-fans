@@ -30,9 +30,9 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 
 **Purpose**: 安裝必要依賴與環境設定，確保後續故事能編譯與部署
 
-- [ ] T001 在 `package.json` 與 `pnpm-lock.yaml` 安裝 `resend`、`react-hook-form`、`zod`、`@hookform/resolvers`、`@next/third-parties` 依賴
-- [ ] T002 於 `.env.local.example` 新增 `RESEND_API_KEY`、`CONTACT_EMAIL`、`NEXT_PUBLIC_GA_ID` 並說明主旨格式 `knk-fans-site:{類型}`
-- [ ] T003 更新 `README.md` Development/Deployment 區段，加入 Resend/GA 設定與 `pnpm type-check && pnpm lint` 驗證流程
+- [x] T001 在 `package.json` 與 `pnpm-lock.yaml` 安裝 `resend`、`react-hook-form`、`zod`、`@hookform/resolvers`、`@next/third-parties` 依賴
+- [x] T002 於 `.env.local.example` 新增 `RESEND_API_KEY`、`CONTACT_EMAIL`、`NEXT_PUBLIC_GA_ID` 並說明主旨格式 `knk-fans-site:{類型}`
+- [x] T003 更新 `README.md` Development/Deployment 區段，加入 Resend/GA 設定與 `pnpm type-check && pnpm lint` 驗證流程
 
 ---
 
@@ -40,9 +40,9 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 
 **Purpose**: 建立共用型別、環境與事件介面，所有使用者故事皆倚賴此層
 
-- [ ] T004 在 `src/types/ui-ux.ts` 定義 `LanguageLoadingState`、`GuideContentItem`、`VarietyCardItem`、`ContactFormSubmission`、`AnalyticsEvent` 型別與共用 enum
-- [ ] T005 在 `src/lib/env.ts` 實作 `getEnv` helper 讀取 `RESEND_API_KEY`/`CONTACT_EMAIL`/`NEXT_PUBLIC_GA_ID`，並更新 `next.config.ts` 暴露 GA ID 給客戶端
-- [ ] T006 建立 `src/lib/analytics.ts`，提供 `trackEvent` stub 與事件常數（language_switch、guide_card_expand、variety_card_click、form_submit、page_view）供後續掛鉤
+- [x] T004 在 `src/types/ui-ux.ts` 定義 `LanguageLoadingState`、`GuideContentItem`、`VarietyCardItem`、`ContactFormSubmission`、`AnalyticsEvent` 型別與共用 enum
+- [x] T005 在 `src/lib/env.ts` 實作 `getEnv` helper 讀取 `RESEND_API_KEY`/`CONTACT_EMAIL`/`NEXT_PUBLIC_GA_ID`，並更新 `next.config.ts` 暴露 GA ID 給客戶端
+- [x] T006 建立 `src/lib/analytics.ts`，提供 `trackEvent` stub 與事件常數（language_switch、guide_card_expand、variety_card_click、form_submit、page_view）供後續掛鉤
 
 **⚠️ 完成 Phase 2 前不得進入任何使用者故事**
 
@@ -53,11 +53,11 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 **Goal**: 切換語言時立即顯示全頁載入遮罩並封鎖重複請求
 **獨立測試**: 在任兩個語言間切換，確認遮罩於 <100ms 顯示、完成後即消失且無重複跳轉
 
-- [ ] T007 [P] [US1] 在 `src/components/common/LoadingOverlay.tsx` 建立 Tailwind + Framer Motion 全畫面遮罩，支援 aria-live 與焦點鎖定
-- [ ] T008 [P] [US1] 在 `src/lib/context/LoadingContext.tsx` 實作 `LanguageLoadingState` Provider 與 Hook，追蹤 pending 計數
-- [ ] T009 [US1] 於 `src/app/[locale]/layout.tsx` 掛載 `LoadingProvider`，在主容器渲染 `LoadingOverlay` 並阻擋滾動/點擊
-- [ ] T010 [US1] 在 `src/components/common/LanguageSelector.tsx` 改用 `startTransition` + context setter，避免重複 replace/refresh 請求
-- [ ] T011 [US1] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增 loadingOverlay 標題、描述與 ARIA 文案
+- [x] T007 [P] [US1] 在 `src/components/common/LoadingOverlay.tsx` 建立 Tailwind + Framer Motion 全畫面遮罩，支援 aria-live 與焦點鎖定
+- [x] T008 [P] [US1] 在 `src/lib/context/LoadingContext.tsx` 實作 `LanguageLoadingState` Provider 與 Hook，追蹤 pending 計數
+- [x] T009 [US1] 於 `src/app/[locale]/layout.tsx` 掛載 `LoadingProvider`，在主容器渲染 `LoadingOverlay` 並阻擋滾動/點擊
+- [x] T010 [US1] 在 `src/components/common/LanguageSelector.tsx` 改用 `startTransition` + context setter，避免重複 replace/refresh 請求
+- [x] T011 [US1] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增 loadingOverlay 標題、描述與 ARIA 文案
 
 ---
 
@@ -66,12 +66,12 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 **Goal**: 以 Why → 推薦舞台 → 推薦歌曲 → 推薦綜藝順序呈現卡片，卡片含縮圖並可內嵌播放
 **獨立測試**: 造訪 `/[locale]`，依序檢視各區塊並確認點擊卡片後於卡片內播放 YouTube
 
-- [ ] T012 [P] [US2] 在 `src/lib/notion/guide.ts` 依 data-model 產生 `GuideContentItem[]`，含排序常數（Why/Stage/Song/Variety）
-- [ ] T013 [P] [US2] 在 `src/components/guide/YouTubeEmbed.tsx` 建立 lazy `react-youtube` 內嵌元件並處理載入/錯誤狀態
-- [ ] T014 [US2] 在 `src/components/guide/GuideCard.tsx` 使用 Framer Motion 建立卡片、展示縮圖並於展開後渲染 `YouTubeEmbed`
-- [ ] T015 [US2] 重構 `src/app/[locale]/page.tsx`，依 Why→舞台→歌曲→綜藝順序渲染新卡片區塊與標題
-- [ ] T016 [US2] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增 Why KNK 摘要、各區塊說明與卡片 CTA 文案
-- [ ] T017 [US2] 於 `public/images/guide/` 新增縮圖資產並在 `next.config.ts` 扩充 remotePatterns 允許 `i.ytimg.com`/Notion 圖源
+- [x] T012 [P] [US2] 在 `src/lib/notion/guide.ts` 依 data-model 產生 `GuideContentItem[]`，含排序常數（Why/Stage/Song/Variety）
+- [x] T013 [P] [US2] 在 `src/components/guide/YouTubeEmbed.tsx` 建立 lazy `react-youtube` 內嵌元件並處理載入/錯誤狀態
+- [x] T014 [US2] 在 `src/components/guide/GuideCard.tsx` 使用 Framer Motion 建立卡片、展示縮圖並於展開後渲染 `YouTubeEmbed`
+- [x] T015 [US2] 重構 `src/app/[locale]/page.tsx`，依 Why→舞台→歌曲→綜藝順序渲染新卡片區塊與標題
+- [x] T016 [US2] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增 Why KNK 摘要、各區塊說明與卡片 CTA 文案
+- [x] T017 [US2] 於 `public/images/guide/` 新增縮圖資產並在 `next.config.ts` 扩充 remotePatterns 允許 `i.ytimg.com`/Notion 圖源
 
 ---
 
@@ -80,10 +80,10 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 **Goal**: 綜藝頁改為單層卡片清單，顯示縮圖與標題，點擊於新分頁開啟
 **獨立測試**: 造訪 `/[locale]/variety`，確認無系列分類、所有卡片點擊後在新分頁開啟正確連結
 
-- [ ] T018 [P] [US3] 在 `src/lib/notion/variety.ts` 將資料轉換為 `VarietyCardItem[]`（含縮圖、標題、外部 URL）並移除系列分組
-- [ ] T019 [P] [US3] 在 `src/components/variety/VarietyCard.tsx` 重構卡片版型、顯示縮圖/標題且設定 `target="_blank" rel="noreferrer"`
-- [ ] T020 [US3] 重寫 `src/app/[locale]/variety/page.tsx`，以單一 responsive grid 呈現卡片並更新導言文字
-- [ ] T021 [US3] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增綜藝 CTA 與「新分頁開啟」ARIA 描述
+- [x] T018 [P] [US3] 在 `src/lib/notion/variety.ts` 將資料轉換為 `VarietyCardItem[]`（含縮圖、標題、外部 URL）並移除系列分組
+- [x] T019 [P] [US3] 在 `src/components/variety/VarietyCard.tsx` 重構卡片版型、顯示縮圖/標題且設定 `target="_blank" rel="noreferrer"`
+- [x] T020 [US3] 重寫 `src/app/[locale]/variety/page.tsx`，以單一 responsive grid 呈現卡片並更新導言文字
+- [x] T021 [US3] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增綜藝 CTA 與「新分頁開啟」ARIA 描述
 
 ---
 
@@ -92,13 +92,13 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 **Goal**: 新增聯絡頁與表單（類型下拉、內容、附件），送出後寄信並顯示成功提示
 **獨立測試**: 於 `/[locale]/contact` 選各種類型並附檔送出，確認 email 主旨 `knk-fans-site:{類型}`、成功/失敗訊息與 5MB 驗證
 
-- [ ] T022 [US5] 在 `src/types/contact.ts` 建立 `contactFormSchema`（無 title 欄位）與 `ContactSubmissionRequest/Response` 型別，並於 `src/types/ui-ux.ts` 匯出
-- [ ] T023 [P] [US5] 在 `src/lib/email.ts` 實作 Resend 客戶端，使用 `CONTACT_EMAIL` 及附件 base64 編碼產出 `knk-fans-site:{類型}` 主旨
-- [ ] T024 [P] [US5] 依 `specs/002-ui-ux-enhancements/contracts/api-contact.yaml` 於 `src/app/api/contact/route.ts` 解析 `formData()`、執行 Zod 驗證與 5MB/MIME 檢查並呼叫 email helper
-- [ ] T025 [US5] 在 `src/components/contact/ContactForm.tsx` 建立 React Hook Form UI（下拉、文字區、附件輸入、狀態指示）
-- [ ] T026 [US5] 於 `src/components/contact/ContactForm.tsx` 串接 `/api/contact` POST、顯示成功/錯誤回饋、阻擋重複提交並重設表單
-- [ ] T027 [US5] 在 `src/app/[locale]/contact/page.tsx` 建立頁面結構與 hero 文案，載入 `ContactForm` 並設定 `generateMetadata`
-- [ ] T028 [US5] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增類型選項、驗證訊息、成功/失敗提示與附件限制文字
+- [x] T022 [US5] 在 `src/types/contact.ts` 建立 `contactFormSchema`（無 title 欄位）與 `ContactSubmissionRequest/Response` 型別，並於 `src/types/ui-ux.ts` 匯出
+- [x] T023 [P] [US5] 在 `src/lib/email.ts` 實作 Resend 客戶端，使用 `CONTACT_EMAIL` 及附件 base64 編碼產出 `knk-fans-site:{類型}` 主旨
+- [x] T024 [P] [US5] 依 `specs/002-ui-ux-enhancements/contracts/api-contact.yaml` 於 `src/app/api/contact/route.ts` 解析 `formData()`、執行 Zod 驗證與 5MB/MIME 檢查並呼叫 email helper
+- [x] T025 [US5] 在 `src/components/contact/ContactForm.tsx` 建立 React Hook Form UI（下拉、文字區、附件輸入、狀態指示）
+- [x] T026 [US5] 於 `src/components/contact/ContactForm.tsx` 串接 `/api/contact` POST、顯示成功/錯誤回饋、阻擋重複提交並重設表單
+- [x] T027 [US5] 在 `src/app/[locale]/contact/page.tsx` 建立頁面結構與 hero 文案，載入 `ContactForm` 並設定 `generateMetadata`
+- [x] T028 [US5] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增類型選項、驗證訊息、成功/失敗提示與附件限制文字
 
 ---
 
@@ -107,10 +107,10 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 **Goal**: Footer 顯示製作者、版權、AI 聲明、聯絡連結並支援四語
 **獨立測試**: 捲動至任一頁底部，確認上述資訊完整且聯絡連結導向 `/contact`
 
-- [ ] T029 [US4] 在 `src/components/common/Footer.tsx` 加入 Pink 製作者、220 Entertainment 版權、AI 聲明與 `/contact` CTA（含 aria-label）
-- [ ] T030 [US4] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增 Footer 免責文字與多語聯絡 CTA
-- [ ] T031 [US4] 調整 `src/app/[locale]/layout.tsx` 讓 Footer 接收多段文字、導向 `/{locale}/contact` 並於 skip-link 後呈現
-- [ ] T032 [P] [US4] 在 `src/styles/globals.css` 與 `tailwind.config.js` 新增 Footer 色彩/排版變數，確保對比度與行動裝置間距
+- [x] T029 [US4] 在 `src/components/common/Footer.tsx` 加入 Pink 製作者、220 Entertainment 版權、AI 聲明與 `/contact` CTA（含 aria-label）
+- [x] T030 [US4] 更新 `src/messages/zh.json`、`src/messages/en.json`、`src/messages/ko.json`、`src/messages/ja.json` 新增 Footer 免責文字與多語聯絡 CTA
+- [x] T031 [US4] 調整 `src/app/[locale]/layout.tsx` 讓 Footer 接收多段文字、導向 `/{locale}/contact` 並於 skip-link 後呈現
+- [x] T032 [P] [US4] 在 `src/styles/globals.css` 與 `tailwind.config.js` 新增 Footer 色彩/排版變數，確保對比度與行動裝置間距
 
 ---
 
@@ -119,11 +119,11 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 **Goal**: 於所有頁面載入 GA4 與 Vercel Analytics，並追蹤 page view + 互動事件
 **獨立測試**: 於 GA4 及 Vercel Analytics 後台檢視即時流量，確認語言切換、卡片展開、聯絡表單送出事件被記錄
 
-- [ ] T033 [P] [US6] 在 `src/app/layout.tsx` 透過 `@next/third-parties/google` 注入 GA4 script，使用 `NEXT_PUBLIC_GA_ID` 並避免重複載入
-- [ ] T034 [US6] 擴充 `src/lib/analytics.ts` 實作 `trackEvent`，將事件傳送至 `window.gtag` 與 `@vercel/analytics`（`va`），並在 ad blocker 情況下安全 no-op
-- [ ] T035 [US6] 在 `src/components/analytics/WebVitalsReporter.tsx` 導入 `trackEvent`，上報 CLS/FID/LCP 等 Web Vitals 為 GA 自訂事件
-- [ ] T036 [US6] 於 `src/components/common/LanguageSelector.tsx`、`src/components/guide/GuideCard.tsx`、`src/components/variety/VarietyCard.tsx`、`src/components/contact/ContactForm.tsx` 呼叫 `trackEvent` 紀錄 language_switch / guide_card_expand / variety_card_click / form_submit
-- [ ] T037 [P] [US6] 更新 `specs/002-ui-ux-enhancements/quickstart.md`，新增 GA4 即時流量驗證與 Vercel Analytics 觀察步驟
+- [x] T033 [P] [US6] 在 `src/app/layout.tsx` 透過 `@next/third-parties/google` 注入 GA4 script，使用 `NEXT_PUBLIC_GA_ID` 並避免重複載入
+- [x] T034 [US6] 擴充 `src/lib/analytics.ts` 實作 `trackEvent`，將事件傳送至 `window.gtag` 與 `@vercel/analytics`（`va`），並在 ad blocker 情況下安全 no-op
+- [x] T035 [US6] 在 `src/components/analytics/WebVitalsReporter.tsx` 導入 `trackEvent`，上報 CLS/FID/LCP 等 Web Vitals 為 GA 自訂事件
+- [x] T036 [US6] 於 `src/components/common/LanguageSelector.tsx`、`src/components/guide/GuideCard.tsx`、`src/components/variety/VarietyCard.tsx`、`src/components/contact/ContactForm.tsx` 呼叫 `trackEvent` 紀錄 language_switch / guide_card_expand / variety_card_click / form_submit
+- [x] T037 [P] [US6] 更新 `specs/002-ui-ux-enhancements/quickstart.md`，新增 GA4 即時流量驗證與 Vercel Analytics 觀察步驟
 
 ---
 
@@ -131,9 +131,9 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 
 **Purpose**: 文件、樣式與驗收檢查，確保所有故事一致性與線上品質
 
-- [ ] T038 在 `src/styles/globals.css` 精簡 overlay/卡片/表單樣式並更新 `tailwind.config.js` token，以維持 <100ms 載入回饋與 <500KB bundle
-- [ ] T039 更新 `specs/002-ui-ux-enhancements/checklists/requirements.md`，加入語言切換、指南、綜藝、聯絡表單、Footer、Analytics 驗收條目
-- [ ] T040 在 `docs/acceptance-tests.md` 撰寫語言切換、指南卡片、綜藝卡片、聯絡表單、Footer、GA 手動測試流程
+- [x] T038 在 `src/styles/globals.css` 精簡 overlay/卡片/表單樣式並更新 `tailwind.config.js` token，以維持 <100ms 載入回饋與 <500KB bundle
+- [x] T039 更新 `specs/002-ui-ux-enhancements/checklists/requirements.md`，加入語言切換、指南、綜藝、聯絡表單、Footer、Analytics 驗收條目
+- [x] T040 在 `docs/acceptance-tests.md` 撰寫語言切換、指南卡片、綜藝卡片、聯絡表單、Footer、GA 手動測試流程
 
 ---
 
@@ -176,4 +176,4 @@ description: "Actionable tasks for UI/UX 增強功能與聯絡表單"
 
 ---
 
-> 所有任務皆已確認符合 `- [ ] T### [P?] [Story?] 描述` 格式，且描述含明確檔案路徑。
+> 所有任務皆已確認符合 `- [x] T### [P?] [Story?] 描述` 格式，且描述含明確檔案路徑。

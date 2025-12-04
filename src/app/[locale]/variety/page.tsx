@@ -1,8 +1,8 @@
 import { getTranslations } from "next-intl/server";
 
-import SeriesList from "@/components/variety/SeriesList";
+import VarietyCard from "@/components/variety/VarietyCard";
 import type { AppLocale } from "@/i18n";
-import { fetchVarietySeries } from "@/lib/notion/variety";
+import { fetchVarietyCards } from "@/lib/notion/variety";
 
 export const revalidate = 86400; // 24 小時
 
@@ -12,7 +12,7 @@ interface VarietyPageParams {
 
 export default async function VarietyPage({ params }: VarietyPageParams) {
   const { locale } = await params;
-  const [t, seriesList] = await Promise.all([getTranslations({ locale }), fetchVarietySeries(locale)]);
+  const [t, varietyCards] = await Promise.all([getTranslations({ locale }), fetchVarietyCards(locale)]);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-12 text-white">
@@ -21,7 +21,11 @@ export default async function VarietyPage({ params }: VarietyPageParams) {
         <h1 className="text-4xl font-bold md:text-5xl">{t("variety.hero.heading")}</h1>
         <p className="text-base text-text-secondary">{t("variety.hero.subheading")}</p>
       </header>
-      <SeriesList series={seriesList} />
+      <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {varietyCards.map((card) => (
+          <VarietyCard item={card} key={card.id} />
+        ))}
+      </div>
     </div>
   );
 }

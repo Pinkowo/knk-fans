@@ -5,7 +5,6 @@ import { getRichTextValue, getTitleValue } from "@/lib/notion/utils";
 import type { GroupAchievement, GroupInfo } from "@/types/group";
 import type {
   NotionPage,
-  NotionProperties,
   NotionPropertyValue,
   NotionQueryResponse,
   NotionRichTextProperty,

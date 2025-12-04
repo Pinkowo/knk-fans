@@ -99,36 +99,101 @@
     "ja": "일본어",
     "en": "영어"
   },
+  "loadingOverlay": {
+    "title": "언어를 전환하는 중",
+    "description": "{locale} 페이지를 불러오는 중입니다. 잠시만 기다려 주세요.",
+    "ariaLabel": "{locale} 버전을 준비 중",
+    "defaultLocaleLabel": "KNK 팬 가이드"
+  },
   "layout": {
     "skip": "본문으로 바로가기"
   },
   "footer": {
-    "byline": "Inspirits of Gravity 제작",
+    "byline": "Inspirits of Gravity 소속 팬 Pink 제작",
+    "rights": "모든 음악·가사·사진·영상의 저작권은 220 Entertainment 및 원저작자에게 있습니다.",
+    "aiNotice": "일부 요약은 AI 도움을 받았으며 반드시 사람이 검수합니다.",
+    "contactHint": "오류 제보나 협업 제안이 있다면 언제든 알려 주세요.",
+    "contactCta": "문의하기",
+    "contactAria": "문의 폼 열기",
     "copyright": "© {year} KNK 팬사이트. All rights reserved."
   },
   "guide": {
     "hero": {
       "title": "KNK 입덕 가이드에 오신 것을 환영합니다",
-      "subtitle": "노래와 무대, 단체 매력을 한 번에 만나보세요."
+      "subtitle": "Why KNK 로 시작해 무대, 추천 곡, 예능 모먼트를 페이지 안에서 바로 재생하세요."
     },
     "sections": {
-      "songs": "추천곡",
-      "playlistHeading": "입문 플레이리스트",
-      "stages": "무대 / 예능",
-      "stagesHeading": "무대 & 예능 추천",
-      "charms": "단체 매력 포인트",
-      "charmsHeading": "왜 KNK인가?"
+      "whyEyebrow": "WHY",
+      "whyTitle": "왜 KNK인가",
+      "whyDescription": "187cm 비율, 입체 하모니, 셀프 프로듀싱이 KNK를 특별하게 만든다.",
+      "stageEyebrow": "STAGE",
+      "stageTitle": "존재감을 느낄 수 있는 대표 무대",
+      "stageDescription": "랜덤플레이댄스부터 시네마틱 동선까지, 팬들이 사랑한 하이라이트를 모았습니다.",
+      "songEyebrow": "SONGS",
+      "songTitle": "한 번에 빠지는 추천 곡",
+      "songDescription": "발라드부터 칼군무 트랙까지 음색과 퍼포먼스를 바로 확인해 보세요.",
+      "varietyEyebrow": "VARIETY",
+      "varietyTitle": "예능에서 드러나는 진짜 매력",
+      "varietyDescription": "인터뷰, 어쿠스틱 무대, 즉흥 게임을 페이지 안에서 바로 감상하세요.",
+      "badges": {
+        "why-knk": "Why KNK",
+        "stage": "무대 하이라이트",
+        "song": "추천 곡",
+        "variety": "예능 픽"
+      },
+      "expandCta": "영상 펼치기",
+      "collapseCta": "영상 닫기",
+      "thumbnailAlt": "{title} 미리보기"
+    },
+    "embed": {
+      "loading": "영상을 불러오는 중…",
+      "error": "영상을 불러오지 못했습니다. YouTube에서 시청해 주세요.",
+      "openExternally": "YouTube에서 열기",
+      "ariaLabel": "{title} 영상"
     }
   },
   "variety": {
     "title": "예능",
     "hero": {
       "heading": "명장면 예능 추천",
-      "subheading": "랜덤플레이댄스부터 라디오 라이브까지 한 번에 모아보기."
+      "subheading": "모든 예능/무대를 카드로 정리했습니다. 클릭하면 새 탭에서 바로 재생됩니다."
     },
     "seriesLabel": "시리즈",
     "episode": "EP",
-    "special": "스페셜"
+    "special": "스페셜",
+    "cta": "영상 보기",
+    "openNewTab": "새 탭",
+    "newTabAria": "{title} 새 탭에서 열기"
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "CONTACT",
+      "title": "문의 · 피드백 보내기",
+      "subtitle": "버그 제보, 사이트 제작 의뢰, 기타 제안을 아래 폼으로 자유롭게 남겨 주세요."
+    },
+    "form": {
+      "inquiryType": "문의 유형",
+      "message": "메시지",
+      "messagePlaceholder": "가능한 자세히 적어 주세요. 링크나 타임스탬프가 있으면 더 좋아요.",
+      "attachmentLabel": "첨부파일 (선택)",
+      "attachmentHint": "최대 5MB, PNG/JPG/GIF/WebP/PDF/TXT/LOG 지원.",
+      "submit": "메시지 보내기",
+      "submitting": "전송 중…",
+      "success": "메시지를 받았습니다! 가능한 한 빨리 답장드릴게요.",
+      "error": "전송에 실패했습니다. 잠시 뒤 다시 시도해 주세요.",
+      "options": {
+        "error-report": "버그 제보",
+        "service-request": "사이트 제작 / 협업",
+        "other": "기타 의견"
+      }
+    },
+    "validation": {
+      "inquiryType": "문의 유형을 선택해 주세요.",
+      "messageMin": "10자 이상 입력해 주세요.",
+      "messageMax": "메시지는 최대 5000자까지 가능합니다.",
+      "fileTooLarge": "첨부파일은 5MB 미만이어야 합니다.",
+      "fileType": "지원하지 않는 파일 형식입니다."
+    }
   },
   "discography": {
     "title": "음반",

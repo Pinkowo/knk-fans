@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { defaultLocale, locales, type AppLocale } from "@/i18n";
-import { fetchGuideData } from "@/lib/notion/guide";
+import { getGuideContentSections } from "@/lib/notion/guide";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const localeParam = url.searchParams.get("locale");
     const locale = locales.includes(localeParam as AppLocale) ? (localeParam as AppLocale) : defaultLocale;
-    const data = await fetchGuideData(locale);
+    const data = await getGuideContentSections(locale);
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Failed to load guide data", error);

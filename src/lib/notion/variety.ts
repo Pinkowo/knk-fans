@@ -10,39 +10,61 @@ import type {
   NotionTitleProperty,
   NotionUrlProperty,
 } from "@/types/notion";
-import type { Episode, VarietySeries } from "@/types/variety";
+import type { VarietyCardItem } from "@/types/ui-ux";
 
-type LocalizedEpisode = Omit<Episode, "description"> & {
+interface NotionEpisode {
+  id: string;
+  title: string;
+  videoId?: string;
+  description?: string;
+}
+
+interface NotionVarietySeries {
+  id: string;
+  name: string;
+  description?: string;
+  cover?: string;
+  episodes: NotionEpisode[];
+}
+
+type LocalizedEpisode = {
+  id: string;
+  title: string;
+  videoId: string;
   description?: Record<AppLocale, string>;
 };
 
-type LocalizedSeries = Omit<VarietySeries, "description" | "episodes"> & {
+type LocalizedSeries = {
+  id: string;
+  name: string;
   description: Record<AppLocale, string>;
+  cover?: string;
   episodes: LocalizedEpisode[];
 };
+
+const FALLBACK_THUMBNAIL = "/images/guide/why-height.svg";
 
 const localizedSeries: LocalizedSeries[] = [
   {
     id: "weekly-idol-2017",
     name: "Weekly Idol EP.297",
     description: {
-      zh: "2017 年《Sun, Moon, Star》回歸期上 Weekly Idol 的經典集數，隊長 Jihun 臨時改編 Random Play Dance 以符合長腿隊形。",
-      en: "A classic 2017 Weekly Idol episode from the “Sun, Moon, Star” era where leader Jihun reworked Random Play Dance formations to fit their tall lineup.",
-      ko: "2017년 ‘Sun, Moon, Star’ 활동기에 출연한 Weekly Idol 명장면으로, 리더 지훈이 긴 라인을 살리기 위해 랜덤플레이댄스를 즉석에서 재구성했다.",
-      ja: "2017年『Sun, Moon, Star』期のWeekly Idol出演回。リーダーのジフンが長身ラインに合わせてランダムプレーダンスを即席で組み直した名場面。",
+      zh: "2017 年《Sun, Moon, Star》回歸期的 Weekly Idol，領隊現場改編 Random Play Dance 展現長腿群舞。",
+      en: "Weekly Idol during the 2017 “Sun, Moon, Star” era where the leader reworked Random Play Dance for their tall lineup.",
+      ko: "2017년 ‘Sun, Moon, Star’ 활동기 주간아이돌로, 리더가 즉석에서 랜덤플레이댄스를 재구성한 명장면.",
+      ja: "2017年『Sun, Moon, Star』期のWeekly Idol。リーダーが長身ライン向けにランダムプレーダンスを組み直した回。",
     },
     cover: "https://i.ytimg.com/vi/ylFw1rMjD0I/hqdefault.jpg",
     episodes: [
       {
         id: "weekly-idol-rpd",
         title: "Random Play Dance & Limbo Mission",
-        episodeNumber: 297,
         videoId: "ylFw1rMjD0I",
         description: {
-          zh: "包含招牌 RPD 與搞笑的 90 度鞠躬懲罰，充分展現 KNK 的團魂。",
-          en: "Includes their trademark RPD segment and hilarious 90-degree bow punishment, showcasing the group’s teamwork.",
-          ko: "대표 랜덤플레이댄스와 90도 절 벌칙이 담겨 있어 KNK의 팀워크를 느낄 수 있다.",
-          ja: "名物ランダムプレーダンスと90度お辞儀の罰ゲームが収録され、団結力がよく分かる。",
+          zh: "包含招牌 RPD 與 90 度懲罰，充分展現 KNK 團魂。",
+          en: "Features their trademark RPD segment and the hilarious 90-degree bow punishment.",
+          ko: "랜덤플레이댄스와 90도 절 벌칙이 포함되어 KNK의 팀워크를 느낄 수 있다.",
+          ja: "名物ランダムプレーダンスと90度お辞儀罰ゲームで団結力が伝わる。",
         },
       },
     ],
@@ -51,10 +73,10 @@ const localizedSeries: LocalizedSeries[] = [
     id: "idol-room-sunset",
     name: "Idol Room",
     description: {
-      zh: "宣傳《Sunset》時出演 JTBC《Idol Room》，除了 Talk 之外也重現舞台走位與 1 秒 Ending Fairy 挑戰。",
-      en: "JTBC Idol Room appearance during the “Sunset” promo era with talk segments plus stage blocking demos and a one-second ending fairy challenge.",
-      ko: "‘Sunset’ 활동기 JTBC Idol Room 출연분으로, 토크 외에 동선 시연과 1초 엔딩 요정 챌린지가 담겨 있다.",
-      ja: "『Sunset』期に出演したJTBC Idol Room。トークに加えてフォーメーション解説や1秒エンディング妖精チャレンジも楽しめる。",
+      zh: "宣傳《Sunset》時出演 JTBC《Idol Room》，包含走位解析與 Ending Fairy 挑戰。",
+      en: "JTBC Idol Room appearance during the “Sunset” promo era with stage blocking demos and the ending fairy challenge.",
+      ko: "‘Sunset’ 활동기의 JTBC Idol Room 출연분으로, 동선 해설과 엔딩요정 챌린지가 담겨 있다.",
+      ja: "『Sunset』期に出演したJTBC Idol Room。フォーメーション解説やエンディング妖精チャレンジが楽しめる。",
     },
     cover: "https://i.ytimg.com/vi/8zwvxPucE7Q/hqdefault.jpg",
     episodes: [
@@ -63,10 +85,10 @@ const localizedSeries: LocalizedSeries[] = [
         title: "Sunset Promotion Clip",
         videoId: "8zwvxPucE7Q",
         description: {
-          zh: "以即興舞蹈與問答遊戲介紹單曲《Sunset》，適合快速了解成員性格。",
-          en: "Improvised dance and quiz games to introduce “Sunset,” perfect for grasping each member’s personality.",
-          ko: "즉흥 댄스와 퀴즈 게임으로 ‘Sunset’을 소개해 멤버 성격을 빠르게 느낄 수 있다.",
-          ja: "即興ダンスやクイズゲームで『Sunset』を紹介し、メンバーの個性がよく分かる。",
+          zh: "即興舞蹈與問答遊戲介紹單曲《Sunset》，快速了解成員性格。",
+          en: "Improvised dances and quiz games that showcase each member while promoting “Sunset.”",
+          ko: "즉흥 댄스와 퀴즈로 멤버 개성을 빠르게 느낄 수 있다.",
+          ja: "即興ダンスやクイズでメンバーの個性を知れる。",
         },
       },
     ],
@@ -75,10 +97,10 @@ const localizedSeries: LocalizedSeries[] = [
     id: "idol-radio-lonely-night",
     name: "Idol Radio Live",
     description: {
-      zh: "MBC FM4U 的 Idol Radio 現場表演，KNK 帶來不插電版本的《Lonely Night》以及日常分享。",
-      en: "MBC FM4U Idol Radio live performance with an unplugged version of “Lonely Night” and candid stories.",
-      ko: "MBC FM4U Idol Radio 라이브로, 언플러그드 버전 ‘Lonely Night’와 일상 토크를 들을 수 있다.",
-      ja: "MBC FM4U Idol Radioのライブステージ。『Lonely Night』のアンプラグドバージョンと素のトークが楽しめる。",
+      zh: "MBC Idol Radio 現場帶來《Lonely Night》不插電版本與日常分享。",
+      en: "MBC Idol Radio live acoustic rendition of “Lonely Night” plus candid talk.",
+      ko: "MBC Idol Radio에서 선보인 'Lonely Night' 어쿠스틱 버전과 일상 토크.",
+      ja: "MBC Idol Radio の『Lonely Night』アコースティックとトークを収録。",
     },
     cover: "https://i.ytimg.com/vi/Yc5GlJ9KdKY/hqdefault.jpg",
     episodes: [
@@ -87,10 +109,10 @@ const localizedSeries: LocalizedSeries[] = [
         title: "Lonely Night Acoustic Stage",
         videoId: "Yc5GlJ9KdKY",
         description: {
-          zh: "成員各自負責和聲與即興 ad-lib，展現穩定 Live 實力。",
-          en: "Each member takes harmony and ad-lib duties, highlighting their stable live vocals.",
-          ko: "멤버들이 하모니와 애드리브를 나눠 맡아 안정적인 라이브 실력을 보여준다.",
-          ja: "メンバーそれぞれがハーモニーやアドリブを担当し、安定したライブ力を披露する。",
+          zh: "成員分配和聲與 ad-lib，展現穩定的 Live 實力。",
+          en: "Each member handles harmonies and ad-libs, highlighting their live control.",
+          ko: "멤버들이 하모니와 애드리브를 나눠 맡아 안정적인 라이브를 보여준다.",
+          ja: "メンバーがハモやアドリブを分担し、安定したライブ力を披露。",
         },
       },
     ],
@@ -105,7 +127,7 @@ interface SeriesProperties {
   Link?: NotionUrlProperty;
 }
 
-function parseEpisodes(raw?: string): Episode[] {
+function parseEpisodes(raw?: string): NotionEpisode[] {
   if (!raw) {
     return [];
   }
@@ -119,14 +141,14 @@ function parseEpisodes(raw?: string): Episode[] {
       const [episodeNumber, videoId] = (meta || "").split(",").map((part) => part.trim());
       return {
         id: `${title}-${index}`,
-        title,
-        episodeNumber: Number(episodeNumber) || undefined,
+        title: title || `Episode ${index + 1}`,
         videoId,
+        description: episodeNumber ? `EP ${episodeNumber}` : undefined,
       };
     });
 }
 
-function mapSeries(page: NotionPage<SeriesProperties>): VarietySeries {
+function mapSeries(page: NotionPage<SeriesProperties>): NotionVarietySeries {
   const { properties } = page;
   return {
     id: page.id,
@@ -137,21 +159,61 @@ function mapSeries(page: NotionPage<SeriesProperties>): VarietySeries {
   };
 }
 
-function buildFallbackSeries(locale: AppLocale): VarietySeries[] {
-  return localizedSeries.map((series) => ({
-    ...series,
-    description: getLocalizedValue(series.description, locale),
-    episodes: series.episodes.map((episode) => ({
-      ...episode,
-      description: episode.description ? getLocalizedValue(episode.description, locale) : undefined,
-    })),
-  }));
+function flattenSeries(series: NotionVarietySeries[]): VarietyCardItem[] {
+  const cards: VarietyCardItem[] = [];
+  series.forEach((seriesItem, index) => {
+    seriesItem.episodes.forEach((episode, episodeIndex) => {
+      if (!episode.videoId) {
+        return;
+      }
+      const safeUrl = sanitizeUrl(`https://www.youtube.com/watch?v=${episode.videoId}`);
+      if (!safeUrl) {
+        return;
+      }
+      cards.push({
+        id: `${seriesItem.id}-${episode.id ?? `${index}-${episodeIndex}`}`,
+        title: episode.title || seriesItem.name,
+        description: episode.description ?? seriesItem.description,
+        thumbnail: seriesItem.cover ?? FALLBACK_THUMBNAIL,
+        externalUrl: safeUrl,
+        tags: [seriesItem.name],
+      });
+    });
+  });
+  return cards;
 }
 
-export async function fetchVarietySeries(locale: AppLocale = defaultLocale): Promise<VarietySeries[]> {
+function buildFallbackCards(locale: AppLocale): VarietyCardItem[] {
+  const cards: VarietyCardItem[] = [];
+  localizedSeries.forEach((series) => {
+    series.episodes.forEach((episode) => {
+      if (!episode.videoId) {
+        return;
+      }
+      const safeUrl = sanitizeUrl(`https://www.youtube.com/watch?v=${episode.videoId}`);
+      if (!safeUrl) {
+        return;
+      }
+
+      cards.push({
+        id: episode.id,
+        title: episode.title,
+        description:
+          (episode.description ? getLocalizedValue(episode.description, locale) : undefined) ||
+          getLocalizedValue(series.description, locale),
+        thumbnail: series.cover ?? FALLBACK_THUMBNAIL,
+        externalUrl: safeUrl,
+        tags: [series.name],
+      });
+    });
+  });
+  return cards;
+}
+
+export async function fetchVarietyCards(locale: AppLocale = defaultLocale): Promise<VarietyCardItem[]> {
   const databaseId = process.env.NOTION_VARIETY_DATABASE_ID;
   if (!databaseId || !process.env.NOTION_API_KEY) {
-    return buildFallbackSeries(locale);
+    return buildFallbackCards(locale);
   }
 
   try {
@@ -161,8 +223,7 @@ export async function fetchVarietySeries(locale: AppLocale = defaultLocale): Pro
     });
 
     if (response.results.length === 0) {
-      console.warn("No variety series found in Notion, using fallback data");
-      return buildFallbackSeries(locale);
+      return buildFallbackCards(locale);
     }
 
     const series = response.results
@@ -174,16 +235,12 @@ export async function fetchVarietySeries(locale: AppLocale = defaultLocale): Pro
           return null;
         }
       })
-      .filter((series): series is VarietySeries => Boolean(series));
+      .filter((series): series is NotionVarietySeries => Boolean(series));
 
-    if (series.length === 0) {
-      console.warn("No valid variety series after mapping, using fallback data");
-      return buildFallbackSeries(locale);
-    }
-
-    return series;
+    const cards = flattenSeries(series);
+    return cards.length > 0 ? cards : buildFallbackCards(locale);
   } catch (error) {
-    console.error("Failed to fetch variety series", error);
-    return buildFallbackSeries(locale);
+    console.error("Failed to fetch variety data", error);
+    return buildFallbackCards(locale);
   }
 }

@@ -99,36 +99,101 @@
     "ja": "Japanese",
     "en": "English"
   },
+  "loadingOverlay": {
+    "title": "Switching language",
+    "description": "Loading the {locale} experience. Hang tight!",
+    "ariaLabel": "Loading the {locale} version",
+    "defaultLocaleLabel": "KNK Fan Guide"
+  },
   "layout": {
     "skip": "Skip to main content"
   },
   "footer": {
-    "byline": "Crafted by Inspirits of Gravity",
+    "byline": "Handcrafted by Pink, Inspirits of Gravity.",
+    "rights": "All songs, lyrics, photos, and videos belong to 220 Entertainment and their respective creators.",
+    "aiNotice": "Some summaries are AI-assisted but always reviewed by humans.",
+    "contactHint": "Spotted an error or want to collaborate?",
+    "contactCta": "Contact me",
+    "contactAria": "Open the contact form",
     "copyright": "© {year} KNK fan site. All rights reserved."
   },
   "guide": {
     "hero": {
       "title": "Welcome to the KNK fan guide",
-      "subtitle": "Discover songs, performances, and charms to fall in love instantly."
+      "subtitle": "Start with Why KNK, then play the must-watch stages, songs, and variety clips without leaving the page."
     },
     "sections": {
-      "songs": "Recommended Songs",
-      "playlistHeading": "Playlist Starter",
-      "stages": "Stages / Variety",
-      "stagesHeading": "Stages & Variety Picks",
-      "charms": "Group Charms",
-      "charmsHeading": "Why KNK?"
+      "whyEyebrow": "Why",
+      "whyTitle": "Why KNK belongs on your playlist",
+      "whyDescription": "Towering formations, layered harmonies, and self-produced storytelling define why KNK converts listeners.",
+      "stageEyebrow": "Stages",
+      "stageTitle": "Iconic stages to feel their presence",
+      "stageDescription": "From Random Play Dance chaos to cinematic blocking, watch the stages that made fans stay.",
+      "songEyebrow": "Songs",
+      "songTitle": "Songs to fall for instantly",
+      "songDescription": "Press play on these tracks to hear the range between emotive ballads and explosive dance anthems.",
+      "varietyEyebrow": "Variety",
+      "varietyTitle": "Variety moments that show their personalities",
+      "varietyDescription": "See how KNK handles interviews, acoustic stages, and improv games without leaving the guide.",
+      "badges": {
+        "why-knk": "Why KNK",
+        "stage": "Stage highlight",
+        "song": "Song spotlight",
+        "variety": "Variety pick"
+      },
+      "expandCta": "Expand video",
+      "collapseCta": "Hide video",
+      "thumbnailAlt": "{title} preview"
+    },
+    "embed": {
+      "loading": "Loading video…",
+      "error": "Unable to load this video. Try opening it on YouTube.",
+      "openExternally": "Open on YouTube",
+      "ariaLabel": "Embedded video for {title}"
     }
   },
   "variety": {
     "title": "Variety",
     "hero": {
       "heading": "Must-watch stages & shows",
-      "subheading": "Relive Random Play Dance, radio live cuts, and more iconic moments."
+      "subheading": "Each card opens an iconic Random Play Dance, radio live cut, or interview in a new tab so you can queue them up."
     },
     "seriesLabel": "Series",
     "episode": "EP",
-    "special": "Special"
+    "special": "Special",
+    "cta": "Watch clip",
+    "openNewTab": "Opens in new tab",
+    "newTabAria": "Open {title} in a new tab"
+  },
+  "contact": {
+    "hero": {
+      "eyebrow": "Contact",
+      "title": "Report an issue or request a feature",
+      "subtitle": "Tell me about bugs, onboarding ideas, or custom site work—your message goes straight to my inbox."
+    },
+    "form": {
+      "inquiryType": "How can I help?",
+      "message": "Message",
+      "messagePlaceholder": "Share as much detail as you can. Links and timestamps are super helpful.",
+      "attachmentLabel": "Attachment (optional)",
+      "attachmentHint": "Max 5MB. PNG, JPG, GIF, WebP, PDF, TXT, or LOG files.",
+      "submit": "Send message",
+      "submitting": "Sending…",
+      "success": "Thanks! I’ll reply as soon as possible.",
+      "error": "Something went wrong. Please try again later.",
+      "options": {
+        "error-report": "Bug report",
+        "service-request": "Site commission / collaboration",
+        "other": "Other feedback"
+      }
+    },
+    "validation": {
+      "inquiryType": "Please choose a request type.",
+      "messageMin": "Tell me a bit more (at least 10 characters).",
+      "messageMax": "Message can be up to 5000 characters.",
+      "fileTooLarge": "Attachment must be 5MB or smaller.",
+      "fileType": "Unsupported file type."
+    }
   },
   "discography": {
     "title": "Discography",

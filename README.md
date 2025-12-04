@@ -13,10 +13,10 @@
 ## 安裝與本機啟動
 
 1. 安裝 Node.js 20（建議使用 `nvm`）。
-2. 安裝依賴：`npm install`
+2. 安裝依賴：`pnpm install`
 3. 複製環境變數樣板：`cp .env.local.example .env.local`
 4. 依下節說明填入 Notion ID、Revalidation Secret 與公開設定。
-5. 啟動開發伺服器：`npm run dev`，瀏覽 `http://localhost:3000/zh`
+5. 啟動開發伺服器：`pnpm dev`，瀏覽 `http://localhost:3000/zh`
 
 > 想了解完整佈署與常見問題，請參考 [`docs/quickstart.md`](docs/quickstart.md)。
 
@@ -24,13 +24,13 @@
 
 | 指令 | 說明 |
 | --- | --- |
-| `npm run dev` | 啟動開發伺服器 |
-| `npm run build` | 產生正式環境 build（含 ISR 頁面） |
-| `npm run analyze` | 以 webpack + Bundle Analyzer 檢視 bundle |
-| `npm run lint` | 執行 ESLint |
-| `npm run check:contrast` | 依 WCAG 2.1 AA 驗證主題對比度 |
-| `npm run check:i18n` | 確認四種語言翻譯鍵值一致 |
-| `npm run type-check` | TypeScript 型別檢查（`tsc --noEmit`） |
+| `pnpm dev` | 啟動開發伺服器 |
+| `pnpm build` | 產生正式環境 build（含 ISR 頁面） |
+| `pnpm analyze` | 以 webpack + Bundle Analyzer 檢視 bundle |
+| `pnpm lint` | 執行 ESLint |
+| `pnpm check:contrast` | 依 WCAG 2.1 AA 驗證主題對比度 |
+| `pnpm check:i18n` | 確認四種語言翻譯鍵值一致 |
+| `pnpm type-check` | TypeScript 型別檢查（`tsc --noEmit`） |
 
 ## 環境變數
 
@@ -43,8 +43,16 @@
 | `NEXT_PUBLIC_SITE_URL` | 站點網址（用於 metadata） |
 | `REVALIDATION_SECRET` | On-Demand Revalidation 用隨機字串 |
 | `NEXT_PUBLIC_WEB_VITALS_ENDPOINT` | （選填）Web Vitals 上報 API 路徑，未設定時在開發模式會輸出至 console |
+| `RESEND_API_KEY` | Resend API 金鑰（用於聯絡表單寄信） |
+| `CONTACT_EMAIL` | 聯絡表單收件者 Email，信件主旨固定為 `knk-fans-site:{類型}` |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 Measurement ID（`G-XXXXXXX`） |
 
 > **部署檢查**：Vercel Dashboard → Settings → Environment Variables 中輸入上述值後重新部署，方可啟用 ISR 與 Revalidate API。
+
+**Resend/GA 設定提示**
+
+- Resend：建立 `production` domain 後取得 API Key，並在 Project/Environment Secrets 中設定 `RESEND_API_KEY` 與 `CONTACT_EMAIL`。
+- GA4：在 Google Analytics 中建立資料串流並取得 Measurement ID，填入 `NEXT_PUBLIC_GA_ID` 後重新部署，使用 `pnpm type-check && pnpm lint` 驗證程式碼再 push。
 
 ## On-Demand Revalidation
 
@@ -87,7 +95,7 @@ curl -X POST https://your-domain.com/api/revalidate \
 
 ## 部署流程摘要
 
-1. `npm run lint && npm run build`，確認無錯誤。
-2. 將 `.env.local.example` 中的變數全部填入 Vercel Dashboard。
-3. 重新部署後，在 Production URL 測試語言切換、API 資料與 Web Vitals（可透過 console 觀察）是否正常。
+1. `pnpm type-check && pnpm lint && pnpm build`，確認語法、型別與 build 皆通過。
+2. 將 `.env.local.example` 中的變數全部填入 Vercel Dashboard（包含 Resend 以及 GA4 相關設定）。
+3. 重新部署後，在 Production URL 測試語言切換、聯絡表單寄信（確認收到 `knk-fans-site:{類型}` 主旨）、GA 即時資料與 Web Vitals（可透過 console 觀察）是否正常。
 4. 需要重新整理 ISR 時，可參考 [`docs/testing-report.md`](docs/testing-report.md) 的指令重跑 Lighthouse 與響應式檢查。

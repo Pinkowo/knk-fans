@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { defaultLocale, locales, type AppLocale } from "@/i18n";
-import { fetchVarietySeries } from "@/lib/notion/variety";
+import { fetchVarietyCards } from "@/lib/notion/variety";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -12,8 +12,8 @@ export async function GET(request: Request) {
     const url = new URL(request.url);
     const localeParam = url.searchParams.get("locale");
     const locale = locales.includes(localeParam as AppLocale) ? (localeParam as AppLocale) : defaultLocale;
-    const series = await fetchVarietySeries(locale);
-    return NextResponse.json(series);
+    const cards = await fetchVarietyCards(locale);
+    return NextResponse.json(cards);
   } catch (error) {
     console.error("variety API failed", error);
     return NextResponse.json({ error: "Unable to fetch variety data" }, { status: 500 });

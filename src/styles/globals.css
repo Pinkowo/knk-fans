@@ -9,6 +9,9 @@
   --text-primary: #f4f5fa;
   --text-secondary: #c3c8de;
   --border-base: #29304a;
+  --footer-bg: #080c16;
+  --footer-border: #1e2538;
+  --footer-text: #b7bfd9;
 }
 
 * {
@@ -88,5 +91,29 @@ select:focus-visible {
   .hover-highlight:hover::after,
   .group:hover .hover-highlight::after {
     transform: scaleX(1);
+  }
+}
+
+@layer components {
+  .site-footer {
+    background: var(--footer-bg);
+    border-top: 1px solid var(--footer-border);
+    color: var(--footer-text);
+  }
+
+  .site-footer__link {
+    @apply font-semibold text-white transition hover:text-accent-pink;
+  }
+
+  .loading-overlay {
+    @apply fixed inset-0 z-50 flex items-center justify-center bg-surface/80 backdrop-blur;
+  }
+
+  .card-surface {
+    @apply rounded-3xl border border-white/10 bg-surface-muted/60 shadow-lg shadow-black/20;
+  }
+
+  .form-field {
+    @apply w-full rounded-2xl border border-white/10 bg-surface-muted/70 px-4 py-3 text-white;
   }
 }

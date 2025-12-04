@@ -1,11 +1,9 @@
 import { defaultLocale, type AppLocale } from "@/i18n";
-import { getLocalizedList, getLocalizedValue } from "@/lib/localization";
+import { getLocalizedValue } from "@/lib/localization";
 import { notionClient } from "@/lib/notion/client";
-import { getFirstFileUrl, getRichTextValue, getTitleValue } from "@/lib/notion/utils";
-import type { GroupInfo } from "@/types/group";
+import { getRichTextValue, getTitleValue } from "@/lib/notion/utils";
+import type { GroupAchievement, GroupInfo } from "@/types/group";
 import type {
-  NotionFilesProperty,
-  NotionNumberProperty,
   NotionPage,
   NotionProperties,
   NotionQueryResponse,
@@ -20,88 +18,156 @@ const groupDescription: Record<AppLocale, string> = {
   ja: "KNK（크나큰／Keunakeun、直訳すると「偉大な人になる」）はソウルを拠点とする220 Entertainment所属のグループ。長身とライブさながらのハーモニーを武器に、2016年シングル『Knock』でデビューし、『Sun, Moon, Star』『Lonely Night』『Sunset』などで都会的な抒情イメージを築いた。",
 };
 
-const groupAchievements: Record<AppLocale, string[]> = {
+const groupAchievements: Record<AppLocale, GroupAchievement[]> = {
   zh: [
-    "2016 年 6 月迷你專輯《Awake》在 Gaon Album Chart 最高達到第 7 名，宣告正式進入主流舞台。",
-    "2017 年再版 EP《Gravity, Completed》憑藉主打〈Rain〉闖入 Billboard World Albums 前 15 名。",
-    "2019 年自作曲單曲〈Lonely Night〉與〈Sunset〉展現創作與編舞能力，獲得評論界好評。",
-    "2020 年迷你專輯《KNK Airline》在多國 iTunes K-Pop Chart 斬獲第一，證明海外粉絲基盤。",
+    {
+      title: "2016《Awake》",
+      description: "迷你專輯在 Gaon Album Chart 攻上第 7 名，正式站上主流舞台。",
+    },
+    {
+      title: "2017《Gravity, Completed》",
+      description: "再版 EP 以主打〈Rain〉闖入 Billboard World Albums 前 15 名。",
+    },
+    {
+      title: "2019〈Lonely Night〉·〈Sunset〉",
+      description: "自作曲與原創編舞獲得評論界好評，奠定創作男團定位。",
+    },
+    {
+      title: "2020《KNK Airline》",
+      description: "多國 iTunes K-Pop Chart 奪冠，證明海外粉絲基盤。",
+    },
   ],
   en: [
-    "Mini album `Awake` (2016) peaked at No. 7 on the Gaon Album Chart, signaling their step onto major stages.",
-    "Repackage EP `Gravity, Completed` (2017) entered the Billboard World Albums Top 15 thanks to title track “Rain.”",
-    "Self-produced singles “Lonely Night” and “Sunset” (2019) highlighted their songwriting and choreography and drew critical praise.",
-    "`KNK Airline` (2020) topped iTunes K-Pop charts in multiple countries, proving their overseas fandom.",
+    {
+      title: "2016 · Mini album `Awake`",
+      description: "Peaked at No. 7 on the Gaon Album Chart and marked their mainstream breakthrough.",
+    },
+    {
+      title: "2017 · `Gravity, Completed`",
+      description: "The repackage with 'Rain' entered the Billboard World Albums Top 15.",
+    },
+    {
+      title: "2019 · 'Lonely Night' & 'Sunset'",
+      description: "Self-produced singles that showcased KNK's songwriting and choreography prowess.",
+    },
+    {
+      title: "2020 · `KNK Airline`",
+      description: "Topped iTunes K-Pop charts in multiple countries, proving their global fandom.",
+    },
   ],
   ko: [
-    "2016년 6월 미니앨범 `Awake`가 가온 앨범 차트 7위까지 올라 주류 무대에 안착했다.",
-    "2017년 리패키지 EP `Gravity, Completed`가 타이틀곡 ‘Rain’을 앞세워 빌보드 월드 앨범 차트 Top 15에 진입했다.",
-    "2019년 자작 싱글 ‘Lonely Night’, ‘Sunset’으로 작사·작곡과 안무 실력을 인정받았다.",
-    "2020년 미니앨범 `KNK Airline`이 다수 국가의 아이튠즈 K-Pop 차트 1위를 차지하며 글로벌 팬층을 증명했다.",
+    {
+      title: "2016 · 미니앨범 `Awake`",
+      description: "가온 앨범 차트 7위로 주류 무대에 안착했다.",
+    },
+    {
+      title: "2017 · `Gravity, Completed`",
+      description: "타이틀곡 ‘Rain’과 함께 빌보드 월드 앨범 차트 Top 15에 진입했다.",
+    },
+    {
+      title: "2019 · ‘Lonely Night’, ‘Sunset’",
+      description: "자작곡과 안무 실력으로 호평을 받으며 크리에이티브 역량을 입증했다.",
+    },
+    {
+      title: "2020 · `KNK Airline`",
+      description: "여러 국가의 아이튠즈 K-Pop 차트 1위를 차지하며 글로벌 팬덤을 증명했다.",
+    },
   ],
   ja: [
-    "2016年6月のミニアルバム『Awake』がGaonアルバムチャート7位を記録し、本格的な主流舞台に乗った。",
-    "2017年の再版EP『Gravity, Completed』はタイトル曲「Rain」でBillboard World Albums Top15にランクイン。",
-    "2019年の自作シングル「Lonely Night」「Sunset」で作詞・作曲と振付の実力が評価された。",
-    "2020年のミニアルバム『KNK Airline』が各国のiTunes K-Popチャートで1位を獲得し、海外ファンダムを証明した。",
+    {
+      title: "2016『Awake』",
+      description: "Gaon アルバムチャート 7 位を記録し、本格的な主流舞台へ。",
+    },
+    {
+      title: "2017『Gravity, Completed』",
+      description: "タイトル曲「Rain」で Billboard World Albums Top15 にランクイン。",
+    },
+    {
+      title: "2019「Lonely Night」「Sunset」",
+      description: "自作シングルで作曲力とパフォーマンス力が評価された。",
+    },
+    {
+      title: "2020『KNK Airline』",
+      description: "各国の iTunes K-Pop チャートで 1 位を獲得し、海外ファンダムを証明。",
+    },
   ],
 };
+
+function getFallbackAchievements(locale: AppLocale): GroupAchievement[] {
+  const localized = groupAchievements[locale] ?? groupAchievements[defaultLocale];
+  return localized.map((item) => ({ ...item }));
+}
 
 function buildFallbackGroup(locale: AppLocale): GroupInfo {
   return {
     id: "knk",
     name: "KNK",
-    debutDate: "2016-03-03",
+    debutDate: "2016.03.03",
     description: getLocalizedValue(groupDescription, locale),
-    achievements: getLocalizedList(groupAchievements, locale),
+    achievements: getFallbackAchievements(locale),
     membersCount: 4,
     cover: "/images/members/KNK.png",
   };
 }
 
-interface AboutProperties extends NotionProperties {
+type AchievementLocalizedKey = `Achievements (${AppLocale})`;
+
+interface MilestoneProperties extends NotionProperties {
   Title: NotionTitleProperty;
-  DebutDate: NotionRichTextProperty;
-  Description: NotionRichTextProperty;
-  Achievements: NotionRichTextProperty;
-  MembersCount: NotionNumberProperty;
-  Cover: NotionFilesProperty;
+  Achievements?: NotionRichTextProperty;
+  [key: string]: NotionRichTextProperty | NotionTitleProperty | undefined;
 }
 
-function mapGroup(page: NotionPage<AboutProperties>): GroupInfo {
+function getLocalizedAchievement(
+  properties: MilestoneProperties,
+  locale: AppLocale,
+): string | undefined {
+  const localizedKey = `Achievements (${locale})` as AchievementLocalizedKey;
+  const defaultKey = `Achievements (${defaultLocale})` as AchievementLocalizedKey;
+  const props = properties as Record<string, NotionRichTextProperty | undefined>;
+  return (
+    getRichTextValue(props[localizedKey]) ??
+    getRichTextValue(props[defaultKey]) ??
+    getRichTextValue(properties.Achievements)
+  );
+}
+
+function mapMilestone(
+  page: NotionPage<MilestoneProperties>,
+  locale: AppLocale,
+): GroupAchievement | null {
   const { properties } = page;
-  return {
-    id: page.id,
-    name: getTitleValue(properties.Title),
-    debutDate: getRichTextValue(properties.DebutDate) || undefined,
-    description: getRichTextValue(properties.Description) || undefined,
-    achievements: getRichTextValue(properties.Achievements)
-      ?.split("\n")
-      .map((line) => line.trim())
-      .filter(Boolean),
-    membersCount: properties.MembersCount?.number ?? undefined,
-    cover: getFirstFileUrl(properties.Cover),
-  };
+  const title = getTitleValue(properties.Title);
+  const description = getLocalizedAchievement(properties, locale);
+  if (!title || !description) {
+    return null;
+  }
+  return { title, description };
 }
 
 export async function fetchGroupInfo(locale: AppLocale = defaultLocale): Promise<GroupInfo> {
+  const fallback = buildFallbackGroup(locale);
   const databaseId = process.env.NOTION_ABOUT_DATABASE_ID;
   if (!databaseId || !process.env.NOTION_API_KEY) {
-    return buildFallbackGroup(locale);
+    return fallback;
   }
 
   try {
-    const response = await notionClient.queryDatabase<NotionQueryResponse<AboutProperties>>({
+    const response = await notionClient.queryDatabase<NotionQueryResponse<MilestoneProperties>>({
       database_id: databaseId,
-      page_size: 1,
+      page_size: 100,
+      sorts: [{ property: "Title", direction: "descending" }],
     });
-    if (response.results.length === 0) {
-      return buildFallbackGroup(locale);
-    }
+    const achievements = response.results
+      .map((page) => mapMilestone(page as NotionPage<MilestoneProperties>, locale))
+      .filter((item): item is GroupAchievement => Boolean(item));
 
-    return mapGroup(response.results[0] as NotionPage<AboutProperties>);
+    return {
+      ...fallback,
+      achievements: achievements.length > 0 ? achievements : fallback.achievements,
+    };
   } catch (error) {
     console.error("Failed to fetch group info", error);
-    return buildFallbackGroup(locale);
+    return fallback;
   }
 }

@@ -12,9 +12,11 @@
   },
   "about": {
     "title": "團體介紹",
-    "debut": "出道日期",
-    "members": "{count} 位成員",
-    "achievements": "重要里程碑",
+  "debut": "出道日期",
+  "members": "{count} 位成員",
+  "fandom": "粉絲名稱",
+  "fandomName": "小仙女",
+  "achievements": "重要里程碑",
     "links": {
       "title": "官方連結",
       "description": "直接追蹤官方頻道與社群，掌握最新消息。",

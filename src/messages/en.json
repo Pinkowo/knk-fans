@@ -12,9 +12,11 @@
   },
   "about": {
     "title": "About KNK",
-    "debut": "Debut date",
-    "members": "{count} members",
-    "achievements": "Milestones",
+  "debut": "Debut date",
+  "members": "{count} members",
+  "fandom": "Fandom name",
+  "fandomName": "Tinkerbell",
+  "achievements": "Milestones",
     "links": {
       "title": "Official links",
       "description": "Watch KNK’s uploads or follow their official socials.",

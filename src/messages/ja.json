@@ -12,9 +12,11 @@
   },
   "about": {
     "title": "グループ紹介",
-    "debut": "デビュー日",
-    "members": "{count} 名のメンバー",
-    "achievements": "主な実績",
+  "debut": "デビュー日",
+  "members": "{count} 名のメンバー",
+  "fandom": "ファンダム名",
+  "fandomName": "ティンカーベル",
+  "achievements": "主な実績",
     "links": {
       "title": "公式リンク",
       "description": "公式チャンネルと SNS をここからチェックできます。",

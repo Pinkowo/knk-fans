@@ -14,6 +14,7 @@ export default async function AboutPage({ params }: AboutPageParams) {
   const { locale } = await params;
   const [t, group] = await Promise.all([getTranslations({ locale }), fetchGroupInfo(locale)]);
   const visitLabel = t("about.links.visit");
+  const fandomName = t("about.fandomName");
   const officialLinks = [
     {
       id: "officialYoutube",
@@ -45,15 +46,23 @@ export default async function AboutPage({ params }: AboutPageParams) {
       </header>
       <section className="grid gap-6 md:grid-cols-2">
         <div className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6">
-          <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">
-            {t("about.debut")}
-          </p>
-          <p className="text-2xl font-semibold">{group.debutDate}</p>
+          <div className="space-y-1">
+            <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">
+              {t("about.debut")}
+            </p>
+            <p className="text-2xl font-semibold">{group.debutDate}</p>
+          </div>
           {group.membersCount && (
             <p className="text-sm text-text-secondary">
               {t("about.members", { count: group.membersCount })}
             </p>
           )}
+          <div className="space-y-1 pt-2">
+            <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">
+              {t("about.fandom")}
+            </p>
+            <p className="text-2xl font-semibold text-white">{fandomName}</p>
+          </div>
         </div>
         <div className="relative h-80 w-full overflow-hidden rounded-3xl">
           <Image
@@ -72,9 +81,13 @@ export default async function AboutPage({ params }: AboutPageParams) {
       {group.achievements && (
         <section className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6">
           <h2 className="text-2xl font-semibold">{t("about.achievements")}</h2>
-          <ul className="list-disc space-y-2 pl-6 text-sm text-text-secondary">
+          <ul className="space-y-3 text-sm text-text-secondary">
             {group.achievements.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={`${item.title}-${item.description}`} className="flex flex-wrap items-baseline gap-2">
+                <span className="font-semibold text-white">{item.title}</span>
+                <span className="text-white/40">|</span>
+                <span>{item.description}</span>
+              </li>
             ))}
           </ul>
         </section>

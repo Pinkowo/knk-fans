@@ -6,6 +6,7 @@ import type { GroupAchievement, GroupInfo } from "@/types/group";
 import type {
   NotionPage,
   NotionProperties,
+  NotionPropertyValue,
   NotionQueryResponse,
   NotionRichTextProperty,
   NotionTitleProperty,
@@ -112,10 +113,10 @@ function buildFallbackGroup(locale: AppLocale): GroupInfo {
 
 type AchievementLocalizedKey = `Achievements (${AppLocale})`;
 
-interface MilestoneProperties extends NotionProperties {
+interface MilestoneProperties {
   Title: NotionTitleProperty;
   Achievements?: NotionRichTextProperty;
-  [key: string]: NotionRichTextProperty | NotionTitleProperty | undefined;
+  [key: string]: NotionPropertyValue | undefined;
 }
 
 function getLocalizedAchievement(

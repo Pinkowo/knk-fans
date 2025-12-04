@@ -50,9 +50,9 @@ export async function fetchPlayerLibrary(locale: AppLocale): Promise<PlayerAlbum
     }
   });
 
-  return albums
+  const mappedAlbums = albums
     .map((album) => {
-      const tracks: PlayerTrack[] = album.tracks
+      const mappedTracks = album.tracks
         .map((track) => {
           if (!track.songId) {
             return null;
@@ -63,27 +63,31 @@ export async function fetchPlayerLibrary(locale: AppLocale): Promise<PlayerAlbum
             return null;
           }
 
-          return {
+          const playerTrack: PlayerTrack = {
             id: track.songId,
             title: track.title,
             artist: detail?.album ?? album.title,
             videoId,
             durationSeconds: parseDuration(track.duration),
           };
+          return playerTrack;
         })
-        .filter((track): track is PlayerTrack => Boolean(track));
+        .filter((track): track is PlayerTrack => track !== null);
 
-      if (tracks.length === 0) {
+      if (mappedTracks.length === 0) {
         return null;
       }
 
-      return {
+      const playerAlbum: PlayerAlbum = {
         id: album.id,
         title: album.title,
         cover: album.cover,
-        artist: tracks[0]?.artist,
-        tracks,
+        artist: mappedTracks[0]?.artist,
+        tracks: mappedTracks,
       };
+      return playerAlbum;
     })
-    .filter((album): album is PlayerAlbum => Boolean(album));
+    .filter((album): album is PlayerAlbum => album !== null);
+
+  return mappedAlbums;
 }

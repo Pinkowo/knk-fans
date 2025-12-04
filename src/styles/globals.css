@@ -32,6 +32,12 @@ a {
   text-decoration: none;
 }
 
+button,
+[role="button"],
+a {
+  cursor: pointer;
+}
+
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,

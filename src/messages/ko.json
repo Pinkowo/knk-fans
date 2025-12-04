@@ -40,7 +40,7 @@
   "aboutMe": {
     "title": "About Me",
     "heading": "안녕하세요, KNK 팬사이트 운영자입니다",
-    "subheading": "한국과 대만을 잇는 Inspirits of Gravity 커뮤니티를 위해 만든 공간입니다.",
+    "subheading": "국내외 틴커벨이 KNK를 편하게 살펴볼 수 있도록 만든 4개 언어 팬 페이지입니다.",
     "sections": {
       "story": {
         "title": "스토리",
@@ -109,31 +109,31 @@
     "skip": "본문으로 바로가기"
   },
   "footer": {
-    "byline": "Inspirits of Gravity 소속 팬 Pink 제작",
+    "byline": "팅커벨 Pink 제작",
     "rights": "모든 음악·가사·사진·영상의 저작권은 220 Entertainment 및 원저작자에게 있습니다.",
-    "aiNotice": "일부 요약은 AI 도움을 받았으며 반드시 사람이 검수합니다.",
-    "contactHint": "오류 제보나 협업 제안이 있다면 언제든 알려 주세요.",
-    "contactCta": "문의하기",
-    "contactAria": "문의 폼 열기",
+    "aiNotice": "일부 문장은 AI 도움을 받았지만 Pink가 직접 검수했습니다.",
+    "contactHint": "오류를 발견했거나 협업을 논의하고 싶다면?",
+    "contactCta": "문의 남기기",
+    "contactAria": "문의 페이지 열기",
     "copyright": "© {year} KNK 팬사이트. All rights reserved."
   },
   "guide": {
     "hero": {
       "title": "KNK 입덕 가이드에 오신 것을 환영합니다",
-      "subtitle": "Why KNK 로 시작해 무대, 추천 곡, 예능 모먼트를 페이지 안에서 바로 재생하세요."
+      "subtitle": "Why KNK 카드로 핵심 매력을 정리하고, 무대·노래·예능 추천을 같은 페이지에서 이어서 감상하세요."
     },
     "sections": {
-      "whyEyebrow": "WHY",
-      "whyTitle": "왜 KNK인가",
-      "whyDescription": "187cm 비율, 입체 하모니, 셀프 프로듀싱이 KNK를 특별하게 만든다.",
+      "whyEyebrow": "WHY KNK",
+      "whyTitle": "KNK가 특별한 세 가지 이유",
+      "whyDescription": "평균 187cm 비율, 다층 하모니, 셀프 프로듀싱 감각을 카드로 정리했습니다.",
       "stageEyebrow": "STAGE",
-      "stageTitle": "존재감을 느낄 수 있는 대표 무대",
-      "stageDescription": "랜덤플레이댄스부터 시네마틱 동선까지, 팬들이 사랑한 하이라이트를 모았습니다.",
+      "stageTitle": "무대 & 연습실 모먼트",
+      "stageDescription": "랜덤플레이댄스, 엔딩요정, 동선 해설 등으로 KNK의 팀워크를 느껴보세요.",
       "songEyebrow": "SONGS",
-      "songTitle": "한 번에 빠지는 추천 곡",
-      "songDescription": "발라드부터 칼군무 트랙까지 음색과 퍼포먼스를 바로 확인해 보세요.",
+      "songTitle": "필청 트랙",
+      "songDescription": "페이지 안에서 바로 재생하며 KNK 특유의 보컬과 퍼포먼스를 체험하세요.",
       "varietyEyebrow": "VARIETY",
-      "varietyTitle": "예능에서 드러나는 진짜 매력",
+      "varietyTitle": "예능·라디오 하이라이트",
       "varietyDescription": "인터뷰, 어쿠스틱 무대, 즉흥 게임을 페이지 안에서 바로 감상하세요.",
       "badges": {
         "why-knk": "Why KNK",
@@ -141,7 +141,7 @@
         "song": "추천 곡",
         "variety": "예능 픽"
       },
-      "expandCta": "영상 펼치기",
+      "expandCta": "추천 영상 보기",
       "collapseCta": "영상 닫기",
       "thumbnailAlt": "{title} 미리보기"
     },
@@ -156,14 +156,13 @@
     "title": "예능",
     "hero": {
       "heading": "명장면 예능 추천",
-      "subheading": "모든 예능/무대를 카드로 정리했습니다. 클릭하면 새 탭에서 바로 재생됩니다."
+      "subheading": "라디오 라이브, 인터뷰, 게임 장면을 카드 하나로 정리해 KNK의 케미를 바로 만나보세요."
     },
     "seriesLabel": "시리즈",
     "episode": "EP",
     "special": "스페셜",
-    "cta": "영상 보기",
-    "openNewTab": "새 탭",
-    "newTabAria": "{title} 새 탭에서 열기"
+    "cta": "영상 보러 가기 ↗",
+    "ariaLabel": "{title} 재생"
   },
   "contact": {
     "hero": {

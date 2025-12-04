@@ -15,8 +15,6 @@ export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
 
   const options = useMemo<YouTubeProps["opts"]>(
     () => ({
-      width: "100%",
-      height: "315",
       playerVars: {
         autoplay: 0,
         rel: 0,
@@ -43,16 +41,18 @@ export default function YouTubeEmbed({ videoId, title }: YouTubeEmbedProps) {
   }
 
   return (
-    <div className="relative aspect-video overflow-hidden rounded-2xl bg-black">
+    <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
       {status !== "ready" && (
         <div className="absolute inset-0 flex items-center justify-center text-sm text-text-secondary">
           {t("loading")}
         </div>
       )}
       <YouTube
+        className="absolute inset-0"
         opts={options}
         title={title}
         videoId={videoId}
+        iframeClassName="absolute inset-0 h-full w-full"
         onError={() => setStatus("error")}
         onReady={() => setStatus("ready")}
       />

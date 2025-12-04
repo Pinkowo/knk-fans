@@ -40,7 +40,7 @@
   "aboutMe": {
     "title": "運営について",
     "heading": "こんにちは、KNK ファンサイトの管理人です",
-    "subheading": "新しいファンにも長年のファンにも役立つアーカイブを目指しています。",
+    "subheading": "ティンカーベルが KNK を4言語で楽しめるように作ったファンページです。",
     "sections": {
       "story": {
         "title": "ストーリー",
@@ -109,39 +109,39 @@
     "skip": "メインコンテンツへスキップ"
   },
   "footer": {
-    "byline": "KNKファン Pink（Inspirits of Gravity）制作",
+    "byline": "Pink (ティンカーベル) が制作",
     "rights": "楽曲・歌詞・写真・映像の権利は 220 Entertainment と各著作者に帰属します。",
-    "aiNotice": "一部の要約は AI の補助を受けていますが、人間が必ず確認しています。",
-    "contactHint": "誤りを見つけた・コラボしたいなど、お気軽にどうぞ。",
-    "contactCta": "問い合わせる",
-    "contactAria": "お問い合わせフォームを開く",
+    "aiNotice": "一部の文章は AI が下書きを手伝いましたが、Pink が必ずチェックしています。",
+    "contactHint": "誤りを見つけた・コラボしたい？気軽にどうぞ。",
+    "contactCta": "メッセージを送る",
+    "contactAria": "お問い合わせページを開く",
     "copyright": "© {year} KNK ファンサイト. All rights reserved."
   },
   "guide": {
     "hero": {
       "title": "KNK 入門ガイドへようこそ",
-      "subtitle": "Why KNK から始め、舞台・楽曲・バラエティの名場面をページ内で再生できます。"
+      "subtitle": "Why KNK の3枚で魅力をつかみ、舞台・楽曲・バラエティのカードを同じページで再生できます。"
     },
     "sections": {
-      "whyEyebrow": "WHY",
-      "whyTitle": "なぜ KNK なのか",
-      "whyDescription": "長身フォーメーション、多層ハーモニー、セルフプロデュースが KNK の魅力です。",
+      "whyEyebrow": "WHY KNK",
+      "whyTitle": "KNK を好きになる3つの理由",
+      "whyDescription": "187cm のフォーメーション、多層ハーモニー、セルフプロデュース力をカードで紹介します。",
       "stageEyebrow": "STAGE",
-      "stageTitle": "存在感が伝わるステージ",
-      "stageDescription": "ランダムプレーダンスからシネマティックな動線まで、ファンを魅了した瞬間をピックアップ。",
+      "stageTitle": "ステージ & リハーサルモーメント",
+      "stageDescription": "ランダムプレーダンスやエンディング妖精、動線解説など、KNK のチームワークを体感できます。",
       "songEyebrow": "SONGS",
-      "songTitle": "一聴でハマる代表曲",
-      "songDescription": "バラードからキレのあるダンス曲まで、幅広い魅力をすぐに体験できます。",
+      "songTitle": "必聴プレイリスト",
+      "songDescription": "ページ内で動画を再生しながら、バラードからダンス曲まで KNK の声を味わえます。",
       "varietyEyebrow": "VARIETY",
-      "varietyTitle": "バラエティで見える素顔",
-      "varietyDescription": "インタビューやアコースティック演奏をページ内でそのまま視聴できます。",
+      "varietyTitle": "バラエティ & ラジオの魅力",
+      "varietyDescription": "インタビュー、ラジオライブ、ゲームのクリップでメンバーの個性とケミをチェック。",
       "badges": {
         "why-knk": "Why KNK",
         "stage": "ステージ",
         "song": "楽曲",
         "variety": "バラエティ"
       },
-      "expandCta": "動画を開く",
+      "expandCta": "おすすめ動画を見る",
       "collapseCta": "動画を閉じる",
       "thumbnailAlt": "{title} のプレビュー"
     },
@@ -156,14 +156,13 @@
     "title": "バラエティ",
     "hero": {
       "heading": "名場面バラエティ特集",
-      "subheading": "おすすめステージやインタビューをカード表示し、クリックで新しいタブが開きます。"
+      "subheading": "ラジオライブやインタビュー、ゲームの名場面をカードごとに紹介し、ここから KNK の魅力とチームワークを知るガイドです。"
     },
     "seriesLabel": "シリーズ",
     "episode": "EP",
     "special": "スペシャル",
-    "cta": "動画を観る",
-    "openNewTab": "新しいタブ",
-    "newTabAria": "{title} を新しいタブで開く"
+    "cta": "動画を観に行く ↗",
+    "ariaLabel": "{title} を再生"
   },
   "contact": {
     "hero": {

@@ -40,7 +40,7 @@
   "aboutMe": {
     "title": "關於我",
     "heading": "嗨，我是 KNK 粉絲站的創辦人",
-    "subheading": "這裡是我為台灣 Inspirits of Gravity 打造的推坑樂園。",
+    "subheading": "這裡是我為所有小仙女打造的推坑樂園。",
     "sections": {
       "story": {
         "title": "我們的故事",
@@ -109,39 +109,39 @@
     "skip": "跳至主要內容"
   },
   "footer": {
-    "byline": "由小仙女 Pink 打造的粉絲站",
-    "rights": "所有歌曲、歌詞、照片與影片版權屬於 220 Entertainment 與原創作者。",
-    "aiNotice": "部分內容經 AI 協助整理，但皆由人工審核。",
-    "contactHint": "若發現資料錯誤或想合作，歡迎告訴我：",
-    "contactCta": "聯絡我",
-    "contactAria": "開啟聯絡表單",
+    "byline": "由小仙女 Pink 親手打造",
+    "rights": "所有歌曲、歌詞、照片與影片版權屬於 220 Entertainment 與原作者。",
+    "aiNotice": "部分文字由 AI 協助草擬，但 Pink 會親自審稿。",
+    "contactHint": "想回報錯誤或討論合作？",
+    "contactCta": "寫信給我",
+    "contactAria": "開啟聯絡頁面",
     "copyright": "© {year} KNK 粉絲網站. 保留所有權利。"
   },
   "guide": {
     "hero": {
       "title": "歡迎來到 KNK 推坑指南",
-      "subtitle": "從 Why KNK 開始，接著依序播放舞台、歌曲與綜藝精選，不用離開頁面。"
+      "subtitle": "從 Why KNK 三大亮點出發，接著透過舞台、歌曲與綜藝卡片認識整個團體。"
     },
     "sections": {
-      "whyEyebrow": "WHY",
-      "whyTitle": "為什麼是 KNK",
-      "whyDescription": "長腿排面、層層和聲與自製故事，是 KNK 入坑的三個關鍵。",
+      "whyEyebrow": "WHY KNK",
+      "whyTitle": "三個理由愛上 KNK",
+      "whyDescription": "用三張卡片整理身高排面、層層和聲與自製實力，幫助新粉快速掌握團體核心。",
       "stageEyebrow": "STAGE",
-      "stageTitle": "必看的舞台瞬間",
-      "stageDescription": "從 Random Play Dance 到戲劇化走位，這些片段讓新粉立刻記住 KNK。",
+      "stageTitle": "舞台與排練鏡頭",
+      "stageDescription": "這些片段收錄 Random Play Dance、Ending Fairy 與走位示範，完整呈現 KNK 的舞台感。",
       "songEyebrow": "SONGS",
-      "songTitle": "一聽就愛上的歌曲",
-      "songDescription": "按播放就能聽見抒情、電音與刀舞的完整範圍。",
+      "songTitle": "入坑歌曲指南",
+      "songDescription": "直接在頁面展開影片，聽見 KNK 兼具抒情與刀群舞的聲線與情緒。",
       "varietyEyebrow": "VARIETY",
-      "varietyTitle": "綜藝裡的真實樣貌",
-      "varietyDescription": "直接在頁面內看訪談、聲樂演出與即興遊戲，不用另開視窗。",
+      "varietyTitle": "綜藝亮點",
+      "varietyDescription": "整理訪談、清唱與遊戲內容，邊看片段邊了解成員的幽默與默契。",
       "badges": {
         "why-knk": "Why KNK",
         "stage": "舞台精選",
         "song": "歌曲推薦",
         "variety": "綜藝推薦"
       },
-      "expandCta": "展開影片",
+      "expandCta": "播放推薦影片",
       "collapseCta": "收合影片",
       "thumbnailAlt": "{title} 預覽圖"
     },
@@ -156,14 +156,13 @@
     "title": "綜藝舞台",
     "hero": {
       "heading": "經典舞台與綜藝推薦",
-      "subheading": "以卡片方式呈現所有綜藝與舞台，點擊即可在新分頁播放影片。"
+      "subheading": "快速瀏覽電台 live、訪談與遊戲精華，邊看邊熟悉 KNK 的團魂互動。"
     },
     "seriesLabel": "系列",
     "episode": "第",
     "special": "特別篇",
-    "cta": "觀看影片",
-    "openNewTab": "新分頁",
-    "newTabAria": "以新分頁開啟 {title}"
+    "cta": "前往觀看 ↗",
+    "ariaLabel": "播放 {title}"
   },
   "contact": {
     "hero": {

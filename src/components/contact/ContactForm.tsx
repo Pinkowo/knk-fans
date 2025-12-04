@@ -82,13 +82,13 @@ export default function ContactForm() {
   });
 
   return (
-    <form className="mt-8 space-y-6" onSubmit={onSubmit}>
-      <div>
-        <label className="text-sm font-semibold text-white" htmlFor="inquiryType">
+    <form className="mt-10 space-y-6" onSubmit={onSubmit}>
+      <div className="space-y-2">
+        <label className="block text-sm font-semibold text-white" htmlFor="inquiryType">
           {t("inquiryType")}
         </label>
         <select
-          className="form-field mt-2"
+          className="form-field mt-2 transition focus:border-accent-teal/50 focus:ring-2 focus:ring-accent-teal/20"
           id="inquiryType"
           {...register("inquiryType")}
         >
@@ -98,26 +98,34 @@ export default function ContactForm() {
             </option>
           ))}
         </select>
-        {errors.inquiryType && <p className="mt-2 text-sm text-accent-pink">{validationMessages("inquiryType")}</p>}
+        {errors.inquiryType && (
+          <p className="mt-2 flex items-center gap-2 text-sm text-accent-pink">
+            <span aria-hidden>⚠</span>
+            {validationMessages("inquiryType")}
+          </p>
+        )}
       </div>
 
-      <div>
-        <label className="text-sm font-semibold text-white" htmlFor="message">
+      <div className="space-y-2">
+        <label className="block text-sm font-semibold text-white" htmlFor="message">
           {t("message")}
         </label>
         <textarea
-          className="form-field mt-2 h-48"
+          className="form-field mt-2 h-48 resize-none transition focus:border-accent-teal/50 focus:ring-2 focus:ring-accent-teal/20"
           id="message"
           placeholder={t("messagePlaceholder")}
           {...register("message")}
         />
         {errors.message && (
-          <p className="mt-2 text-sm text-accent-pink">{getValidationMessage(errors.message.message)}</p>
+          <p className="mt-2 flex items-center gap-2 text-sm text-accent-pink">
+            <span aria-hidden>⚠</span>
+            {getValidationMessage(errors.message.message)}
+          </p>
         )}
       </div>
 
-      <div>
-        <label className="text-sm font-semibold text-white" htmlFor="attachment">
+      <div className="space-y-2">
+        <label className="block text-sm font-semibold text-white" htmlFor="attachment">
           {t("attachmentLabel")}
         </label>
         <Controller
@@ -126,7 +134,7 @@ export default function ContactForm() {
           render={({ field }) => (
             <input
               accept=".png,.jpg,.jpeg,.gif,.webp,.pdf,.txt,.log"
-              className="form-field mt-2 file:mr-4 file:rounded-xl file:border-0 file:bg-white/10 file:px-4 file:py-2 file:text-sm file:text-white"
+              className="form-field mt-2 transition file:mr-4 file:cursor-pointer file:rounded-xl file:border-0 file:bg-white/10 file:px-4 file:py-2 file:text-sm file:text-white file:transition file:hover:bg-white/20 focus:border-accent-teal/50 focus:ring-2 focus:ring-accent-teal/20"
               id="attachment"
               type="file"
               onChange={(event) => {
@@ -138,25 +146,43 @@ export default function ContactForm() {
         />
         <p className="mt-2 text-sm text-text-secondary">{t("attachmentHint")}</p>
         {errors.attachment && (
-          <p className="mt-2 text-sm text-accent-pink">{getValidationMessage(errors.attachment.message)}</p>
+          <p className="mt-2 flex items-center gap-2 text-sm text-accent-pink">
+            <span aria-hidden>⚠</span>
+            {getValidationMessage(errors.attachment.message)}
+          </p>
         )}
       </div>
 
       <button
-        className="w-full rounded-2xl bg-accent-pink px-6 py-3 text-center text-sm font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-60"
+        className="group relative w-full overflow-hidden rounded-2xl bg-accent-teal px-6 py-4 text-center text-sm font-semibold uppercase tracking-[0.3em] text-white transition hover:bg-white hover:text-black disabled:cursor-not-allowed disabled:opacity-60"
         disabled={isSubmitting}
         type="submit"
       >
-        {isSubmitting ? t("submitting") : t("submit")}
+        <span className="relative z-10">{isSubmitting ? t("submitting") : t("submit")}</span>
+        <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-accent-pink via-brand-400 to-accent-teal transition-transform duration-300 group-hover:translate-x-0" aria-hidden />
       </button>
 
       <div aria-live="polite">
-        {status === "success" && <p className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-200">{t("success")}</p>}
+        {status === "success" && (
+          <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5 shadow-lg">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl" aria-hidden>✓</span>
+              <div>
+                <p className="font-semibold text-emerald-200">{t("success")}</p>
+              </div>
+            </div>
+          </div>
+        )}
         {status === "error" && (
-          <p className="rounded-2xl border border-accent-pink/40 bg-accent-pink/10 p-4 text-sm text-accent-pink">
-            {t("error")}
-            {serverError && <span className="block text-xs text-text-secondary">{serverError}</span>}
-          </p>
+          <div className="rounded-2xl border border-accent-pink/40 bg-accent-pink/10 p-5 shadow-lg">
+            <div className="flex items-start gap-3">
+              <span className="text-2xl" aria-hidden>✗</span>
+              <div className="flex-1">
+                <p className="font-semibold text-accent-pink">{t("error")}</p>
+                {serverError && <p className="mt-1 text-sm text-text-secondary">{serverError}</p>}
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </form>

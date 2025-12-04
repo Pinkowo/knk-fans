@@ -40,7 +40,7 @@
   "aboutMe": {
     "title": "About Me",
     "heading": "Hi, I'm the person behind this KNK fan project",
-    "subheading": "A homebase for the Inspirits of Gravity community, in four languages.",
+    "subheading": "A space for Tinkerbell to explore KNK in four languages.",
     "sections": {
       "story": {
         "title": "Story",
@@ -109,39 +109,39 @@
     "skip": "Skip to main content"
   },
   "footer": {
-    "byline": "Handcrafted by Pink, Inspirits of Gravity.",
-    "rights": "All songs, lyrics, photos, and videos belong to 220 Entertainment and their respective creators.",
-    "aiNotice": "Some summaries are AI-assisted but always reviewed by humans.",
-    "contactHint": "Spotted an error or want to collaborate?",
-    "contactCta": "Contact me",
-    "contactAria": "Open the contact form",
+    "byline": "Crafted by Pink for Tinkerbell.",
+    "rights": "All songs, lyrics, photos, and videos belong to 220 Entertainment and original creators.",
+    "aiNotice": "Some copy is AI-assisted but personally reviewed by Pink.",
+    "contactHint": "Spot an issue or want to collaborate?",
+    "contactCta": "Say hello",
+    "contactAria": "Open the contact page",
     "copyright": "© {year} KNK fan site. All rights reserved."
   },
   "guide": {
     "hero": {
       "title": "Welcome to the KNK fan guide",
-      "subtitle": "Start with Why KNK, then play the must-watch stages, songs, and variety clips without leaving the page."
+      "subtitle": "Start with three Why KNK cards, then dive into curated stages, songs, and variety picks without leaving the page."
     },
     "sections": {
-      "whyEyebrow": "Why",
-      "whyTitle": "Why KNK belongs on your playlist",
-      "whyDescription": "Towering formations, layered harmonies, and self-produced storytelling define why KNK converts listeners.",
+      "whyEyebrow": "Why KNK",
+      "whyTitle": "Three reasons to love KNK",
+      "whyDescription": "These cards highlight the towering lines, layered vocals, and self-produced storytelling that make KNK special.",
       "stageEyebrow": "Stages",
-      "stageTitle": "Iconic stages to feel their presence",
-      "stageDescription": "From Random Play Dance chaos to cinematic blocking, watch the stages that made fans stay.",
+      "stageTitle": "Stage moments with impact",
+      "stageDescription": "Random Play Dance chaos, ending fairy challenges, and blocking breakdowns that showcase their precision.",
       "songEyebrow": "Songs",
-      "songTitle": "Songs to fall for instantly",
-      "songDescription": "Press play on these tracks to hear the range between emotive ballads and explosive dance anthems.",
+      "songTitle": "Essential listening",
+      "songDescription": "Play the embedded videos to experience KNK’s range, from emotive ballads to explosive choreography.",
       "varietyEyebrow": "Variety",
-      "varietyTitle": "Variety moments that show their personalities",
-      "varietyDescription": "See how KNK handles interviews, acoustic stages, and improv games without leaving the guide.",
+      "varietyTitle": "Clips that reveal their chemistry",
+      "varietyDescription": "Interviews, radio lives, and improv games curated to introduce each member’s personality.",
       "badges": {
         "why-knk": "Why KNK",
         "stage": "Stage highlight",
         "song": "Song spotlight",
         "variety": "Variety pick"
       },
-      "expandCta": "Expand video",
+      "expandCta": "Watch recommended clip",
       "collapseCta": "Hide video",
       "thumbnailAlt": "{title} preview"
     },
@@ -156,14 +156,13 @@
     "title": "Variety",
     "hero": {
       "heading": "Must-watch stages & shows",
-      "subheading": "Each card opens an iconic Random Play Dance, radio live cut, or interview in a new tab so you can queue them up."
+      "subheading": "Each card highlights a radio live, interview, or game segment that introduces KNK’s humor and teamwork."
     },
     "seriesLabel": "Series",
     "episode": "EP",
     "special": "Special",
-    "cta": "Watch clip",
-    "openNewTab": "Opens in new tab",
-    "newTabAria": "Open {title} in a new tab"
+    "cta": "Visit clip ↗",
+    "ariaLabel": "Play {title}"
   },
   "contact": {
     "hero": {

@@ -4,6 +4,7 @@ import { defaultLocale, locales, type AppLocale } from "@/i18n";
 import { fetchVarietySeries } from "@/lib/notion/variety";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 export const revalidate = 86400; // 24 小時
 
 export async function GET(request: Request) {

@@ -4,6 +4,7 @@ import { defaultLocale, locales, type AppLocale } from "@/i18n";
 import { fetchGuideData } from "@/lib/notion/guide";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 export const revalidate = 21600;
 
 export async function GET(request: Request) {

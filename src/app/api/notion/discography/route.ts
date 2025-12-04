@@ -4,6 +4,7 @@ import { defaultLocale, locales, type AppLocale } from "@/i18n";
 import { fetchAlbums } from "@/lib/notion/albums";
 
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 export const revalidate = 604800; // 7 days
 
 export async function GET(request: Request) {

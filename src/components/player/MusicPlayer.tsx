@@ -168,16 +168,29 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
     const timeoutId = setTimeout(() => {
       try {
         const currentPlayer = playerRef.current;
-        if (currentPlayer && typeof currentPlayer.loadVideoById === "function") {
-          currentPlayer.loadVideoById(videoId);
-          if (isPlayingRef.current) {
-            currentPlayer.playVideo();
-          }
+        if (!currentPlayer || typeof currentPlayer.loadVideoById !== "function") {
+          return;
+        }
+
+        if (!videoId || typeof videoId !== "string") {
+          return;
+        }
+
+        // Check if player iframe exists
+        const iframe = currentPlayer.getIframe?.();
+        if (!iframe) {
+          console.warn("Player iframe not ready yet");
+          return;
+        }
+
+        currentPlayer.loadVideoById(videoId);
+        if (isPlayingRef.current && typeof currentPlayer.playVideo === "function") {
+          currentPlayer.playVideo();
         }
       } catch (error) {
         console.error("Error loading video:", error);
       }
-    }, 150);
+    }, 250);
 
     return () => clearTimeout(timeoutId);
   }, [activeTrack?.id, activeTrack?.videoId]);
@@ -431,8 +444,13 @@ function SelectorPanel({ title, items, onClose, onSelect, closeLabel }: Selector
       <div className="relative flex h-full w-4/5 max-w-sm flex-col bg-gradient-to-b from-slate-950/95 via-slate-900/90 to-slate-900/85 p-5 text-white shadow-2xl">
         <div className="mb-4 flex items-center justify-between text-sm">
           <p className="font-semibold uppercase tracking-[0.3em] text-white/70">{title}</p>
-          <button type="button" onClick={onClose} className="text-white/70 underline">
-            {closeLabel}
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-white/70 transition hover:bg-white/10 hover:text-white"
+            aria-label={closeLabel}
+          >
+            ×
           </button>
         </div>
         <div className="max-h-[70vh] space-y-2 overflow-y-auto">

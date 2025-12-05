@@ -27,10 +27,10 @@ const guideContent: GuideContentItem[] = [
     id: "why-height",
     category: "why-knk",
     title: {
-      zh: "187 公分的舞台排面",
-      en: "187 cm Stage Lines",
-      ko: "187cm 라인의 무대",
-      ja: "187cmのステージライン",
+      zh: "186 公分的舞台排面",
+      en: "186 cm Stage Lines",
+      ko: "186cm 라인의 무대",
+      ja: "186cmのステージライン",
     },
     description: {
       zh: "成員身高皆在 180cm 以上，群舞展現錯落的線條與刀群舞張力。",
@@ -90,10 +90,10 @@ const guideContent: GuideContentItem[] = [
       ja: "Weekly Idol ランダムプレーダンス",
     },
     description: {
-      zh: "2017 年 4 月播出，KNK 用 187cm 平均身高重現招牌刀群舞，還臨場改編 Limbo 挑戰。",
-      en: "The 2017 Weekly Idol episode where the 187 cm lineup reworked Random Play Dance formations and even improvised the limbo game.",
-      ko: "2017년 주간아이돌 출연 회차로, 평균 187cm 라인이 랜덤플레이댄스를 재구성하고 림보 벌칙까지 웃음으로 채웠다.",
-      ja: "2017年放送回。平均187cmのラインナップがランダムプレーダンスを再構成し、リンボ罰ゲームまで笑いに変えた。",
+      zh: "2017 年 4 月播出，KNK 用 186cm 平均身高重現招牌刀群舞，還臨場改編 Limbo 挑戰。",
+      en: "The 2017 Weekly Idol episode where the 186 cm lineup reworked Random Play Dance formations and even improvised the limbo game.",
+      ko: "2017년 주간아이돌 출연 회차로, 평균 186cm 라인이 랜덤플레이댄스를 재구성하고 림보 벌칙까지 웃음으로 채웠다.",
+      ja: "2017年放送回。平均186cmのラインナップがランダムプレーダンスを再構成し、リンボ罰ゲームまで笑いに変えた。",
     },
     thumbnail: "https://i.ytimg.com/vi/ylFw1rMjD0I/maxresdefault.jpg",
     videoId: "ylFw1rMjD0I",
@@ -240,7 +240,8 @@ function resolveLocalizedValue(locale: AppLocale, value?: Record<AppLocale, stri
 
 function sortGuideItems(items: GuideContentResolvedItem[]): GuideContentResolvedItem[] {
   return [...items].sort((a, b) => {
-    const categoryDiff = GUIDE_CATEGORY_ORDER.indexOf(a.category) - GUIDE_CATEGORY_ORDER.indexOf(b.category);
+    const categoryDiff =
+      GUIDE_CATEGORY_ORDER.indexOf(a.category) - GUIDE_CATEGORY_ORDER.indexOf(b.category);
     if (categoryDiff !== 0) {
       return categoryDiff;
     }
@@ -312,7 +313,10 @@ function extractYouTubeVideoId(rawUrl?: string | null) {
   return undefined;
 }
 
-function mapGuidePage(page: NotionPage<GuideProperties>, locale: AppLocale): GuideContentResolvedItem | null {
+function mapGuidePage(
+  page: NotionPage<GuideProperties>,
+  locale: AppLocale,
+): GuideContentResolvedItem | null {
   const { properties } = page;
   const category = normalizeGuideCategory(properties.Category?.select?.name);
   if (!category) {
@@ -361,6 +365,32 @@ function resolveFallbackGuideContent(locale: AppLocale): GuideContentResolvedIte
   return sortGuideItems(resolved);
 }
 
+function mergeFallbackForMissingCategories(
+  items: GuideContentResolvedItem[],
+  locale: AppLocale,
+): GuideContentResolvedItem[] {
+  const missingCategories = GUIDE_CATEGORY_ORDER.filter(
+    (category) => !items.some((item) => item.category === category),
+  );
+
+  if (missingCategories.length === 0) {
+    return items;
+  }
+
+  const fallbackItems = resolveFallbackGuideContent(locale).filter((item) =>
+    missingCategories.includes(item.category),
+  );
+
+  const deduped = fallbackItems.map((fallbackItem) => {
+    if (items.some((item) => item.id === fallbackItem.id)) {
+      return { ...fallbackItem, id: `fallback-${fallbackItem.id}` };
+    }
+    return fallbackItem;
+  });
+
+  return sortGuideItems([...items, ...deduped]);
+}
+
 async function fetchGuideContentFromNotion(
   locale: AppLocale,
 ): Promise<GuideContentResolvedItem[] | null> {
@@ -392,18 +422,22 @@ async function fetchGuideContentFromNotion(
       .filter((item): item is GuideContentResolvedItem => Boolean(item));
 
     if (!items.length) {
-      console.warn("Guide entries returned by Notion contained no valid cards, using fallback content");
+      console.warn(
+        "Guide entries returned by Notion contained no valid cards, using fallback content",
+      );
       return null;
     }
 
-    return sortGuideItems(items);
+    return mergeFallbackForMissingCategories(items, locale);
   } catch (error) {
     console.error("Failed to fetch guide content from Notion", error);
     return null;
   }
 }
 
-export async function getGuideContent(locale: AppLocale = defaultLocale): Promise<GuideContentResolvedItem[]> {
+export async function getGuideContent(
+  locale: AppLocale = defaultLocale,
+): Promise<GuideContentResolvedItem[]> {
   const notionItems = await fetchGuideContentFromNotion(locale);
   if (notionItems) {
     return notionItems;

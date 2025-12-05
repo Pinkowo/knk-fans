@@ -109,13 +109,12 @@
     "skip": "본문으로 바로가기"
   },
   "footer": {
-    "byline": "팅커벨 Pink 제작",
-    "rights": "모든 음악·가사·사진·영상의 저작권은 220 Entertainment 및 원저작자에게 있습니다.",
-    "aiNotice": "일부 문장은 AI 도움을 받았지만 Pink가 직접 검수했습니다.",
-    "contactHint": "오류를 발견했거나 협업을 논의하고 싶다면?",
-    "contactCta": "문의 남기기",
+    "line1": "이 사이트는 팅커벨 Pink가 제작했으며, 모든 음악·가사·사진·영상의 권리는 220 Entertainment 및 원저작자에게 있습니다.",
+    "line2Prefix": "일부 문장은 AI가 초안을 돕습니다. 의뢰나 오류 제보는 ",
+    "line2Suffix": " 로 남겨 주세요.",
+    "contactCta": "문의하기 ↗",
     "contactAria": "문의 페이지 열기",
-    "copyright": "© {year} KNK 팬사이트. All rights reserved."
+    "line3": "© {year} KNK 팬사이트. All rights reserved."
   },
   "guide": {
     "hero": {

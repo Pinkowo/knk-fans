@@ -109,13 +109,12 @@
     "skip": "メインコンテンツへスキップ"
   },
   "footer": {
-    "byline": "Pink (ティンカーベル) が制作",
-    "rights": "楽曲・歌詞・写真・映像の権利は 220 Entertainment と各著作者に帰属します。",
-    "aiNotice": "一部の文章は AI が下書きを手伝いましたが、Pink が必ずチェックしています。",
-    "contactHint": "誤りを見つけた・コラボしたい？気軽にどうぞ。",
-    "contactCta": "メッセージを送る",
+    "line1": "本サイトはティンカーベル Pink が制作し、楽曲・歌詞・写真・映像の権利は 220 Entertainment と著作者に帰属します。",
+    "line2Prefix": "一部の文章は AI が下書きを手伝っています。ご依頼や修正の連絡は ",
+    "line2Suffix": " からどうぞ。",
+    "contactCta": "お問い合わせ ↗",
     "contactAria": "お問い合わせページを開く",
-    "copyright": "© {year} KNK ファンサイト. All rights reserved."
+    "line3": "© {year} KNK ファンサイト. All rights reserved."
   },
   "guide": {
     "hero": {

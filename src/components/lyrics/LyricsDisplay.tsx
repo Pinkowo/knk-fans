@@ -81,7 +81,7 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
   };
 
   return (
-    <div className="space-y-6 px-6" style={{ contain: "content" }}>
+    <div className="space-y-6 px-6 pb-6" style={{ contain: "content" }}>
       <div className={controlsWrapperClass}>
           <LyricsControls
             availableLanguages={availableLanguageOptions}
@@ -125,7 +125,7 @@ function LyricsDisplayInner({ lyrics }: LyricsDisplayProps) {
               const meta = getLanguageMeta(entry.lang);
               return (
                 <div key={entry.lang} className="mx-auto max-w-4xl">
-                  <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+                    <div className="rounded-3xl border border-white/10 bg-white/5 p-6 pb-6">
                     <p className="text-xs uppercase tracking-[0.3em] text-text-secondary">
                       {meta?.label ?? entry.lang.toUpperCase()}
                     </p>

@@ -109,13 +109,12 @@
     "skip": "Skip to main content"
   },
   "footer": {
-    "byline": "Crafted by Pink for Tinkerbell.",
-    "rights": "All songs, lyrics, photos, and videos belong to 220 Entertainment and original creators.",
-    "aiNotice": "Some copy is AI-assisted but personally reviewed by Pink.",
-    "contactHint": "Spot an issue or want to collaborate?",
-    "contactCta": "Say hello",
+    "line1": "Built by Tinkerbell Pink; every song, lyric, photo, and video belongs to 220 Entertainment and the original creators.",
+    "line2Prefix": "Some copy is AI-assisted. For commissions or corrections, feel free to ",
+    "line2Suffix": ".",
+    "contactCta": "contact me ↗",
     "contactAria": "Open the contact page",
-    "copyright": "© {year} KNK fan site. All rights reserved."
+    "line3": "© {year} KNK fan site. All rights reserved."
   },
   "guide": {
     "hero": {

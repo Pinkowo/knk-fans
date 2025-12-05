@@ -172,6 +172,8 @@
     },
     "form": {
       "inquiryType": "How can I help?",
+      "email": "Email",
+      "emailPlaceholder": "Let me know where I can reply.",
       "message": "Message",
       "messagePlaceholder": "Share as much detail as you can. Links and timestamps are super helpful.",
       "attachmentLabel": "Attachment (optional)",
@@ -188,6 +190,8 @@
     },
     "validation": {
       "inquiryType": "Please choose a request type.",
+      "emailRequired": "Email is required.",
+      "emailInvalid": "Please enter a valid email address.",
       "messageMin": "Tell me a bit more (at least 10 characters).",
       "messageMax": "Message can be up to 5000 characters.",
       "fileTooLarge": "Attachment must be 5MB or smaller.",

@@ -28,6 +28,7 @@ export default function ContactForm() {
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       inquiryType: CONTACT_INQUIRY_TYPES[0],
+      email: "",
       message: "",
       attachment: undefined,
     },
@@ -47,6 +48,7 @@ export default function ContactForm() {
     setStatus("idle");
     const formData = new FormData();
     formData.append("inquiryType", values.inquiryType);
+    formData.append("email", values.email);
     formData.append("message", values.message);
     if (values.attachment) {
       formData.append("attachment", values.attachment);
@@ -102,6 +104,25 @@ export default function ContactForm() {
           <p className="mt-2 flex items-center gap-2 text-sm text-accent-pink">
             <span aria-hidden>⚠</span>
             {validationMessages("inquiryType")}
+          </p>
+        )}
+      </div>
+
+      <div className="space-y-2">
+        <label className="block text-sm font-semibold text-white" htmlFor="email">
+          {t("email")}
+        </label>
+        <input
+          className="form-field mt-2 transition focus:border-accent-teal/50 focus:ring-2 focus:ring-accent-teal/20"
+          id="email"
+          type="email"
+          placeholder={t("emailPlaceholder")}
+          {...register("email")}
+        />
+        {errors.email && (
+          <p className="mt-2 flex items-center gap-2 text-sm text-accent-pink">
+            <span aria-hidden>⚠</span>
+            {getValidationMessage(errors.email.message)}
           </p>
         )}
       </div>

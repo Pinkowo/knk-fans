@@ -172,6 +172,8 @@
     },
     "form": {
       "inquiryType": "문의 유형",
+      "email": "이메일",
+      "emailPlaceholder": "답장을 받을 이메일 주소를 입력해 주세요.",
       "message": "메시지",
       "messagePlaceholder": "가능한 자세히 적어 주세요. 링크나 타임스탬프가 있으면 더 좋아요.",
       "attachmentLabel": "첨부파일 (선택)",
@@ -188,6 +190,8 @@
     },
     "validation": {
       "inquiryType": "문의 유형을 선택해 주세요.",
+      "emailRequired": "이메일을 입력해 주세요.",
+      "emailInvalid": "올바른 이메일 주소를 입력해 주세요.",
       "messageMin": "10자 이상 입력해 주세요.",
       "messageMax": "메시지는 최대 5000자까지 가능합니다.",
       "fileTooLarge": "첨부파일은 5MB 미만이어야 합니다.",

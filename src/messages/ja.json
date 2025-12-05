@@ -172,6 +172,8 @@
     },
     "form": {
       "inquiryType": "お問い合わせ内容",
+      "email": "メールアドレス",
+      "emailPlaceholder": "返信先のメールアドレスをご入力ください。",
       "message": "メッセージ",
       "messagePlaceholder": "できるだけ詳しくお知らせください。リンクやタイムスタンプがあると助かります。",
       "attachmentLabel": "添付ファイル（任意）",
@@ -188,6 +190,8 @@
     },
     "validation": {
       "inquiryType": "項目を選択してください。",
+      "emailRequired": "メールアドレスを入力してください。",
+      "emailInvalid": "有効なメールアドレスを入力してください。",
       "messageMin": "10文字以上で入力してください。",
       "messageMax": "メッセージは 5000 文字以内でお願いします。",
       "fileTooLarge": "添付ファイルは 5MB 以下にしてください。",

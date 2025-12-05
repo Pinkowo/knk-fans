@@ -24,6 +24,7 @@ export async function POST(request: Request) {
     const attachmentEntry = formData.get("attachment");
     const parsed = await contactFormSchema.safeParseAsync({
       inquiryType: formData.get("inquiryType"),
+      email: formData.get("email"),
       message: formData.get("message"),
       attachment: attachmentEntry instanceof File && attachmentEntry.size > 0 ? attachmentEntry : undefined,
     });
@@ -47,6 +48,7 @@ export async function POST(request: Request) {
 
     const submission: ContactFormSubmission = {
       inquiryType: parsed.data.inquiryType,
+      email: parsed.data.email,
       message: parsed.data.message,
       locale: normalizeLocale(formData.get("locale")),
       submittedAt: ensureDate(formData.get("submittedAt")),

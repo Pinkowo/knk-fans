@@ -172,6 +172,8 @@
     },
     "form": {
       "inquiryType": "想詢問的項目",
+      "email": "聯絡 Email",
+      "emailPlaceholder": "請留下可以聯絡你的 Email。",
       "message": "訊息內容",
       "messagePlaceholder": "請盡量描述詳細（可附上連結或時間戳）。",
       "attachmentLabel": "附件（選填）",
@@ -188,6 +190,8 @@
     },
     "validation": {
       "inquiryType": "請選擇一個類型。",
+      "emailRequired": "請輸入 Email。",
+      "emailInvalid": "Email 格式不正確。",
       "messageMin": "至少輸入 10 個字，讓我了解更多。",
       "messageMax": "訊息上限為 5000 字。",
       "fileTooLarge": "附件需小於 5MB。",

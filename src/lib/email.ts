@@ -30,6 +30,7 @@ export async function sendContactEmail(submission: ContactFormSubmission): Promi
   const html = `
     <h2>New KNK Fansite Contact</h2>
     <p><strong>Type:</strong> ${submission.inquiryType}</p>
+    <p><strong>Email:</strong> ${submission.email}</p>
     <p><strong>Locale:</strong> ${submission.locale}</p>
     <p><strong>Submitted At:</strong> ${submission.submittedAt}</p>
     <p><strong>User Agent:</strong> ${submission.userAgent ?? "unknown"}</p>
@@ -45,6 +46,7 @@ export async function sendContactEmail(submission: ContactFormSubmission): Promi
     html,
     text: [
       `Type: ${submission.inquiryType}`,
+      `Email: ${submission.email}`,
       `Locale: ${submission.locale}`,
       `Submitted At: ${submission.submittedAt}`,
       `User Agent: ${submission.userAgent ?? "unknown"}`,

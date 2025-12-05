@@ -17,6 +17,11 @@ const ALLOWED_MIME_TYPES = [
 
 export const contactFormSchema = z.object({
   inquiryType: z.enum(CONTACT_INQUIRY_TYPES),
+  email: z
+    .string()
+    .trim()
+    .min(1, { message: "emailRequired" })
+    .email({ message: "emailInvalid" }),
   message: z
     .string()
     .min(10, { message: "messageMin" })
@@ -52,6 +57,7 @@ export interface ContactFormAttachmentMetadata {
 
 export interface ContactFormSubmission {
   inquiryType: ContactInquiryType;
+  email: string;
   message: string;
   locale: AppLocale;
   submittedAt: string;

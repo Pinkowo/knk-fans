@@ -1,4 +1,16 @@
 import { defaultLocale, type AppLocale } from "@/i18n";
+import { notionClient } from "@/lib/notion/client";
+import { getFirstFileUrl, getRichTextValue, getTitleValue } from "@/lib/notion/utils";
+import type {
+  NotionFilesProperty,
+  NotionNumberProperty,
+  NotionPage,
+  NotionQueryResponse,
+  NotionRichTextProperty,
+  NotionSelectProperty,
+  NotionTitleProperty,
+  NotionUrlProperty,
+} from "@/types/notion";
 import type {
   GuideCategory,
   GuideContentByCategory,
@@ -7,6 +19,8 @@ import type {
 } from "@/types/ui-ux";
 
 export const GUIDE_CATEGORY_ORDER: GuideCategory[] = ["why-knk", "stage", "song", "variety"];
+
+const FALLBACK_THUMBNAIL = "/images/guide/why-height.svg";
 
 const guideContent: GuideContentItem[] = [
   {
@@ -201,6 +215,21 @@ const guideContent: GuideContentItem[] = [
   },
 ];
 
+type LocalizedTitleKey = `Title (${AppLocale})`;
+type LocalizedDescriptionKey = `Description (${AppLocale})`;
+
+type GuideLocalizedKey = LocalizedTitleKey | LocalizedDescriptionKey;
+
+type GuideProperties = {
+  Title: NotionTitleProperty;
+  Category?: NotionSelectProperty;
+  Description?: NotionRichTextProperty;
+  Thumbnail?: NotionFilesProperty;
+  Link?: NotionUrlProperty;
+  Order?: NotionNumberProperty;
+  VideoId?: NotionRichTextProperty;
+} & Partial<Record<GuideLocalizedKey, NotionRichTextProperty>>;
+
 function resolveLocalizedValue(locale: AppLocale, value?: Record<AppLocale, string>) {
   if (!value) {
     return undefined;
@@ -209,29 +238,183 @@ function resolveLocalizedValue(locale: AppLocale, value?: Record<AppLocale, stri
   return value[locale] ?? value[defaultLocale];
 }
 
-function resolveGuideContent(locale: AppLocale): GuideContentResolvedItem[] {
-  return guideContent
-    .map<GuideContentResolvedItem>((item) => ({
-      id: item.id,
-      category: item.category,
-      title: item.title[locale] ?? item.title[defaultLocale],
-      description: resolveLocalizedValue(locale, item.description),
-      thumbnail: item.thumbnail,
-      videoId: item.videoId,
-      displayOrder: item.displayOrder,
-    }))
-    .sort((a, b) => {
-      const categoryDiff = GUIDE_CATEGORY_ORDER.indexOf(a.category) - GUIDE_CATEGORY_ORDER.indexOf(b.category);
-      return categoryDiff !== 0 ? categoryDiff : a.displayOrder - b.displayOrder;
+function sortGuideItems(items: GuideContentResolvedItem[]): GuideContentResolvedItem[] {
+  return [...items].sort((a, b) => {
+    const categoryDiff = GUIDE_CATEGORY_ORDER.indexOf(a.category) - GUIDE_CATEGORY_ORDER.indexOf(b.category);
+    if (categoryDiff !== 0) {
+      return categoryDiff;
+    }
+    return a.displayOrder - b.displayOrder;
+  });
+}
+
+function getLocalizedTitle(properties: GuideProperties, locale: AppLocale) {
+  const key = `Title (${locale})` as LocalizedTitleKey;
+  const defaultKey = `Title (${defaultLocale})` as LocalizedTitleKey;
+  return (
+    getRichTextValue(properties[key]) ||
+    getRichTextValue(properties[defaultKey]) ||
+    getTitleValue(properties.Title)
+  );
+}
+
+function getLocalizedDescription(properties: GuideProperties, locale: AppLocale) {
+  const key = `Description (${locale})` as LocalizedDescriptionKey;
+  const defaultKey = `Description (${defaultLocale})` as LocalizedDescriptionKey;
+  return (
+    getRichTextValue(properties[key]) ||
+    getRichTextValue(properties[defaultKey]) ||
+    getRichTextValue(properties.Description) ||
+    undefined
+  );
+}
+
+function normalizeGuideCategory(value?: string | null): GuideCategory | null {
+  if (!value) {
+    return null;
+  }
+  const normalized = value.trim().toLowerCase().replace(/\s+/g, "-");
+  if (normalized === "why" || normalized === "why-knk") {
+    return "why-knk";
+  }
+  if (GUIDE_CATEGORY_ORDER.includes(normalized as GuideCategory)) {
+    return normalized as GuideCategory;
+  }
+  return null;
+}
+
+function extractYouTubeVideoId(rawUrl?: string | null) {
+  if (!rawUrl) {
+    return undefined;
+  }
+
+  try {
+    const url = new URL(rawUrl);
+    const host = url.hostname.replace(/^www\./, "");
+    if (host === "youtu.be") {
+      const id = url.pathname.slice(1).trim();
+      return id || undefined;
+    }
+    if (host.endsWith("youtube.com")) {
+      const searchId = url.searchParams.get("v");
+      if (searchId) {
+        return searchId.trim();
+      }
+      const segments = url.pathname.split("/").filter(Boolean);
+      if (segments.length >= 2 && ["embed", "shorts", "live"].includes(segments[0])) {
+        return segments[1].trim();
+      }
+    }
+  } catch {
+    return undefined;
+  }
+
+  return undefined;
+}
+
+function mapGuidePage(page: NotionPage<GuideProperties>, locale: AppLocale): GuideContentResolvedItem | null {
+  const { properties } = page;
+  const category = normalizeGuideCategory(properties.Category?.select?.name);
+  if (!category) {
+    return null;
+  }
+
+  const title = getLocalizedTitle(properties, locale);
+  if (!title) {
+    return null;
+  }
+
+  const description = getLocalizedDescription(properties, locale);
+  const explicitVideoId = getRichTextValue(properties.VideoId)?.trim();
+  const videoId = explicitVideoId || extractYouTubeVideoId(properties.Link?.url) || undefined;
+
+  if (!videoId && category !== "why-knk") {
+    return null;
+  }
+
+  const thumbnail =
+    getFirstFileUrl(properties.Thumbnail) ??
+    (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : FALLBACK_THUMBNAIL);
+  const displayOrder = typeof properties.Order?.number === "number" ? properties.Order.number : 999;
+
+  return {
+    id: page.id,
+    category,
+    title,
+    description,
+    thumbnail,
+    videoId: videoId ?? "placeholder-video",
+    displayOrder,
+  };
+}
+
+function resolveFallbackGuideContent(locale: AppLocale): GuideContentResolvedItem[] {
+  const resolved = guideContent.map<GuideContentResolvedItem>((item) => ({
+    id: item.id,
+    category: item.category,
+    title: item.title[locale] ?? item.title[defaultLocale],
+    description: resolveLocalizedValue(locale, item.description),
+    thumbnail: item.thumbnail,
+    videoId: item.videoId,
+    displayOrder: item.displayOrder,
+  }));
+  return sortGuideItems(resolved);
+}
+
+async function fetchGuideContentFromNotion(
+  locale: AppLocale,
+): Promise<GuideContentResolvedItem[] | null> {
+  const databaseId = process.env.NOTION_GUIDE_DATABASE_ID;
+  if (!databaseId || !process.env.NOTION_API_KEY) {
+    return null;
+  }
+
+  try {
+    const response = await notionClient.queryDatabase<NotionQueryResponse<GuideProperties>>({
+      database_id: databaseId,
+      sorts: [{ property: "Order", direction: "ascending" }],
     });
+
+    if (!response.results.length) {
+      console.warn("No guide entries found in Notion, falling back to static content");
+      return null;
+    }
+
+    const items = response.results
+      .map((page) => {
+        try {
+          return mapGuidePage(page, locale);
+        } catch (error) {
+          console.warn("Failed to map guide item", error);
+          return null;
+        }
+      })
+      .filter((item): item is GuideContentResolvedItem => Boolean(item));
+
+    if (!items.length) {
+      console.warn("Guide entries returned by Notion contained no valid cards, using fallback content");
+      return null;
+    }
+
+    return sortGuideItems(items);
+  } catch (error) {
+    console.error("Failed to fetch guide content from Notion", error);
+    return null;
+  }
 }
 
-export function getGuideContent(locale: AppLocale = defaultLocale): GuideContentResolvedItem[] {
-  return resolveGuideContent(locale);
+export async function getGuideContent(locale: AppLocale = defaultLocale): Promise<GuideContentResolvedItem[]> {
+  const notionItems = await fetchGuideContentFromNotion(locale);
+  if (notionItems) {
+    return notionItems;
+  }
+  return resolveFallbackGuideContent(locale);
 }
 
-export function getGuideContentSections(locale: AppLocale = defaultLocale): GuideContentByCategory {
-  const items = resolveGuideContent(locale);
+export async function getGuideContentSections(
+  locale: AppLocale = defaultLocale,
+): Promise<GuideContentByCategory> {
+  const items = await getGuideContent(locale);
   return GUIDE_CATEGORY_ORDER.reduce((sections, category) => {
     sections[category] = items.filter((item) => item.category === category);
     return sections;

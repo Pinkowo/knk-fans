@@ -4,13 +4,16 @@ import type { ContactFormSubmission } from "@/types/contact";
 
 import { runtimeEnv } from "./env";
 
-const resend = new Resend(runtimeEnv.resendApiKey());
-
 interface SendContactEmailResult {
   id?: string;
 }
 
+function getResendClient(): Resend {
+  return new Resend(runtimeEnv.resendApiKey());
+}
+
 export async function sendContactEmail(submission: ContactFormSubmission): Promise<SendContactEmailResult> {
+  const resend = getResendClient();
   const to = runtimeEnv.contactEmail();
   const subject = `knk-fans-site:${submission.inquiryType}`;
   const attachments =

@@ -18,8 +18,16 @@ interface GuideCardProps {
 const BLUR_DATA_URL =
   "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0nMScgaGVpZ2h0PScxJyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnPjxyZWN0IHdpZHRoPScxJyBoZWlnaHQ9JzEnIGZpbGw9JyMyMjIyMzAnIC8+PC9zdmc+";
 
-export default function GuideCard({ item, category, allowExpand, isExpanded, onToggle }: GuideCardProps) {
+export default function GuideCard({
+  item,
+  category,
+  allowExpand,
+  isExpanded,
+  onToggle,
+}: GuideCardProps) {
   const t = useTranslations("guide.sections");
+  const hasThumbnail = Boolean(item.thumbnail);
+  const isWhyCard = !hasThumbnail && category === "why-knk";
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -28,20 +36,24 @@ export default function GuideCard({ item, category, allowExpand, isExpanded, onT
 
   const content = (
     <>
-      <div className="relative h-48 w-full overflow-hidden rounded-2xl">
-        <Image
-          alt={t("thumbnailAlt", { title: item.title })}
-          className="object-cover"
-          fill
-          placeholder="blur"
-          blurDataURL={BLUR_DATA_URL}
-          sizes="(min-width: 768px) 50vw, 100vw"
-          src={item.thumbnail}
-        />
-        <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1 text-xs uppercase tracking-[0.2em] text-white">
-          {t(`badges.${category}`)}
-        </span>
-      </div>
+      {!isWhyCard && (
+        <div className="relative h-48 w-full overflow-hidden rounded-2xl">
+          {hasThumbnail ? (
+            <Image
+              alt={t("thumbnailAlt", { title: item.title })}
+              className="object-cover"
+              fill
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
+              sizes="(min-width: 768px) 50vw, 100vw"
+              src={item.thumbnail}
+            />
+          ) : null}
+          <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/40 px-3 py-1 text-xs uppercase tracking-[0.2em] text-white">
+            {t(`badges.${category}`)}
+          </span>
+        </div>
+      )}
       <div className="space-y-2">
         <h3 className="text-xl font-semibold text-white">{item.title}</h3>
         {item.description && <p className="text-sm text-text-secondary">{item.description}</p>}

@@ -22,15 +22,22 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "KNK Fansite",
   description: "A multilingual KNK fan guide built with Next.js",
+  icons: {
+    icon: "/logo-round.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="zh" suppressHydrationWarning>
-      <body className={`${notoSans.variable} ${spaceGrotesk.variable} bg-surface text-white antialiased`}>
+      <body
+        className={`${notoSans.variable} ${spaceGrotesk.variable} bg-surface text-white antialiased`}
+      >
         {children}
         <Analytics />
-        {process.env.NEXT_PUBLIC_GA_ID ? <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} /> : null}
+        {process.env.NEXT_PUBLIC_GA_ID ? (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        ) : null}
       </body>
     </html>
   );

@@ -22,7 +22,23 @@ export interface PetSettings {
 }
 
 export const DEFAULT_PETS: Pet[] = [
-  { id: "beta", name: "Beta", color: "#ff7ac3", spriteRow: 0 },
+  {
+    id: "jihun",
+    name: "Jihun",
+    color: "#ff7ac3",
+    spriteRow: 0,
+    spriteSheet: "/sprites/jihun.png",
+    columns: 3,
+    rows: 5,
+    directionalRows: {
+      leftDown: 0,
+      rightDown: 1,
+      left: 2,
+      right: 3,
+      up: 4,
+      default: 3,
+    },
+  },
   { id: "gamma", name: "Gamma", color: "#ffd166", spriteRow: 1 },
   {
     id: "dongwon",

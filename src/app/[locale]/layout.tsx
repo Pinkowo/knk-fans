@@ -9,6 +9,7 @@ import Header from "@/components/common/Header";
 import PetSettingsPanel from "@/components/pets/PetSettings";
 import SitePet from "@/components/pets/SitePet";
 import MusicPlayer from "@/components/player/MusicPlayer";
+import StructuredData from "@/components/seo/StructuredData";
 import { defaultLocale, locales, type AppLocale } from "@/i18n";
 import { LoadingProvider } from "@/lib/context/LoadingContext";
 import { PlayerProvider } from "@/lib/context/PlayerContext";
@@ -33,13 +34,73 @@ export async function generateMetadata({
   const resolvedLocale = resolveLocale(locale);
   const t = await getTranslations({ locale: resolvedLocale });
 
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://knkfans.site";
+  const title = t("guide.hero.title");
+  const description = t("guide.hero.subtitle");
+
   return {
     title: {
       template: `%s | KNK Guide`,
-      default: t("guide.hero.title"),
+      default: title,
     },
-    description: t("guide.hero.subtitle"),
-    metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://knk-fans.vercel.app"),
+    description,
+    metadataBase: new URL(siteUrl),
+    keywords: ["KNK", "크나큰", "K-pop", "韓國男團", "idol", "케이팝", "팬사이트"],
+    authors: [{ name: "Pink" }],
+    creator: "Pink",
+    publisher: "KNK Fansite",
+    alternates: {
+      canonical: `/${resolvedLocale}`,
+      languages: {
+        "zh-TW": "/zh",
+        "en-US": "/en",
+        "ko-KR": "/ko",
+        "ja-JP": "/ja",
+      },
+    },
+    openGraph: {
+      type: "website",
+      locale:
+        resolvedLocale === "zh"
+          ? "zh_TW"
+          : resolvedLocale === "en"
+            ? "en_US"
+            : resolvedLocale === "ja"
+              ? "ja_JP"
+              : "ko_KR",
+      url: `${siteUrl}/${resolvedLocale}`,
+      title,
+      description,
+      siteName: "KNK Fansite",
+      images: [
+        {
+          url: `${siteUrl}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: "KNK Fansite",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${siteUrl}/og-image.png`],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    verification: {
+      google: "bf3fb2ed0f535e07",
+    },
   };
 }
 
@@ -60,6 +121,7 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider locale={resolvedLocale} messages={messages} timeZone="Asia/Taipei">
+      <StructuredData locale={resolvedLocale} />
       <LoadingProvider>
         <PlayerProvider>
           <div className="flex min-h-screen flex-col bg-surface text-white">

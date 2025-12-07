@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
@@ -8,6 +9,20 @@ export const revalidate = 604800;
 
 interface AboutPageParams {
   params: Promise<{ locale: AppLocale }>;
+}
+
+export async function generateMetadata({ params }: AboutPageParams): Promise<Metadata> {
+  const { locale } = await params;
+  const group = await fetchGroupInfo(locale);
+
+  return {
+    title: group.name,
+    description: group.description,
+    openGraph: {
+      title: group.name,
+      description: group.description,
+    },
+  };
 }
 
 export default async function AboutPage({ params }: AboutPageParams) {
@@ -70,7 +85,7 @@ export default async function AboutPage({ params }: AboutPageParams) {
               group.cover ||
               "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80"
             }
-            alt={group.name}
+            alt={t("about.coverImageAlt", { name: group.name })}
             fill
             className="object-cover"
             sizes="(min-width: 768px) 50vw, 100vw"

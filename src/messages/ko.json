@@ -17,6 +17,7 @@
   "fandom": "팬덤명",
   "fandomName": "팅커벨",
   "achievements": "주요 활동",
+  "coverImageAlt": "{name} 그룹 사진",
     "links": {
       "title": "공식 링크",
       "description": "KNK의 공식 채널과 SNS를 한눈에 확인하세요.",

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import AlbumCard from "@/components/discography/AlbumCard";
@@ -8,6 +9,20 @@ export const revalidate = 86400; // 24 小時
 
 interface DiscographyPageParams {
   params: Promise<{ locale: AppLocale }>;
+}
+
+export async function generateMetadata({ params }: DiscographyPageParams): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
+  return {
+    title: t("discography.hero.heading"),
+    description: t("discography.hero.subheading"),
+    openGraph: {
+      title: t("discography.hero.heading"),
+      description: t("discography.hero.subheading"),
+    },
+  };
 }
 
 export default async function DiscographyPage({ params }: DiscographyPageParams) {

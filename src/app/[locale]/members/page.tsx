@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import MembersGrid from "@/components/members/MembersGrid";
@@ -8,6 +9,20 @@ export const revalidate = 3600; // 1 小時重新驗證
 
 interface MembersPageParams {
   params: Promise<{ locale: AppLocale }>;
+}
+
+export async function generateMetadata({ params }: MembersPageParams): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
+  return {
+    title: t("members.hero.heading"),
+    description: t("members.hero.subheading"),
+    openGraph: {
+      title: t("members.hero.heading"),
+      description: t("members.hero.subheading"),
+    },
+  };
 }
 
 export default async function MembersPage({ params }: MembersPageParams) {

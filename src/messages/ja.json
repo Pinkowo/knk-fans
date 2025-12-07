@@ -17,6 +17,7 @@
   "fandom": "ファンダム名",
   "fandomName": "ティンカーベル",
   "achievements": "主な実績",
+  "coverImageAlt": "{name} グループ写真",
     "links": {
       "title": "公式リンク",
       "description": "公式チャンネルと SNS をここからチェックできます。",

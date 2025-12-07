@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import VarietyCard from "@/components/variety/VarietyCard";
@@ -8,6 +9,20 @@ export const revalidate = 86400; // 24 小時
 
 interface VarietyPageParams {
   params: Promise<{ locale: AppLocale }>;
+}
+
+export async function generateMetadata({ params }: VarietyPageParams): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
+  return {
+    title: t("variety.hero.heading"),
+    description: t("variety.hero.subheading"),
+    openGraph: {
+      title: t("variety.hero.heading"),
+      description: t("variety.hero.subheading"),
+    },
+  };
 }
 
 export default async function VarietyPage({ params }: VarietyPageParams) {

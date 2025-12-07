@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import LinkCard from "@/components/links/LinkCard";
@@ -8,6 +9,20 @@ export const revalidate = 604800;
 
 interface PageParams {
   params: Promise<{ locale: AppLocale }>;
+}
+
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+
+  return {
+    title: t("links.heading"),
+    description: t("links.subheading"),
+    openGraph: {
+      title: t("links.heading"),
+      description: t("links.subheading"),
+    },
+  };
 }
 
 export default async function LinksPage({ params }: PageParams) {

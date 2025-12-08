@@ -145,6 +145,8 @@ export default function SitePet() {
 
     const initializePets = () => {
       const activePets = DEFAULT_PETS.filter((pet) => settings.activePets[pet.id]);
+      const existing = new Map(petsRef.current.map((pet) => [pet.id, pet]));
+
       activePets.forEach((pet) => {
         const sheetPath = pet.spriteSheet ?? DEFAULT_SPRITE_SHEET;
         if (!spriteCache.current[sheetPath]) {
@@ -155,6 +157,22 @@ export default function SitePet() {
       });
 
       petsRef.current = activePets.map((pet) => {
+        const sheetPath = pet.spriteSheet ?? DEFAULT_SPRITE_SHEET;
+        const columns = pet.columns ?? DEFAULT_COLUMNS;
+        const rows = pet.rows ?? DEFAULT_ROWS;
+        const existingPet = existing.get(pet.id);
+
+        if (existingPet) {
+          existingPet.spriteSheet = sheetPath;
+          existingPet.columns = columns;
+          existingPet.rows = rows;
+          existingPet.directionalRows = pet.directionalRows;
+          existingPet.spriteRow = pet.spriteRow;
+          existingPet.x = Math.min(existingPet.x, canvas.width - SPRITE_SIZE);
+          existingPet.y = Math.min(existingPet.y, canvas.height - SPRITE_SIZE);
+          return existingPet;
+        }
+
         const initialVelocity = randomVelocity();
         return {
           id: pet.id,
@@ -164,9 +182,9 @@ export default function SitePet() {
           vy: initialVelocity.vy,
           frame: 0,
           spriteRow: pet.spriteRow,
-          spriteSheet: pet.spriteSheet ?? DEFAULT_SPRITE_SHEET,
-          columns: pet.columns ?? DEFAULT_COLUMNS,
-          rows: pet.rows ?? DEFAULT_ROWS,
+          spriteSheet: sheetPath,
+          columns,
+          rows,
           directionalRows: pet.directionalRows,
           isMoving: true,
           stateUntil: nowMs() + randomDuration(MOVE_DURATION),

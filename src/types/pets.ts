@@ -21,6 +21,15 @@ export interface PetSettings {
   activePets: Record<string, boolean>;
 }
 
+const DIRECTIONAL_ROWS = {
+  leftDown: 0,
+  rightDown: 1,
+  left: 0,
+  right: 1,
+  up: 2,
+  default: 0,
+} as const;
+
 export const DEFAULT_PETS: Pet[] = [
   {
     id: "jihun",
@@ -29,50 +38,38 @@ export const DEFAULT_PETS: Pet[] = [
     spriteRow: 0,
     spriteSheet: "/sprites/jihun.png",
     columns: 3,
-    rows: 5,
-    directionalRows: {
-      leftDown: 0,
-      rightDown: 1,
-      left: 2,
-      right: 3,
-      up: 4,
-      default: 3,
-    },
+    rows: 3,
+    directionalRows: DIRECTIONAL_ROWS,
   },
-  { id: "gamma", name: "Gamma", color: "#ffd166", spriteRow: 1 },
+  {
+    id: "hyunjong",
+    name: "Hyunjong",
+    color: "#ffd166",
+    spriteRow: 0,
+    spriteSheet: "/sprites/hyunjong.png",
+    columns: 3,
+    rows: 3,
+    directionalRows: DIRECTIONAL_ROWS,
+  },
   {
     id: "dongwon",
     name: "Dongwon",
     color: "#83e0ff",
-    spriteRow: 2,
+    spriteRow: 0,
     spriteSheet: "/sprites/dongwon.png",
     columns: 3,
-    rows: 5,
-    directionalRows: {
-      leftDown: 0,
-      rightDown: 1,
-      left: 2,
-      right: 3,
-      up: 4,
-      default: 3,
-    },
+    rows: 3,
+    directionalRows: DIRECTIONAL_ROWS,
   },
   {
     id: "inseong",
     name: "Inseong",
     color: "#ff9f43",
-    spriteRow: 1,
+    spriteRow: 0,
     spriteSheet: "/sprites/inseong.png",
     columns: 3,
-    rows: 5,
-    directionalRows: {
-      leftDown: 0,
-      rightDown: 1,
-      left: 2,
-      right: 3,
-      up: 4,
-      default: 3,
-    },
+    rows: 3,
+    directionalRows: DIRECTIONAL_ROWS,
   },
 ];
 

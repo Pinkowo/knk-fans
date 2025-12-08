@@ -6,7 +6,6 @@ import type { Member, MemberStatus } from "@/types/member";
 import type {
   NotionDateProperty,
   NotionFilesProperty,
-  NotionFormulaProperty,
   NotionNumberProperty,
   NotionPage,
   NotionQueryResponse,
@@ -21,6 +20,105 @@ type LocalizedRichTextKey = `${"Bio" | "Position"} (${AppLocale})`;
 type LocalizedMember = Omit<Member, "bio" | "position"> & {
   bio: Record<AppLocale, string>;
   position?: Record<AppLocale, string>;
+};
+
+type ZodiacSign =
+  | "capricorn"
+  | "aquarius"
+  | "pisces"
+  | "aries"
+  | "taurus"
+  | "gemini"
+  | "cancer"
+  | "leo"
+  | "virgo"
+  | "libra"
+  | "scorpio"
+  | "sagittarius";
+
+const ZODIAC_RANGES: Array<{
+  id: ZodiacSign;
+  start: [number, number];
+  end: [number, number];
+}> = [
+  { id: "capricorn", start: [12, 22], end: [1, 19] },
+  { id: "aquarius", start: [1, 20], end: [2, 18] },
+  { id: "pisces", start: [2, 19], end: [3, 20] },
+  { id: "aries", start: [3, 21], end: [4, 19] },
+  { id: "taurus", start: [4, 20], end: [5, 20] },
+  { id: "gemini", start: [5, 21], end: [6, 21] },
+  { id: "cancer", start: [6, 22], end: [7, 22] },
+  { id: "leo", start: [7, 23], end: [8, 22] },
+  { id: "virgo", start: [8, 23], end: [9, 22] },
+  { id: "libra", start: [9, 23], end: [10, 23] },
+  { id: "scorpio", start: [10, 24], end: [11, 21] },
+  { id: "sagittarius", start: [11, 22], end: [12, 21] },
+];
+
+const ZODIAC_LABELS: Record<AppLocale, Record<ZodiacSign, string>> = {
+  zh: {
+    capricorn: "摩羯座",
+    aquarius: "水瓶座",
+    pisces: "雙魚座",
+    aries: "牡羊座",
+    taurus: "金牛座",
+    gemini: "雙子座",
+    cancer: "巨蟹座",
+    leo: "獅子座",
+    virgo: "處女座",
+    libra: "天秤座",
+    scorpio: "天蠍座",
+    sagittarius: "射手座",
+  },
+  en: {
+    capricorn: "Capricorn",
+    aquarius: "Aquarius",
+    pisces: "Pisces",
+    aries: "Aries",
+    taurus: "Taurus",
+    gemini: "Gemini",
+    cancer: "Cancer",
+    leo: "Leo",
+    virgo: "Virgo",
+    libra: "Libra",
+    scorpio: "Scorpio",
+    sagittarius: "Sagittarius",
+  },
+  ko: {
+    capricorn: "염소자리",
+    aquarius: "물병자리",
+    pisces: "물고기자리",
+    aries: "양자리",
+    taurus: "황소자리",
+    gemini: "쌍둥이자리",
+    cancer: "게자리",
+    leo: "사자자리",
+    virgo: "처녀자리",
+    libra: "천칭자리",
+    scorpio: "전갈자리",
+    sagittarius: "사수자리",
+  },
+  ja: {
+    capricorn: "山羊座",
+    aquarius: "水瓶座",
+    pisces: "魚座",
+    aries: "牡羊座",
+    taurus: "牡牛座",
+    gemini: "双子座",
+    cancer: "蟹座",
+    leo: "獅子座",
+    virgo: "乙女座",
+    libra: "天秤座",
+    scorpio: "蠍座",
+    sagittarius: "射手座",
+  },
+};
+
+const AGE_SUFFIX: Record<AppLocale, string> = {
+  zh: "歲",
+  ko: "세",
+  ja: "歳",
+  en: "",
 };
 
 const localizedMembers: LocalizedMember[] = [
@@ -168,8 +266,6 @@ interface MemberDatabaseProperties {
   Bio?: NotionRichTextProperty;
   Position?: NotionRichTextProperty;
   Birthday?: NotionDateProperty;
-  Age?: NotionFormulaProperty;
-  Zodiac?: NotionSelectProperty;
   "Blood Type"?: NotionSelectProperty;
   MBTI?: NotionSelectProperty;
   Height?: NotionNumberProperty;
@@ -198,25 +294,68 @@ function getDateValue(property?: NotionDateProperty): string | undefined {
   return property?.date?.start ?? undefined;
 }
 
-function getFormulaValue(property?: NotionFormulaProperty): string | undefined {
-  if (!property?.formula) {
+function isWithinRange(
+  month: number,
+  day: number,
+  [startMonth, startDay]: [number, number],
+  [endMonth, endDay]: [number, number],
+) {
+  if (startMonth > endMonth || (startMonth === endMonth && startDay > endDay)) {
+    return (
+      month > startMonth ||
+      (month === startMonth && day >= startDay) ||
+      month < endMonth ||
+      (month === endMonth && day <= endDay)
+    );
+  }
+  if (month < startMonth || month > endMonth) {
+    return false;
+  }
+  if (month === startMonth && day < startDay) {
+    return false;
+  }
+  if (month === endMonth && day > endDay) {
+    return false;
+  }
+  return true;
+}
+
+function getZodiacLabel(birthday?: string, locale: AppLocale = defaultLocale): string | undefined {
+  if (!birthday) {
     return undefined;
   }
-  const formula = property.formula;
-  switch (formula.type) {
-    case "string":
-      return formula.string ?? undefined;
-    case "number":
-      return typeof formula.number === "number" ? String(formula.number) : undefined;
-    case "boolean":
-      return typeof formula.boolean === "boolean" ? (formula.boolean ? "Yes" : "No") : undefined;
-    case "date":
-      return formula.date?.start ?? undefined;
-    case "rich_text":
-      return formula.rich_text?.map((item) => item.plain_text).join("") ?? undefined;
-    default:
-      return undefined;
+  const date = new Date(birthday);
+  if (Number.isNaN(date.getTime())) {
+    return undefined;
   }
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+  const sign =
+    ZODIAC_RANGES.find((range) => isWithinRange(month, day, range.start, range.end))?.id ?? "capricorn";
+  return ZODIAC_LABELS[locale][sign];
+}
+
+function getAgeLabel(birthday?: string, locale: AppLocale = defaultLocale): string | undefined {
+  if (!birthday) {
+    return undefined;
+  }
+  const birthDate = new Date(birthday);
+  if (Number.isNaN(birthDate.getTime())) {
+    return undefined;
+  }
+  const now = new Date();
+  let age = now.getFullYear() - birthDate.getFullYear();
+  const hasHadBirthday =
+    now.getMonth() > birthDate.getMonth() ||
+    (now.getMonth() === birthDate.getMonth() && now.getDate() >= birthDate.getDate());
+  if (!hasHadBirthday) {
+    age -= 1;
+  }
+  if (age < 0) {
+    return undefined;
+  }
+  const suffix = AGE_SUFFIX[locale] ?? "";
+  return suffix ? `${age}${suffix}` : String(age);
 }
 
 function getLocalizedRichText(
@@ -239,6 +378,7 @@ function mapMember(page: NotionPage<MemberDatabaseProperties>, locale: AppLocale
   const status = (properties.Status.select?.name?.toLowerCase() as MemberStatus) || "current";
 
   const profileLink = sanitizeUrl(properties.Profile?.url ?? undefined);
+  const birthday = getDateValue(properties.Birthday);
 
   return {
     id: page.id,
@@ -247,9 +387,9 @@ function mapMember(page: NotionPage<MemberDatabaseProperties>, locale: AppLocale
     bio: getLocalizedRichText(properties, "Bio", locale) || "",
     position: getLocalizedRichText(properties, "Position", locale) || undefined,
     photo: getFirstFileUrl(properties.Photo) ?? profileLink,
-    birthday: getDateValue(properties.Birthday),
-    age: getFormulaValue(properties.Age),
-    zodiac: properties.Zodiac?.select?.name ?? undefined,
+    birthday,
+    age: getAgeLabel(birthday, locale),
+    zodiac: getZodiacLabel(birthday, locale),
     bloodType: properties["Blood Type"]?.select?.name ?? undefined,
     mbti: properties.MBTI?.select?.name ?? undefined,
     height: typeof properties.Height?.number === "number" ? `${properties.Height.number} cm` : undefined,

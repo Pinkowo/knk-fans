@@ -5,7 +5,7 @@ interface StructuredDataProps {
 }
 
 export default function StructuredData({ locale }: StructuredDataProps) {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://knkfans.site";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.knk-fans.com";
 
   const organizationSchema = {
     "@context": "https://schema.org",

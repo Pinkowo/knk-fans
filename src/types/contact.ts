@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import type { AppLocale } from "@/i18n";
 
-export const CONTACT_INQUIRY_TYPES = ["error-report", "service-request", "other"] as const;
+export const CONTACT_INQUIRY_TYPES = ["error-report", "other"] as const;
 export type ContactInquiryType = (typeof CONTACT_INQUIRY_TYPES)[number];
 
 const MAX_ATTACHMENT_SIZE = 5 * 1024 * 1024; // 5MB

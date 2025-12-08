@@ -111,7 +111,8 @@
   },
   "footer": {
     "line1": "Built by Tinkerbell Pink; every song, lyric, photo, and video belongs to 220 Entertainment and the original creators.",
-    "line2Prefix": "Some copy is AI-assisted. For commissions or corrections, feel free to ",
+    "line1b": "All videos and music are embedded via YouTube links, so rights remain with the original uploaders/rights holders; takedown or copyright requests will be honored immediately.",
+    "line2Prefix": "Some copy is AI-assisted. For corrections, feel free to ",
     "line2Suffix": ".",
     "contactCta": "contact me ↗",
     "contactAria": "Open the contact page",
@@ -168,7 +169,7 @@
     "hero": {
       "eyebrow": "Contact",
       "title": "Report an issue or request a feature",
-      "subtitle": "Tell me about bugs, onboarding ideas, or custom site work—your message goes straight to my inbox."
+      "subtitle": "Tell me about bugs or ideas—the message goes straight to my inbox."
     },
     "form": {
       "inquiryType": "How can I help?",
@@ -184,7 +185,6 @@
       "error": "Something went wrong. Please try again later.",
       "options": {
         "error-report": "Bug report",
-        "service-request": "Site commission / collaboration",
         "other": "Other feedback"
       }
     },

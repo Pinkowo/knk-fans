@@ -111,7 +111,8 @@
   },
   "footer": {
     "line1": "本網站由小仙女 Pink 製作，所有歌曲、歌詞、照片與影片版權屬於 220 Entertainment 與原作者。",
-    "line2Prefix": "部分文字由 AI 生成，若有委託邀約或錯誤回報都歡迎 ",
+    "line1b": "影片及音樂皆使用 YouTube 網址嵌入，內容版權仍歸原上傳者與權利方所有，如有下架或著作權問題會依權利人要求立即移除。",
+    "line2Prefix": "部分文字由 AI 生成，若有錯誤回報都歡迎 ",
     "line2Suffix": "",
     "contactCta": "聯絡我 ↗",
     "contactAria": "開啟聯絡頁面",
@@ -168,7 +169,7 @@
     "hero": {
       "eyebrow": "CONTACT",
       "title": "聯絡我",
-      "subtitle": "無論是錯誤回報、網站製作委託或其他想法都可以透過這個表單告訴我。"
+      "subtitle": "無論是錯誤回報或其他想法都可以透過這個表單告訴我。"
     },
     "form": {
       "inquiryType": "想詢問的項目",
@@ -184,8 +185,7 @@
       "error": "送出時發生問題，請稍後再試。",
       "options": {
         "error-report": "錯誤回報",
-        "service-request": "網站製作/合作",
-        "other": "其他意見"
+        "other": "其他"
       }
     },
     "validation": {

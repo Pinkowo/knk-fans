@@ -15,11 +15,21 @@ import type {
   NotionUrlProperty,
 } from "@/types/notion";
 
-type LocalizedRichTextKey = `${"Bio" | "Position"} (${AppLocale})`;
+type LocalizedRichTextKey =
+  `${"Bio" | "Position" | "Favorite Food" | "Disliked Food" | "Alcohol Tolerance" | "Hobbies" | "Special Skills" | "Solo Activities"} (${AppLocale})`;
 
-type LocalizedMember = Omit<Member, "bio" | "position"> & {
+type LocalizedMember = Omit<
+  Member,
+  "bio" | "position" | "favoriteFood" | "dislikedFood" | "alcoholTolerance" | "hobbies" | "specialSkills" | "soloActivities"
+> & {
   bio: Record<AppLocale, string>;
   position?: Record<AppLocale, string>;
+  favoriteFood?: Record<AppLocale, string>;
+  dislikedFood?: Record<AppLocale, string>;
+  alcoholTolerance?: Record<AppLocale, string>;
+  hobbies?: Record<AppLocale, string>;
+  specialSkills?: Record<AppLocale, string>;
+  soloActivities?: Record<AppLocale, string>;
 };
 
 type ZodiacSign =
@@ -360,7 +370,15 @@ function getAgeLabel(birthday?: string, locale: AppLocale = defaultLocale): stri
 
 function getLocalizedRichText(
   properties: MemberDatabaseProperties,
-  baseKey: "Bio" | "Position",
+  baseKey:
+    | "Bio"
+    | "Position"
+    | "Favorite Food"
+    | "Disliked Food"
+    | "Alcohol Tolerance"
+    | "Hobbies"
+    | "Special Skills"
+    | "Solo Activities",
   locale: AppLocale,
 ): string | undefined {
   const localizedKey = `${baseKey} (${locale})` as LocalizedRichTextKey;
@@ -394,12 +412,12 @@ function mapMember(page: NotionPage<MemberDatabaseProperties>, locale: AppLocale
     mbti: properties.MBTI?.select?.name ?? undefined,
     height: typeof properties.Height?.number === "number" ? `${properties.Height.number} cm` : undefined,
     representativeAnimal: getRichTextValue(properties["Representative Animal"]) || undefined,
-    favoriteFood: getRichTextValue(properties["Favorite Food"]) || undefined,
-    dislikedFood: getRichTextValue(properties["Disliked Food"]) || undefined,
-    alcoholTolerance: getRichTextValue(properties["Alcohol Tolerance"]) || undefined,
-    hobbies: getRichTextValue(properties.Hobbies) || undefined,
-    specialSkills: getRichTextValue(properties["Special Skills"]) || undefined,
-    soloActivities: getRichTextValue(properties["Solo Activities"]) || undefined,
+    favoriteFood: getLocalizedRichText(properties, "Favorite Food", locale) || undefined,
+    dislikedFood: getLocalizedRichText(properties, "Disliked Food", locale) || undefined,
+    alcoholTolerance: getLocalizedRichText(properties, "Alcohol Tolerance", locale) || undefined,
+    hobbies: getLocalizedRichText(properties, "Hobbies", locale) || undefined,
+    specialSkills: getLocalizedRichText(properties, "Special Skills", locale) || undefined,
+    soloActivities: getLocalizedRichText(properties, "Solo Activities", locale) || undefined,
     joinDate: getDateValue(properties["Join Date"]),
     leaveDate: getDateValue(properties["Leave Date"]),
     links: profileLink ? [{ label: "Profile", url: profileLink }] : undefined,
@@ -411,6 +429,14 @@ function buildFallbackMembers(locale: AppLocale): Member[] {
     ...member,
     bio: getLocalizedValue(member.bio, locale),
     position: member.position ? getLocalizedValue(member.position, locale) : undefined,
+    favoriteFood: member.favoriteFood ? getLocalizedValue(member.favoriteFood, locale) : undefined,
+    dislikedFood: member.dislikedFood ? getLocalizedValue(member.dislikedFood, locale) : undefined,
+    alcoholTolerance: member.alcoholTolerance
+      ? getLocalizedValue(member.alcoholTolerance, locale)
+      : undefined,
+    hobbies: member.hobbies ? getLocalizedValue(member.hobbies, locale) : undefined,
+    specialSkills: member.specialSkills ? getLocalizedValue(member.specialSkills, locale) : undefined,
+    soloActivities: member.soloActivities ? getLocalizedValue(member.soloActivities, locale) : undefined,
   }));
 }
 

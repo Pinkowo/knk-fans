@@ -29,6 +29,7 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
   const [showAlbumPanel, setShowAlbumPanel] = useState(false);
   const [showTrackPanel, setShowTrackPanel] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
+  const [playerEnabled, setPlayerEnabled] = useState(false);
   const playerRef = useRef<YouTubePlayer | null>(null);
   const progressInterval = useRef<number | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
@@ -71,6 +72,12 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsHydrated(true);
   }, []);
+
+  useEffect(() => {
+    if (state.isPlaying) {
+      setPlayerEnabled(true);
+    }
+  }, [state.isPlaying]);
 
   useEffect(() => {
     return () => {
@@ -409,18 +416,20 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
           }}
         />
       )}
-      <div className="hidden">
-        <YouTube
-          videoId={activeTrack.videoId}
-          opts={{
-            height: "0",
-            width: "0",
-            playerVars: { autoplay: state.isPlaying ? 1 : 0, controls: 0, rel: 0, playsinline: 1 },
-          }}
-          onReady={handleReady}
-          onStateChange={handleStateChange}
-        />
-      </div>
+      {playerEnabled && (
+        <div className="hidden">
+          <YouTube
+            videoId={activeTrack.videoId}
+            opts={{
+              height: "0",
+              width: "0",
+              playerVars: { autoplay: state.isPlaying ? 1 : 0, controls: 0, rel: 0, playsinline: 1 },
+            }}
+            onReady={handleReady}
+            onStateChange={handleStateChange}
+          />
+        </div>
+      )}
     </>
   );
 }

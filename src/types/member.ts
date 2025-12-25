@@ -2,6 +2,7 @@ export type MemberStatus = "current" | "former";
 
 export interface Member {
   id: string;
+  slug?: string;
   name: string;
   status: MemberStatus;
   bio: string;

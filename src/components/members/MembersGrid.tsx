@@ -1,20 +1,19 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
 
 import MemberCard from "@/components/members/MemberCard";
-import MemberModal from "@/components/members/MemberModal";
+import type { AppLocale } from "@/i18n";
 import type { Member } from "@/types/member";
 
 interface MembersGridProps {
   current: Member[];
   former: Member[];
+  locale: AppLocale;
 }
 
-export default function MembersGrid({ current, former }: MembersGridProps) {
+export default function MembersGrid({ current, former, locale }: MembersGridProps) {
   const t = useTranslations();
-  const [selectedMember, setSelectedMember] = useState<Member | null>(null);
 
   const sections = [
     { title: t("members.current"), members: current },
@@ -41,7 +40,7 @@ export default function MembersGrid({ current, former }: MembersGridProps) {
                   <MemberCard
                     key={member.id}
                     member={member}
-                    onSelect={setSelectedMember}
+                    href={`/${locale}/members/${member.slug ?? member.id}`}
                     priority={index < 3}
                   />
                 ))}
@@ -54,8 +53,6 @@ export default function MembersGrid({ current, former }: MembersGridProps) {
           </section>
         );
       })}
-
-      <MemberModal member={selectedMember} onClose={() => setSelectedMember(null)} />
     </div>
   );
 }

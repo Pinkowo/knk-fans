@@ -18,7 +18,6 @@ import { fetchPlayerLibrary } from "@/lib/player/library";
 type LayoutParams = { locale: string };
 
 export const dynamic = "force-static";
-export const dynamicParams = false;
 
 function resolveLocale(locale: string): AppLocale {
   return locales.includes(locale as AppLocale) ? (locale as AppLocale) : defaultLocale;

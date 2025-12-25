@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { locales } from "@/i18n";
 import { fetchSongIds } from "@/lib/notion/albums";
+import { fetchMembers } from "@/lib/notion/members";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.knk-fans.com";
@@ -29,8 +30,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  const songIds = await fetchSongIds();
+  const [songIds, members] = await Promise.all([fetchSongIds(), fetchMembers()]);
   const songPages: MetadataRoute.Sitemap = [];
+  const memberPages: MetadataRoute.Sitemap = [];
 
   for (const locale of locales) {
     for (const id of songIds) {
@@ -43,5 +45,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  return [...staticPages, ...songPages];
+  for (const locale of locales) {
+    for (const member of members) {
+      memberPages.push({
+        url: `${BASE_URL}/${locale}/members/${member.slug ?? member.id}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
+  }
+
+  return [...staticPages, ...songPages, ...memberPages];
 }

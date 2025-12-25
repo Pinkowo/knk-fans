@@ -44,7 +44,7 @@ export default async function MembersPage({ params }: MembersPageParams) {
         <p className="text-base text-text-secondary">{t("members.hero.subheading")}</p>
       </header>
       <div className="mt-10">
-        <MembersGrid current={current} former={former} />
+        <MembersGrid current={current} former={former} locale={locale} />
       </div>
     </div>
   );

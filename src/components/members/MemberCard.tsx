@@ -1,24 +1,25 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 import type { Member } from "@/types/member";
 
 interface MemberCardProps {
   member: Member;
-  onSelect: (member: Member) => void;
+  href: string;
   priority?: boolean;
 }
 
-export default function MemberCard({ member, onSelect, priority = false }: MemberCardProps) {
+export default function MemberCard({ member, href, priority = false }: MemberCardProps) {
   const t = useTranslations();
   const label = member.position ? `${member.name} · ${member.position}` : member.name;
 
   return (
-    <button
-      type="button"
-      onClick={() => onSelect(member)}
+    <Link
+      href={href}
+      scroll={false}
       className="group flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/5 text-left transition hover:-translate-y-1 hover:border-white/20"
       aria-label={label}
     >
@@ -49,6 +50,6 @@ export default function MemberCard({ member, onSelect, priority = false }: Membe
         <h3 className="text-xl font-semibold text-white">{member.name}</h3>
         <p className="line-clamp-2 text-sm text-text-secondary/80">{member.bio}</p>
       </div>
-    </button>
+    </Link>
   );
 }

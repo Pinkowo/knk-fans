@@ -273,6 +273,7 @@ const localizedMembers: LocalizedMember[] = [
 interface MemberDatabaseProperties {
   Name: NotionTitleProperty;
   Status: NotionSelectProperty;
+  Slug?: NotionRichTextProperty;
   Bio?: NotionRichTextProperty;
   Position?: NotionRichTextProperty;
   Birthday?: NotionDateProperty;
@@ -302,6 +303,25 @@ interface MemberDatabaseProperties {
 
 function getDateValue(property?: NotionDateProperty): string | undefined {
   return property?.date?.start ?? undefined;
+}
+
+function normalizeMemberSlug(value?: string): string | undefined {
+  if (!value) {
+    return undefined;
+  }
+
+  const base = value.split("(")[0]?.trim() ?? "";
+  if (!base) {
+    return undefined;
+  }
+
+  const slug = base
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+
+  return slug || undefined;
 }
 
 function isWithinRange(
@@ -397,10 +417,14 @@ function mapMember(page: NotionPage<MemberDatabaseProperties>, locale: AppLocale
 
   const profileLink = sanitizeUrl(properties.Profile?.url ?? undefined);
   const birthday = getDateValue(properties.Birthday);
+  const name = getTitleValue(properties.Name);
+  const rawSlug = getRichTextValue(properties.Slug) || name;
+  const slug = normalizeMemberSlug(rawSlug) ?? page.id;
 
   return {
     id: page.id,
-    name: getTitleValue(properties.Name),
+    slug,
+    name,
     status,
     bio: getLocalizedRichText(properties, "Bio", locale) || "",
     position: getLocalizedRichText(properties, "Position", locale) || undefined,
@@ -427,6 +451,7 @@ function mapMember(page: NotionPage<MemberDatabaseProperties>, locale: AppLocale
 function buildFallbackMembers(locale: AppLocale): Member[] {
   return localizedMembers.map((member) => ({
     ...member,
+    slug: normalizeMemberSlug(member.name) ?? member.id,
     bio: getLocalizedValue(member.bio, locale),
     position: member.position ? getLocalizedValue(member.position, locale) : undefined,
     favoriteFood: member.favoriteFood ? getLocalizedValue(member.favoriteFood, locale) : undefined,
@@ -481,4 +506,12 @@ export async function fetchMemberById(
 ): Promise<Member | null> {
   const members = await fetchMembers(locale);
   return members.find((member) => member.id === id) ?? null;
+}
+
+export async function fetchMemberBySlug(
+  slug: string,
+  locale: AppLocale = defaultLocale,
+): Promise<Member | null> {
+  const members = await fetchMembers(locale);
+  return members.find((member) => member.slug === slug || member.id === slug) ?? null;
 }

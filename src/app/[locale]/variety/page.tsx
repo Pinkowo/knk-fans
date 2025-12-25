@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import VarietyCard from "@/components/variety/VarietyCard";
 import type { AppLocale } from "@/i18n";
 import { fetchVarietyCards } from "@/lib/notion/variety";
+import { buildAlternates, buildPageUrl } from "@/lib/seo/metadata";
 
 export const revalidate = 86400; // 24 小時
 
@@ -14,13 +15,16 @@ interface VarietyPageParams {
 export async function generateMetadata({ params }: VarietyPageParams): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
+  const path = "/variety";
 
   return {
     title: t("variety.hero.heading"),
     description: t("variety.hero.subheading"),
+    alternates: buildAlternates(locale, path),
     openGraph: {
       title: t("variety.hero.heading"),
       description: t("variety.hero.subheading"),
+      url: buildPageUrl(locale, path),
     },
   };
 }

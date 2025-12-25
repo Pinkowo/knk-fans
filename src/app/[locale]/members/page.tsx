@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import MembersGrid from "@/components/members/MembersGrid";
 import type { AppLocale } from "@/i18n";
 import { fetchMembers } from "@/lib/notion/members";
+import { buildAlternates, buildPageUrl } from "@/lib/seo/metadata";
 
 export const revalidate = 3600; // 1 小時重新驗證
 
@@ -14,13 +15,16 @@ interface MembersPageParams {
 export async function generateMetadata({ params }: MembersPageParams): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
+  const path = "/members";
 
   return {
     title: t("members.hero.heading"),
     description: t("members.hero.subheading"),
+    alternates: buildAlternates(locale, path),
     openGraph: {
       title: t("members.hero.heading"),
       description: t("members.hero.subheading"),
+      url: buildPageUrl(locale, path),
     },
   };
 }

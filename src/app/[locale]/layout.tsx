@@ -17,6 +17,9 @@ import { fetchPlayerLibrary } from "@/lib/player/library";
 
 type LayoutParams = { locale: string };
 
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
 function resolveLocale(locale: string): AppLocale {
   return locales.includes(locale as AppLocale) ? (locale as AppLocale) : defaultLocale;
 }
@@ -49,15 +52,6 @@ export async function generateMetadata({
     authors: [{ name: "Pink" }],
     creator: "Pink",
     publisher: "KNK Fansite",
-    alternates: {
-      canonical: `/${resolvedLocale}`,
-      languages: {
-        "zh-TW": "/zh",
-        "en-US": "/en",
-        "ko-KR": "/ko",
-        "ja-JP": "/ja",
-      },
-    },
     openGraph: {
       type: "website",
       locale:
@@ -68,7 +62,6 @@ export async function generateMetadata({
             : resolvedLocale === "ja"
               ? "ja_JP"
               : "ko_KR",
-      url: `${siteUrl}/${resolvedLocale}`,
       title,
       description,
       siteName: "KNK Fansite",

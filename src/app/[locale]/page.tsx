@@ -1,12 +1,33 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
 import GuideSection from "@/components/guide/GuideSection";
 import type { AppLocale } from "@/i18n";
+import { buildAlternates, buildPageUrl } from "@/lib/seo/metadata";
 import { getGuideContentSections } from "@/lib/notion/guide";
 import type { GuideCategory } from "@/types/ui-ux";
 
 interface GuidePageParams {
   params: Promise<{ locale: AppLocale }>;
+}
+
+export async function generateMetadata({ params }: GuidePageParams): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+  const title = t("guide.hero.title");
+  const description = t("guide.hero.subtitle");
+  const path = "";
+
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title,
+      description,
+      url: buildPageUrl(locale, path),
+    },
+  };
 }
 
 export default async function GuidePage({ params }: GuidePageParams) {

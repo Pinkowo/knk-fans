@@ -1,7 +1,30 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+import type { AppLocale } from "@/i18n";
+import { buildAlternates, buildPageUrl } from "@/lib/seo/metadata";
+
 interface AboutMePageParams {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: AppLocale }>;
+}
+
+export async function generateMetadata({ params }: AboutMePageParams): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+  const path = "/about-me";
+  const title = t("aboutMe.heading");
+  const description = t("aboutMe.subheading");
+
+  return {
+    title,
+    description,
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title,
+      description,
+      url: buildPageUrl(locale, path),
+    },
+  };
 }
 
 export default async function AboutMePage({ params }: AboutMePageParams) {

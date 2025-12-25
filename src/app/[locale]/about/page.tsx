@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 
 import type { AppLocale } from "@/i18n";
 import { fetchGroupInfo } from "@/lib/notion/about";
+import { buildAlternates, buildPageUrl } from "@/lib/seo/metadata";
 
 export const revalidate = 604800;
 
@@ -14,13 +15,16 @@ interface AboutPageParams {
 export async function generateMetadata({ params }: AboutPageParams): Promise<Metadata> {
   const { locale } = await params;
   const group = await fetchGroupInfo(locale);
+  const path = "/about";
 
   return {
     title: group.name,
     description: group.description,
+    alternates: buildAlternates(locale, path),
     openGraph: {
       title: group.name,
       description: group.description,
+      url: buildPageUrl(locale, path),
     },
   };
 }

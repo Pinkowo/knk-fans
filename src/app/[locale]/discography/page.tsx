@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import AlbumCard from "@/components/discography/AlbumCard";
 import type { AppLocale } from "@/i18n";
 import { fetchAlbums } from "@/lib/notion/albums";
+import { buildAlternates, buildPageUrl } from "@/lib/seo/metadata";
 
 export const revalidate = 86400; // 24 小時
 
@@ -14,13 +15,16 @@ interface DiscographyPageParams {
 export async function generateMetadata({ params }: DiscographyPageParams): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
+  const path = "/discography";
 
   return {
     title: t("discography.hero.heading"),
     description: t("discography.hero.subheading"),
+    alternates: buildAlternates(locale, path),
     openGraph: {
       title: t("discography.hero.heading"),
       description: t("discography.hero.subheading"),
+      url: buildPageUrl(locale, path),
     },
   };
 }

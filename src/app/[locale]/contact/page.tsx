@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 
 import ContactForm from "@/components/contact/ContactForm";
 import type { AppLocale } from "@/i18n";
+import { buildAlternates, buildPageUrl } from "@/lib/seo/metadata";
 
 interface ContactPageParams {
   params: Promise<{ locale: AppLocale }>;
@@ -11,10 +12,17 @@ interface ContactPageParams {
 export async function generateMetadata({ params }: ContactPageParams): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "contact" });
+  const path = "/contact";
 
   return {
     title: t("hero.title"),
     description: t("hero.subtitle"),
+    alternates: buildAlternates(locale, path),
+    openGraph: {
+      title: t("hero.title"),
+      description: t("hero.subtitle"),
+      url: buildPageUrl(locale, path),
+    },
   };
 }
 

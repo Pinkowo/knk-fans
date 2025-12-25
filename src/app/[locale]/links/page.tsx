@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import LinkCard from "@/components/links/LinkCard";
 import type { AppLocale } from "@/i18n";
 import { fetchExternalLinks } from "@/lib/notion/links";
+import { buildAlternates, buildPageUrl } from "@/lib/seo/metadata";
 
 export const revalidate = 604800;
 
@@ -14,13 +15,16 @@ interface PageParams {
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale });
+  const path = "/links";
 
   return {
     title: t("links.heading"),
     description: t("links.subheading"),
+    alternates: buildAlternates(locale, path),
     openGraph: {
       title: t("links.heading"),
       description: t("links.subheading"),
+      url: buildPageUrl(locale, path),
     },
   };
 }

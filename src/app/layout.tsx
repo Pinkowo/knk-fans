@@ -23,7 +23,11 @@ export const metadata: Metadata = {
   title: "KNK Fansite",
   description: "A multilingual KNK fan guide built with Next.js",
   icons: {
-    icon: "/logo-round.png",
+    icon: [
+      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/logo-round.png", type: "image/png" },
+    ],
+    apple: "/logo-round.png",
   },
 };
 

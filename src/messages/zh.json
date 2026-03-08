@@ -169,7 +169,8 @@
     "hero": {
       "eyebrow": "CONTACT",
       "title": "聯絡我",
-      "subtitle": "無論是錯誤回報或其他想法都可以透過這個表單告訴我。"
+      "subtitle": "無論是錯誤回報或其他想法都可以透過這個表單告訴我。",
+      "directContact": "或直接寄信至"
     },
     "form": {
       "inquiryType": "想詢問的項目",
@@ -182,7 +183,7 @@
       "submit": "送出訊息",
       "submitting": "傳送中…",
       "success": "已收到！我會盡快回覆。",
-      "error": "送出時發生問題，請稍後再試。",
+      "error": "送出時發生問題。",
       "options": {
         "error-report": "錯誤回報",
         "other": "其他"

@@ -169,7 +169,8 @@
     "hero": {
       "eyebrow": "Contact",
       "title": "Report an issue or request a feature",
-      "subtitle": "Tell me about bugs or ideas—the message goes straight to my inbox."
+      "subtitle": "Tell me about bugs or ideas—the message goes straight to my inbox.",
+      "directContact": "Or email me directly at"
     },
     "form": {
       "inquiryType": "How can I help?",
@@ -182,7 +183,7 @@
       "submit": "Send message",
       "submitting": "Sending…",
       "success": "Thanks! I’ll reply as soon as possible.",
-      "error": "Something went wrong. Please try again later.",
+      "error": "Something went wrong.",
       "options": {
         "error-report": "Bug report",
         "other": "Other feedback"

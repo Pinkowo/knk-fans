@@ -169,7 +169,8 @@
     "hero": {
       "eyebrow": "CONTACT",
       "title": "문의 · 피드백 보내기",
-      "subtitle": "버그 제보나 아이디어가 있다면 아래 폼으로 자유롭게 남겨 주세요."
+      "subtitle": "버그 제보나 아이디어가 있다면 아래 폼으로 자유롭게 남겨 주세요.",
+      "directContact": "또는 직접 이메일로 연락하세요"
     },
     "form": {
       "inquiryType": "문의 유형",
@@ -182,7 +183,7 @@
       "submit": "메시지 보내기",
       "submitting": "전송 중…",
       "success": "메시지를 받았습니다! 가능한 한 빨리 답장드릴게요.",
-      "error": "전송에 실패했습니다. 잠시 뒤 다시 시도해 주세요.",
+      "error": "전송에 실패했습니다.",
       "options": {
         "error-report": "버그 제보",
         "other": "기타 의견"

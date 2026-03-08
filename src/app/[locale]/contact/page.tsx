@@ -36,6 +36,15 @@ export default async function ContactPage({ params }: ContactPageParams) {
         <p className="text-sm uppercase tracking-[0.3em] text-accent-teal">{t("hero.eyebrow")}</p>
         <h1 className="text-4xl font-bold md:text-5xl">{t("hero.title")}</h1>
         <p className="text-base text-text-secondary">{t("hero.subtitle")}</p>
+        <p className="text-sm text-text-secondary">
+          {t("hero.directContact")}{" "}
+          <a
+            href="mailto:pink.exp.studio@gmail.com"
+            className="text-accent-teal underline-offset-4 hover:underline"
+          >
+            pink.exp.studio@gmail.com
+          </a>
+        </p>
       </header>
       <ContactForm />
     </div>

@@ -201,6 +201,14 @@ export default function ContactForm() {
               <div className="flex-1">
                 <p className="font-semibold text-accent-pink">{t("error")}</p>
                 {serverError && <p className="mt-1 text-sm text-text-secondary">{serverError}</p>}
+                <p className="mt-2 text-sm text-text-secondary">
+                  <a
+                    href="mailto:pink.exp.studio@gmail.com"
+                    className="text-accent-teal underline-offset-4 hover:underline"
+                  >
+                    pink.exp.studio@gmail.com
+                  </a>
+                </p>
               </div>
             </div>
           </div>

@@ -417,12 +417,12 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
         />
       )}
       {playerEnabled && (
-        <div className="hidden">
+        <div className="pointer-events-none absolute h-px w-px overflow-hidden opacity-0">
           <YouTube
             videoId={activeTrack.videoId}
             opts={{
-              height: "0",
-              width: "0",
+              height: "1",
+              width: "1",
               playerVars: { autoplay: state.isPlaying ? 1 : 0, controls: 0, rel: 0, playsinline: 1 },
             }}
             onReady={handleReady}

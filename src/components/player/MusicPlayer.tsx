@@ -2,9 +2,7 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useRef, useState } from "react";
-import YouTube from "react-youtube";
-import type { YouTubeEvent, YouTubePlayer } from "react-youtube";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { MUSIC_PLAYER_COLLAPSE_EVENT, PET_PANEL_CLOSE_EVENT } from "@/lib/constants/panels";
 import { usePlayer } from "@/lib/context/PlayerContext";
@@ -30,28 +28,32 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
   const [showTrackPanel, setShowTrackPanel] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
   const [playerEnabled, setPlayerEnabled] = useState(false);
-  const playerRef = useRef<YouTubePlayer | null>(null);
-  const progressInterval = useRef<number | null>(null);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const isPlayingRef = useRef(state.isPlaying);
-  const previousTrackIdRef = useRef<string | null>(null);
+  const activeTrackRef = useRef<PlayerTrack | undefined>(undefined);
+  const activeAlbumRef = useRef<PlayerAlbum | undefined>(undefined);
 
   const activeAlbum = useMemo(() => {
-    if (!library.length) {
-      return undefined;
-    }
+    if (!library.length) return undefined;
     return library.find((album) => album.id === state.currentAlbumId) ?? library[0];
   }, [library, state.currentAlbumId]);
 
   const activeTrack = useMemo<PlayerTrack | undefined>(() => {
-    if (!activeAlbum) {
-      return undefined;
-    }
+    if (!activeAlbum) return undefined;
     return (
       activeAlbum.tracks.find((track) => track.id === state.currentTrackId) ?? activeAlbum.tracks[0]
     );
   }, [activeAlbum, state.currentTrackId]);
+
+  useEffect(() => {
+    activeTrackRef.current = activeTrack;
+  }, [activeTrack]);
+
+  useEffect(() => {
+    activeAlbumRef.current = activeAlbum;
+  }, [activeAlbum]);
 
   useEffect(() => {
     if (activeAlbum && state.currentAlbumId !== activeAlbum.id) {
@@ -61,14 +63,12 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
 
   useEffect(() => {
     if (activeTrack && state.currentTrackId !== activeTrack.id) {
-      // Persist the resolved fallback track for future sessions.
       // eslint-disable-next-line react-hooks/set-state-in-effect
       setCurrentTrack(activeTrack.id);
     }
   }, [activeTrack, setCurrentTrack, state.currentTrackId]);
 
   useEffect(() => {
-    // Persist hydration flag for client-only features (YouTube player + DOM APIs).
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsHydrated(true);
   }, []);
@@ -79,128 +79,72 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
     }
   }, [state.isPlaying]);
 
-  useEffect(() => {
-    return () => {
-      if (progressInterval.current) {
-        window.clearInterval(progressInterval.current);
-      }
-    };
+  // Send postMessage command to the YouTube iframe
+  const sendCommand = useCallback((func: string, args: unknown[] = []) => {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func, args }),
+      "https://www.youtube.com",
+    );
   }, []);
 
+  // Listen for messages from the YouTube iframe
   useEffect(() => {
-    if (!playerRef.current) {
-      return;
-    }
-    if (state.isPlaying) {
-      playerRef.current.playVideo();
-    } else {
-      playerRef.current.pauseVideo();
-    }
-  }, [state.isPlaying]);
-  useEffect(() => {
-    isPlayingRef.current = state.isPlaying;
-  }, [state.isPlaying]);
-
-  useEffect(() => {
-    if (!state.isPlaying || !playerRef.current) {
-      if (progressInterval.current) {
-        window.clearInterval(progressInterval.current);
-        progressInterval.current = null;
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== "https://www.youtube.com") return;
+      let data: Record<string, unknown>;
+      try {
+        data = typeof event.data === "string" ? JSON.parse(event.data) : event.data;
+      } catch {
+        return;
       }
-      return;
-    }
 
-    progressInterval.current = window.setInterval(() => {
-      const player = playerRef.current;
-      if (player) {
-        try {
-          const time = player.getCurrentTime();
-          const dur = player.getDuration();
-          if (time !== undefined && !Number.isNaN(time)) {
-            setCurrentTime(time);
+      if (data.event === "onReady") {
+        // Start receiving periodic info (currentTime, duration)
+        iframeRef.current?.contentWindow?.postMessage(
+          JSON.stringify({ event: "listening" }),
+          "https://www.youtube.com",
+        );
+      }
+
+      if (data.event === "onStateChange" && typeof data.info === "number") {
+        // 0 = ended → advance to next track
+        if (data.info === 0) {
+          const album = activeAlbumRef.current;
+          const track = activeTrackRef.current;
+          if (album && track) {
+            handleNextTrack(album, track, setCurrentTrack);
           }
-          if (dur && !Number.isNaN(dur)) {
-            setDuration((prev) => prev || dur);
-          }
-        } catch {
-          // Player might not be ready yet, skip this update
         }
       }
-    }, 1000);
 
-    return () => {
-      if (progressInterval.current) {
-        window.clearInterval(progressInterval.current);
-        progressInterval.current = null;
+      if (data.event === "infoDelivery" && data.info && typeof data.info === "object") {
+        const info = data.info as { currentTime?: number; duration?: number };
+        if (typeof info.currentTime === "number" && !Number.isNaN(info.currentTime)) {
+          setCurrentTime(info.currentTime);
+        }
+        if (typeof info.duration === "number" && info.duration > 0 && !Number.isNaN(info.duration)) {
+          setDuration((prev) => prev || (info.duration as number));
+        }
       }
     };
-  }, [state.isPlaying]);
 
+    window.addEventListener("message", handleMessage);
+    return () => window.removeEventListener("message", handleMessage);
+  }, [setCurrentTrack]);
+
+  // Sync play/pause with iframe
   useEffect(() => {
-    const currentTrackId = activeTrack?.id;
-    const videoId = activeTrack?.videoId;
+    isPlayingRef.current = state.isPlaying;
+    sendCommand(state.isPlaying ? "playVideo" : "pauseVideo");
+  }, [state.isPlaying, sendCommand]);
 
-    // Reset UI progress whenever a new track loads.
+  // Reset progress on track change
+  useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCurrentTime(0);
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setDuration(0);
-
-    // Skip if no track or invalid video ID
-    if (!currentTrackId || !videoId || typeof videoId !== "string" || videoId.trim() === "") {
-      return;
-    }
-
-    // Only load video if this is a track change (not initial render)
-    if (previousTrackIdRef.current === null) {
-      // First render - let the YouTube component handle initial load
-      previousTrackIdRef.current = currentTrackId;
-      return;
-    }
-
-    // Track has changed - update the ref
-    const isTrackChange = previousTrackIdRef.current !== currentTrackId;
-    previousTrackIdRef.current = currentTrackId;
-
-    if (!isTrackChange) {
-      return;
-    }
-
-    const player = playerRef.current;
-    if (!player) {
-      return;
-    }
-
-    // Delay to ensure player iframe is ready
-    const timeoutId = setTimeout(() => {
-      try {
-        const currentPlayer = playerRef.current;
-        if (!currentPlayer || typeof currentPlayer.loadVideoById !== "function") {
-          return;
-        }
-
-        if (!videoId || typeof videoId !== "string") {
-          return;
-        }
-
-        // Check if player iframe exists
-        const iframe = currentPlayer.getIframe?.();
-        if (!iframe) {
-          console.warn("Player iframe not ready yet");
-          return;
-        }
-
-        currentPlayer.loadVideoById(videoId);
-        if (isPlayingRef.current && typeof currentPlayer.playVideo === "function") {
-          currentPlayer.playVideo();
-        }
-      } catch (error) {
-        console.error("Error loading video:", error);
-      }
-    }, 250);
-
-    return () => clearTimeout(timeoutId);
-  }, [activeTrack?.id, activeTrack?.videoId]);
+  }, [activeTrack?.id]);
 
   useEffect(() => {
     const handleCollapse = () => {
@@ -216,9 +160,7 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
   }, [setShowAlbumPanel, setShowTrackPanel, setState]);
 
   useEffect(() => {
-    if (!state.isExpanded) {
-      return;
-    }
+    if (!state.isExpanded) return;
     window.dispatchEvent(new Event(PET_PANEL_CLOSE_EVENT));
   }, [state.isExpanded]);
 
@@ -226,34 +168,11 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
     return null;
   }
 
-  const handleReady = (event: YouTubeEvent<YouTubePlayer>) => {
-    playerRef.current = event.target;
-    setDuration(event.target.getDuration());
-    if (isPlayingRef.current) {
-      event.target.playVideo();
-    }
-  };
-
-  const handleStateChange = (event: YouTubeEvent<YouTubePlayer>) => {
-    if (event.data === 0) {
-      // Video ended, play next track
-      if (activeAlbum && activeTrack) {
-        handleNextTrack(activeAlbum, activeTrack, setCurrentTrack);
-      }
-    }
-    if (event.data === 1) {
-      // Video is playing
-      const duration = event.target.getDuration();
-      if (duration && !Number.isNaN(duration)) {
-        setDuration(duration);
-      }
-    }
-  };
-
   const minimizedLabel = activeTrack.title;
   const formattedElapsed = formatTime(currentTime);
   const formattedTotal = formatTime(duration || activeTrack.durationSeconds);
   const progressPercent = duration ? Math.min((currentTime / duration) * 100, 100) : 0;
+
   const handleToggleExpanded = () => {
     setShowAlbumPanel(false);
     setShowTrackPanel(false);
@@ -417,16 +336,14 @@ export default function MusicPlayer({ library }: MusicPlayerProps) {
         />
       )}
       {playerEnabled && (
-        <div className="pointer-events-none absolute h-px w-px overflow-hidden opacity-0">
-          <YouTube
-            videoId={activeTrack.videoId}
-            opts={{
-              height: "1",
-              width: "1",
-              playerVars: { autoplay: state.isPlaying ? 1 : 0, controls: 0, rel: 0, playsinline: 1 },
-            }}
-            onReady={handleReady}
-            onStateChange={handleStateChange}
+        <div className="pointer-events-none absolute overflow-hidden opacity-0" style={{ width: 1, height: 1 }}>
+          <iframe
+            key={activeTrack.videoId}
+            ref={iframeRef}
+            src={`https://www.youtube.com/embed/${activeTrack.videoId}?enablejsapi=1&autoplay=${isPlayingRef.current ? 1 : 0}&controls=0&rel=0&playsinline=1`}
+            allow="autoplay; encrypted-media"
+            title="music player"
+            style={{ width: 1, height: 1 }}
           />
         </div>
       )}
@@ -512,9 +429,7 @@ function handlePreviousTrack(
 }
 
 function formatTime(seconds?: number): string {
-  if (!seconds || Number.isNaN(seconds)) {
-    return "00:00";
-  }
+  if (!seconds || Number.isNaN(seconds)) return "00:00";
   const totalSeconds = Math.max(0, Math.floor(seconds));
   const minutes = Math.floor(totalSeconds / 60);
   const remainingSeconds = totalSeconds % 60;
